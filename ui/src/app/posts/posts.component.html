@@ -1,0 +1,20 @@
+<app-post-modal #meetingModal  [post]="selectedPost"></app-post-modal>
+<div class=" h-100  meeting-container ">
+  <div class="p-3 h-100 ">
+
+    <div class="text-center owl-container" *ngIf="!loading && (commonService.isEmpty(posts))">
+      <img class="w-75"  src="../../../assets/images/home/owl.svg">
+      <div>چیزی پیدا نکردم</div>
+    </div>
+
+    <spinner [showing]="loading" #spinner></spinner>
+
+
+
+    <div class="mb-3 mt-4" *ngFor="let item of posts" >
+        <app-post [post]="item">
+        </app-post>
+    </div>
+
+  </div>
+</div>

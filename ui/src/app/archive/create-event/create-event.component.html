@@ -1,0 +1,180 @@
+<div class="container" >
+
+  <div class="card mt-5 mb-5">
+    <div class="card-body">
+      <form class="form-horizontal" ng-show="meetingStep==1" >
+
+        <div class="row">
+
+          <!--left column-->
+          <div class="col-md-8 d-flex flex-column">
+
+            <!--Title-->
+            <div class="row ">
+              <label class="col-sm-2 col-form-label">Title</label>
+              <div class="col-sm-10">
+
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="align-bottom fa fa-list"></i></span>
+                  </div>
+                  <input type="text" name="title" class="form-control" placeholder="Title" [(ngModel)]="event.title">
+                </div>
+
+              </div>
+            </div>
+
+            <!--image-->
+            <div class="row " >
+              <label class="col-sm-2 col-form-label">Image</label>
+              <div class="col-sm-10">
+
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="align-bottom fa fa-image"></i></span>
+                  </div>
+                  <div class="custom-file">
+                    <input (change)="fileChanged($event)" #fileInput type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                    <label class="custom-file-label" for="inputGroupFile01">{{fileName ? fileName : "Select an image"}}</label>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Image Modal -->
+            <modal #imageCropperModal
+                   [modalTitle]="'Edit Image Size'"
+                   [zIndex]="5"
+                   [maximizable]="true">
+              <ng-container class="app-modal-body">
+                <image-cropper #cropper
+                         [imageChangedEvent]="imageChangedEvent"
+                         [maintainAspectRatio]="true"
+                         [aspectRatio]="4 / 4"
+                         format="png"
+                         (imageCropped)="imageCropped($event)"
+                         (loadImageFailed)="loadImageFailed()"></image-cropper>
+              </ng-container>
+              <ng-container class="app-modal-footer">
+                <!--<button type="button" class="btn btn-default">Delete</button>&nbsp;-->
+                <!--<button type="button" class="btn btn-default">Save</button>-->
+                <div class="text-right">
+                  <button type="button" class="btn primary" (click)="imageCropperModal.hide()">OK</button>
+                </div>
+              </ng-container>
+            </modal>
+
+            <!--Times-->
+            <div class="form-group row " *ngFor="let time of event.times; let i = index" [attr.data-index]="i">
+              <label class="col-sm-2 col-form-label"><span *ngIf="i===0">Times</span></label>
+              <div class="col-sm-4">
+                <date (onDateSelected)="onDateSelected(i, $event)" [inputClasses]="'form-control'"></date>
+              </div>
+              <div class="col-sm-2">
+                <select class="form-control" name="timeFrom" [(ngModel)]="time.from">
+                  <option disabled selected [value]="null">-- : --</option>
+                  <option *ngFor="let x of times" [ngValue]="x">{{x}}</option>
+                </select>
+              </div>
+              <div class="col-sm-2">
+                <select class="form-control" name="timeTo" [(ngModel)]="time.to">
+                  <option disabled selected [value]="null" >-- : --</option>
+                  <option *ngFor="let x of times" [ngValue]="x">{{x}}</option>
+                </select>
+              </div>
+              <div class="col-sm-2">
+                <button class="w-100 btn secondary" [disabled]="event.times.length===1" (click)="removeDateTime($event, i)"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <div class="form-group row ">
+              <div class="col-sm-2">
+              </div>
+              <div class="col-sm-10">
+                <a href="#" (click)="addDateTime($event)"><span class=""><i class="fa fa-plus"></i> Add Date</span></a>
+              </div>
+            </div>
+
+            <!--Location-->
+            <div class="row">
+              <label class="col-sm-2 col-form-label">Location</label>
+              <div class="col-sm-10">
+
+
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="align-bottom fa fa-map-marker"></i></span>
+                  </div>
+                  <input type="text" class="form-control" size=80
+                         ng-model="event.venue.farsiAddress1"
+                         #searchBox name="title" placeholder="Addresss 1" />
+                </div>
+
+              </div>
+            </div>
+
+            <div class="row">
+              <span class="col-sm-2"></span>
+              <div class="col-sm-10">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="align-bottom fa fa-map-marker"></i></span>
+                  </div>
+                  <input type="text" class="form-control" :size=80
+                         ng-model="event.venue.farsiAddress1"
+                         #address2  name="title" placeholder="Addresss 2" />
+                  <!--on-place-changed="vm.placeChanged()"-->
+                </div>
+
+              </div>
+            </div>
+
+            <!--makes the buttons stick to the bottom by expanding itself -->
+            <div class="flex-grow-1"></div>
+
+            <div layout="row" class="">
+              <button type="button" [disabled]="submitting" class="btn primary pull-right" (click)="onSubmit()" >OK <i *ngIf="submitting" class="fa fa-refresh fa-spin"></i></button>
+              <button type="button" class="btn secondary" >Cancel</button>
+            </div>
+
+          </div>
+
+
+          <!--right column-->
+          <div class="col-md-4 d-flex flex-column">
+
+            <div class="row" >
+              <div class="col-md-12 image-container">
+                <img class="form-group image-element" [src]="'../assets/images/post-placeholder.png'"
+                     [width]="croppedWidth"
+                     [height]="croppedHeight"
+                     (click)="onImageClick();" />
+                <i *ngIf="false" (click)="removeImage()" class="fa fa-times image-remove"></i>
+              </div>
+            </div>
+
+            <!--map-->
+            <div class="row flex-grow-1">
+              <div class="col-sm-12" >
+                <div class="h-100" id="map" #gmap style="min-height: 200px;" ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+        <!--<div class="form-group row">
+          <span class="align-bottom col-sm-1 "><i class="align-bottom fa fa-sticky-note"></i></span>
+          <label class="col-sm-2 col-form-label">Description</label>
+          <div class="col-sm-10">
+            <textarea id="note" type="text" rows="3" class="form-control" name="title" placeholder="Description" ng-model="post.description"></textarea>
+          </div>
+        </div>-->
+
+      </form>
+    </div>
+  </div>
+
+</div>

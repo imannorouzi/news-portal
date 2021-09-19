@@ -1,0 +1,77 @@
+<div class="">
+  <div [class]="'meeting-item  ' + event.status" (click)="onClicked($event, event)">
+
+    <div class="">
+
+      <div class="row ">
+
+        <div class="col-sm-6 flexbox-parent-row" >
+
+          <div class=" meeting-time text-right" *ngIf="event.pointedDate">
+            <span *ngIf="event.pointedDate.startTime" class="meeting-time">
+              <i class="fa fa-clock-o ml-2"></i>
+              <span>{{dateService.getTimeFromDateString(event.pointedDate.startTime)}}</span>
+            </span>
+          </div>
+
+          <div class=" text-right meeting-title-wrapper">
+            <span [class]="'meeting-title mr-2 ' + (event.title ? 'font-weight-bold' : 'text-muted')">{{event.title ? event.title : 'بدون عنوان'}}</span>
+          </div>
+        </div>
+
+
+
+        <div class="col-sm-6 text-left" >
+          <div class="panel text-right flexbox-parent-row" >
+            <div class="contact-image-container " *ngFor="let contact of event.attendees;">
+              <img class="contact-image rounded-circle shadow" [src]="contact.imageUrl ? contact.imageUrl : '../assets/images/user-placeholder.png'">
+            </div>
+            <span class="mr-2 names flexbox-item-grow">  {{attendeesString}}  </span>
+          </div>
+
+        </div>
+      </div>
+
+
+      <!--<div *ngIf="false">
+
+        &lt;!&ndash;<span class="text-left"><small class="text-muted">{{commonService.getStatusString(post.status)}}</small></span>&ndash;&gt;
+        <a [routerLink]="['/edit-meeting/' + post.id]" *ngIf="user.id === post.chairId" class="meeting-tool btn ml-1"><i class="fa fa-edit meeting-tool"></i></a>
+        <a class="meeting-tool shadow dropdown-toggle btn" *ngIf="user.id !== post.chairId" data-toggle="dropdown" (click)="$post.stopPropagation" ></a>
+        <div class="dropdown-menu rtl">
+          <a class="dropdown-item text-right" (click)="updateAttendingStatus(post.contactEvent.id, 'ATTENDING')">
+            میام <i [style.color]="'green'" class="fa fa-check"></i>
+          </a>
+          <a class="dropdown-item text-right" (click)="updateAttendingStatus(post.contactEvent.id, 'NOT_ATTENDING')">
+            نمیام <i [style.color]="'red'" class="fa fa-close"></i>
+          </a>
+          <a class="dropdown-item text-right" (click)="updateAttendingStatus(post.contactEvent.id, 'TENTATIVE')">
+            شاید <i [style.color]="'orange'" class="fa fa-exclamation"></i>
+          </a>
+        </div>
+
+
+        <h5 class="card-title text-right row">
+          <div class="col text-left meeting-time">
+            <span class="text-left"><small class="text-muted">{{commonService.getTimeDuration(post.pointedDate.startTime, post.pointedDate.endTime)}}</small></span>
+          </div>
+        </h5>
+
+        <div class="row">
+          <div class="col-md-9 text-right">
+
+          <span class="">
+            <a [href]="'https://maps.google.com/?q='+ post.venue.latitude +',' + post.venue.longitude" target="_blank" (click)="$post.stopPropagation();">
+              <small class="text-muted"><i class="fa fa-map-marker"></i> {{post.venue ? post.venue.farsiAddress1 + ', ' +  post.venue.farsiAddress2: ""}}</small>
+            </a>
+          </span>
+          </div>
+
+        </div>
+
+      </div>-->
+
+    </div>
+
+  </div>
+</div>

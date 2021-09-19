@@ -1,0 +1,27 @@
+{
+  "groups": [
+    {
+      "name": "app",
+      "type": "com.sholop.ApplicationConfiguration",
+      "sourceType": "com.sholop.ApplicationConfiguration"
+    }
+  ],
+  "properties": [
+    {
+      "name": "app.description",
+      "type": "java.lang.String",
+      "sourceType": "com.sholop.ApplicationConfiguration"
+    },
+    {
+      "name": "app.name",
+      "type": "java.lang.String",
+      "sourceType": "com.sholop.ApplicationConfiguration"
+    },
+    {
+      "name": "app.upload-dir",
+      "type": "java.lang.String",
+      "sourceType": "com.sholop.ApplicationConfiguration"
+    }
+  ],
+  "hints": []
+}

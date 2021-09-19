@@ -1,0 +1,52 @@
+<reception-item-modal></reception-item-modal>
+<app-reception></app-reception>
+<app-qr-code-scanner #scanner ></app-qr-code-scanner>
+<overlay-spinner [text]="'در حال دریافت اطلاعات...'" *ngIf="loadingReception"></overlay-spinner>
+<confirm #prompt [type]="'PROMPT'" [title]="''">{{promptText}}</confirm>
+
+<!--<app-floating-button></app-floating-button>-->
+<div [class]="(authService.isLoggedIn() ? '' : '' ) + ' home h-100 '" id="home">
+
+  <div [class]="' page-wrapper flexbox-parent chiller-theme ' + (authService.isLoggedIn() ? 'has-sidebar toggled ' : ' no-sidebar ')
+      + (sidebar ? 'open' : 'closed')" #pageWrapper>
+
+    <nav id="sidebar" class="sidebar-wrapper" #sidebarWrapper>
+      <div class="sidebar-content ltr">
+
+        <div class="sidebar-brand rtl text-left" id="sidebar-brand-close">
+          <div id="close-sidebar"  (click)="this.toggleSidebar()">
+            <i [class]="'fa nav-icon active ' + (sidebar ? 'fa-arrow-right' : 'fa-arrow-left')"></i>
+          </div>
+        </div>
+
+        <div class="sidebar-menu rtl ">
+          <ul>
+            <li class="sidebar-item " [class]="(navigationService.currentLocation.startsWith('/posts') ? 'selected' : '')" [routerLink]="'/posts'">
+              <a [routerLink]="'/posts'">
+                <i class="fa fa-users"></i>
+                <span>اخبار</span>
+              </a>
+            </li>
+
+            <li class="sidebar-item" *ngIf="false" [class]="(navigationService.currentLocation === '/messages' ? 'selected' : '')" [routerLink]="'/messages'">
+              <a [routerLink]="">
+                <i class="fa fa-inbox"></i>
+                <span>پیام‌ها</span>
+                <span class="badge badge-pill badge-danger">3</span>
+              </a>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+      <!-- sidebar-content  -->
+    </nav>
+
+    <main class="page-content flexbox-item-grow">
+      <ng-content></ng-content>
+    </main>
+  </div>
+
+</div>
+
+

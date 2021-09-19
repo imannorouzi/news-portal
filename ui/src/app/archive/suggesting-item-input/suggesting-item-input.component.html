@@ -1,0 +1,35 @@
+<div class="position-relative " >
+  <ng-content></ng-content>
+
+  <div class="items " *ngIf="showing && type === 'users'">
+    <div *ngFor="let c of items; let i = index;" [class.selected]="selectedIndex===i"
+         (click)="onItemSelected(i)"
+         class="item">
+      <div class="flexbox-parent-row p-1">
+        <img class="rounded-circle contact-image ml-3" [src]="c.imageUrl ? c.imageUrl : '../assets/images/user-placeholder.png'">
+        <div class="contact_name flexbox-item-grow">{{c.name}}</div>
+      </div>
+    </div>
+
+    <div class="item p-1" *ngIf="!loading && guestsHint && items && items.length === 0">
+      <img class="small-owl"  src="../../../assets/images/home/owl.svg">
+      <div class="d-inline-block">کسی با این مشخصات نداریم.</div>
+    </div>
+
+    <div class="item p-1" *ngIf="loading">
+      <spinner [size]="'small'" [showing]="true" #spinner></spinner>
+    </div>
+  </div>
+
+
+  <div class="items " *ngIf="showing && type === 'virtual-venues'">
+    <div *ngFor="let c of items; let i = index;" [class.selected]="selectedIndex===i"
+         (click)="onItemSelected(i)" class="item">
+      <div class="flexbox-parent-row p-1">
+        <img class="rounded-circle contact-image ml-3" [src]="c.imageUrl ? c.imageUrl : '../assets/images/user-placeholder.png'">
+        <div class="contact_name flexbox-item-grow">{{c.name}}</div>
+      </div>
+    </div>
+  </div>
+
+</div>

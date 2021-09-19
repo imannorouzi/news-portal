@@ -1,0 +1,14 @@
+<modal [modalTitle]=" '' "
+       [size]="'lg'"
+       [zIndex]="11" #childModal>
+
+  <ng-container class="app-modal-body" *ngIf="event">
+    <app-meeting-details [event]="event" ></app-meeting-details>
+  </ng-container>>
+
+  <ng-container class="app-modal-footer">
+    <button class="btn ml-2 danger" > لغو ملاقات </button>
+    <button class="btn secondary " (click)="hide()"> بستن </button>
+  </ng-container>
+
+</modal>

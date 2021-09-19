@@ -1,0 +1,63 @@
+<div [class]="'container position-relative ' + (disabled ? 'disabled ' : '') + mode">
+  <div *ngIf="false && disabled" class="blocker"></div>
+  <div class="row">
+    <div class="span12 w-100">
+
+      <div class="calendar-container">
+        <table class="calendar-table table-condensed w-100 text-center" >
+          <thead >
+          <tr >
+            <th colspan="7">
+                        <span class="flexbox-parent-row">
+                          <div class="btn-container">
+                          <a class="btn change-month-btn" (click)="getMonthMapArray(monthOffset-1)"><i class="fa fa-angle-right"></i> ماه قبل</a>
+                            </div>
+                        	<a class="btn flexbox-item-grow">
+                            <div class="font-weight-bold">{{dateService.getMonthName(month.currentMonth-1)}} {{month.currentYear}}</div>
+                            <div class="text-muted">
+                              {{dateService.getGreMonthName((today.gDate.getMonth()-1) % 12)}} -
+                              {{dateService.getGreMonthName(today.gDate.getMonth())}}
+                            </div>
+                          </a>
+                          <div class="btn-container">
+                        	<a class="btn change-month-btn" (click)="getMonthMapArray(monthOffset+1)">ماه بعد <i class="fa fa-angle-left"></i></a>
+                          </div>
+                        </span>
+            </th>
+          </tr>
+          <tr >
+            <th>شنبه</th>
+            <th>یکشنبه</th>
+            <th>دوشنبه</th>
+            <th>سه‌شنبه</th>
+            <th>چهارشنبه</th>
+            <th>پنجشنبه</th>
+            <th>جمعه</th>
+          </tr>
+          </thead>
+          <tbody class="calendar-content">
+          <tr *ngFor="let week of month.weeks; ">
+            <td (click)="onDaySelected(day)"
+                [class.meeting-day]="day && meetingMap[day.gDate.getDate()]>0"
+                [class.selected]="day && selectedDate.gDate.toISOString()===day.gDate.toISOString()" class="calendar-day position-relative"
+                [class.today]="monthOffset === 0 && day && (today.gDate.getDate()===day.gDate.getDate())"
+                *ngFor="let day of week;  let i = index;">
+              <div *ngIf="day" class="calendar-cell" >
+                <div class="calendar-jday font-weight-bold" [class.holiday]="i%7===6">{{day.jDate.date}}</div>
+                <div class="calendar-gday english_font" [class.holiday]="i%7===6">{{day.gDate.getDate()}}</div>
+
+              </div>
+              <div class="meeting-count position-absolute " *ngIf="day && meetingMap[day.gDate.getDate()]">
+                <div class="arrow"></div>
+                <div class="content">
+                  <i class="fa fa-coffee"></i> <span> {{meetingMap[day.gDate.getDate()]}} </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+#calendar {
+  position: absolute;
+  width: 100%;
+  background: white;
+  z-index: 10;
+  right: 0;
+}
+
+#calendar-container{
+  position: relative;
+  margin:0;
+}
+
+.frame{
+  line-height: 2.5;
+}

@@ -1,0 +1,27 @@
+<div class="">
+  <div [class]="'post-item  ' + post.status" (click)="onClicked($event, post)">
+
+    <div class="d-table">
+
+      <img class=" post-thumbnail" [src]="post.imageUrl" alt=""/>
+      <div class=" post-text" >
+        <div class=" text-right post-title-wrapper ">
+          <span [class]="'font-heading post-title mr-2 ' + (post.title ? 'font-weight-bold' : 'text-muted')">{{post.title ? post.title : 'بدون عنوان'}}</span>
+        </div>
+
+        <div class="post-content">
+          <p>{{post.excerpt}}</p>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="post-footer flexbox-parent-row">
+      <span class="text-muted font-small font-heading flexbox-item-grow">۲ نظر</span>
+      <span class="text-muted font-small font-heading">{{dateService.greToPersian(post.created, true)}}</span>
+    </div>
+
+
+
+  </div>
+</div>

@@ -1,0 +1,159 @@
+.ui-modal-overlay {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+
+.ui-modal {
+  display: none;
+  position: fixed;
+  /*border-radius: 10px;*/
+  left: 0;
+  top: 0;
+  max-width: 95%;
+  outline: none;
+  background-color: #fefefe;
+  padding: 0;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.ui-modal-header {
+  position: relative;
+  padding: 10px 16px;
+  background-color: #eee;
+  color: #9d9d9d;
+  user-select: none;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  /*border-top-right-radius: 10px;*/
+  /*border-top-left-radius: 10px;*/
+  cursor: move;
+}
+
+.ui-modal-body {
+  position: relative;
+  padding: 10px 16px;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+}
+
+.ui-modal-footer {
+  padding: 0 15px 15px 15px;
+  color: white;
+}
+
+.ui-titlebar {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  height: 100%;
+  overflow: hidden;
+}
+
+.ui-modal-title {
+  font-size: 18px;
+}
+
+.ui-controlbar {
+  display: flex;
+  align-items: center;
+}
+
+.ui-icon {
+  cursor: pointer;
+  padding-top: 9px;
+}
+
+.ui-icon:hover {
+  opacity: 0.75;
+}
+
+.dragging {
+  cursor: move;
+  border-color: #66afe9;
+  outline: 0;
+  box-shadow: 0 4px 8px rgba(102,175,233,.6), 0 6px 20px rgba(0,0,0,.2);
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.resizing {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.ui-resizable-se {
+  position:absolute;
+  cursor: se-resize;
+  height: 15px;
+  width: 15px;
+  right: 0;
+  bottom: 0;
+}
+
+.ui-resizable-e {
+  position:absolute;
+  cursor: e-resize;
+  height: 100%;
+  width: 7px;
+  right: -5px;
+  top: 0;
+}
+
+.ui-resizable-s {
+  position:absolute;
+  cursor: s-resize;
+  height: 7px;
+  width: 100%;
+  bottom: -5px;
+  left: 0;
+}
+
+
+.modal-icon:hover{
+  background-color: #909ea8;
+  color: white;
+}
+.modal-icon{
+  border-radius: 50%;
+  font-size: 22px;
+  /* padding: 5px; */
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  margin-left: 15px;
+  text-align: center;
+  line-height: 32px;
+}
+
+
+.ui-modal.auto {
+  width: fit-content;
+}
+.ui-modal.sm {
+  width: 400px;
+}
+.ui-modal.md {
+  width: 550px;
+}
+.ui-modal.lg {
+  width: 800px;
+}
+
+@media (min-width: 768px) {
+  .ui-modal {
+    width: 100%;
+  }
+}
+@media (min-width: 320px) {
+  .ui-modal {
+    width: 300px;
+  }
+}

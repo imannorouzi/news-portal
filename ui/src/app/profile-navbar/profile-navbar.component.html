@@ -1,0 +1,32 @@
+<div class=" p-2" *ngIf="authService.getCurrentUser()">
+
+  <div class="">
+    <div class="text-center justify-content-center">
+      <div class="w-50 m-auto text-center">
+        <img class="rounded-circle w-100" [src]="authService.getCurrentUser().imageUrl ? authService.getCurrentUser().imageUrl : '../assets/images/user-placeholder.png'">
+      </div>
+    </div>
+
+    <div class="">
+
+      <div class="bold">
+        <strong>{{authService.getCurrentUser().name}}</strong>
+      </div>
+
+      <!--Email-->
+
+      <div class="user-info">
+        <div>{{authService.getCurrentUser().username}}</div>
+        <div>{{authService.getCurrentUser().phone}}</div>
+        <div>{{authService.getCurrentUser().farsiAddress1}}</div>
+        <div>{{authService.getCurrentUser().farsiAddress2}}</div>
+      </div>
+
+      <div class="">
+        <span>{{authService.getCurrentUser().description}}</span>
+      </div>
+
+    </div>
+  </div>
+
+</div>

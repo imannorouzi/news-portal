@@ -1,0 +1,97 @@
+<div class=" p-3">
+
+  <div class="bg-white ">
+    <div class="text-center justify-content-center">
+      <div class="user-image m-auto text-center">
+        <img class="rounded-circle w-100" (click)="onImageClick()" [src]="user.imageUrl ? user.imageUrl : '../assets/images/user-placeholder.png'">
+        <small class="text-muted ">برای انتخاب عکس کلیک کنید</small>
+      </div>
+
+      <!-- Image Modal -->
+      <modal #imageCropperModal
+             [modalTitle]="'Edit Image Size'"
+             [zIndex]="10"
+             [maximizable]="true">
+        <ng-container class="app-modal-body">
+          <div class="text-center">
+          <image-cropper #cropper
+                         [imageChangedEvent]="imageChangedEvent"
+                         [maintainAspectRatio]="true"
+                         [aspectRatio]="4 / 4"
+                         format="png"
+                         (imageCropped)="imageCropped($event)"
+                         (loadImageFailed)="loadImageFailed()"></image-cropper>
+          </div>
+        </ng-container>
+        <ng-container class="app-modal-footer">
+          <!--<button type="button" class="btn btn-default">Delete</button>&nbsp;-->
+          <!--<button type="button" class="btn btn-default">Save</button>-->
+          <div class="text-right">
+            <button type="button" class="btn primary" (click)="onImageCropperModalOk()">خوبه</button>
+          </div>
+        </ng-container>
+      </modal>
+
+      <input (change)="fileChanged($event)" #fileInput type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+
+    </div>
+
+    <div class="">
+
+      <div class="">
+        <label class=" col-form-label text-right">نام</label>
+        <input id="name" type="text" name="name" class="" placeholder="نام کامل" [(ngModel)]="user.name">
+      </div>
+
+      <!--Email-->
+      <div class="">
+        <label class="col-form-label text-right">ایمیل</label>
+        <input type="text" name="email" class=" ltr" readonly placeholder="ali@gmail.com" [(ngModel)]="user.username">
+      </div>
+
+      <div class="">
+        <label class="col-form-label text-right">تلفن</label>
+        <input type="text" name="phone" class="ltr" placeholder="0912XXXXXXXX" [(ngModel)]="user.phone">
+      </div>
+
+      <div class="">
+        <label class=" col-form-label text-right">آدرس</label>
+            <input type="text" class="mb-2"
+                   [(ngModel)]="user.farsiAddress1"
+                   autocomplete="off"
+                   #searchBox name="address_1" placeholder="شهر،‌ خیابان" />
+
+            <input type="text" class="mb-2"
+                   [(ngModel)]="user.farsiAddress2"
+                   autocomplete="off"
+                   #address2  name="address_2" placeholder="کوچه،‌ پلاک، واحد" /> <!--on-place-changed="vm.placeChanged()"-->
+
+          <div class="mb-3">
+            <agm-map class="map"
+                     [latitude]="mapLat"
+                     [longitude]="mapLng"
+                     [scrollwheel]="true"
+                     [zoom]="zoom"
+                     (mapClick)="mapClicked($event)">
+              <agm-marker [markerDraggable]="true"
+                          (dragEnd)="markerMoved($event)"
+                          [latitude]="user.latitude" [longitude]="user.longitude"></agm-marker>
+            </agm-map>
+          </div>
+
+      </div>
+
+      <div class=" ">
+        <label class="col-sm-2 col-form-label text-right">درباره من</label>
+            <textarea id="message" type="text" rows="7" name="description"
+                      [(ngModel)]="user.description"
+                      class="" placeholder="توضیحاتی برای آشنایی مخاطبانتان"></textarea>
+      </div>
+
+
+      <button type="button" class="btn primary ml-2" (click)="updateUser()">دخیره</button>
+
+    </div>
+  </div>
+
+</div>
