@@ -9,6 +9,7 @@ import {MeetingService, readMethod} from '../archive/meetings/meeting.service';
 import {CommonService} from '../utils/common.service';
 import {of} from 'rxjs';
 import {DummyData} from '../dummyData';
+import {PostModalComponent} from "../post-modal/post-modal.component";
 
 @Component({
   selector: 'app-posts',
@@ -17,7 +18,7 @@ import {DummyData} from '../dummyData';
 })
 export class PostsComponent implements OnInit {
   @ViewChild('spinner', {static: true}) spinner: SpinnerComponent;
-  @ViewChild('postModal', {static: true}) postModal: MeetingItemModalComponent;
+  @ViewChild('postModal', {static: true}) postModal: PostModalComponent;
 
   posts = [];
   loading = false;

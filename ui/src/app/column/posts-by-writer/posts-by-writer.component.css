@@ -1,0 +1,21 @@
+.posts-container{
+}
+
+.post:hover {
+  background-color: #f1f1f1;
+}
+.post:last-child {
+  border-bottom: none;
+}
+.post {
+  padding: 5px;
+  cursor: pointer;
+  border-bottom: #ddeeff 1px dashed;
+}
+
+.post-open-icon:hover {
+  color: darkred;
+}
+.post-open-icon{
+  line-height: 1.5;
+}

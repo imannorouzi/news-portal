@@ -70,7 +70,7 @@ label{
   /*margin-top: 10px;*/
 }
 
-.app-container button{
+.app-container button.app-button{
   display: inline-block;
   padding: 10px 16px;
   cursor: pointer;
@@ -104,35 +104,35 @@ label{
 }
 
 
-.app-container button[disabled]{
+.app-container button[disabled].app-button{
   opacity: .7;
 }
-.app-container button.small:hover{
+.app-container button.app-button.small:hover{
   background: #eeeeee;
 }
-.app-container button.small{
+.app-container button.app-button.small{
   background: transparent;
   color: #111111;
 }
 
-.app-container button:hover {
+.app-container button.app-button:hover {
   /*background-color: #e18f35;*/
   background-color: #005ea6;
 }
 
-.app-container button.secondary {
+.app-container button.app-button.secondary {
   background-color: #E1E7EB;
   color: #2C2E2F;
 }
-.app-container button.secondary:hover {
+.app-container button.app-button.secondary:hover {
   background-color: #d2dbe1;
 }
 
-.app-container button.danger {
+.app-container button.app-button.danger {
   background-color: #980303;
   color: white;
 }
-.app-container button.danger:hover {
+.app-container button.app-button.danger:hover {
   background-color: #d84747;
 }
 

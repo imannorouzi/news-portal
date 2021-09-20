@@ -5,10 +5,12 @@
   /*color:#ffcc00;*/
 }
 .navbar{
-  background-color: #17A2B9;
+  background-color: #f1f1f1;
   /*background-color: #0070ba;*/
   padding: 0;
   border-bottom: #444;
+  box-shadow: 0 3px 8px rgba(0,0,0,.25);
+  z-index: 200;
 }
 .dropdown-menu .fa{
   width: 25px;

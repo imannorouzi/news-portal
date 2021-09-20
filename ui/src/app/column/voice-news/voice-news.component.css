@@ -1,0 +1,14 @@
+.audio {
+  background: #a1a9a2;
+  padding: 10px 10px 10px 10px;
+  border-radius: 11px;
+  color: white;
+}
+
+audio::-webkit-media-controls-panel {
+  border-color: #a1a9a2;
+}
+
+.title {
+  padding: 0 10px 10px 10px;
+}

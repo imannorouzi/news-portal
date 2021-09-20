@@ -1,0 +1,45 @@
+<nav id="sidebar" class="sidebar-wrapper h-100" #sidebarWrapper>
+  <div class="sidebar-content ltr">
+
+    <!--<div class="sidebar-brand rtl text-left" id="sidebar-brand-close">
+      <div id="close-sidebar"  (click)="this.toggleSidebar()">
+        <i [class]="'fa nav-icon active ' + (sidebar ? 'fa-arrow-right' : 'fa-arrow-left')"></i>
+      </div>
+    </div>-->
+
+    <div class="sidebar-menu rtl ">
+      <ul>
+        <li class="sidebar-item " [class]="(navigationService.currentLocation.startsWith('/posts') ? 'selected' : '')" [routerLink]="'/posts'">
+          <a [routerLink]="'/posts'">
+            <i class="fa fa-newspaper-o ml-2"></i>
+            <span class="font-heading">اخبار</span>
+          </a>
+        </li>
+
+        <li class="sidebar-item " [class]="(navigationService.currentLocation.startsWith('/strikes') ? 'selected' : '')" [routerLink]="'/strikes'">
+          <a [routerLink]="'/strikes'">
+            <i class="fa fa-map ml-2"></i>
+            <span class="font-heading">نقشه اعتصابات</span>
+          </a>
+        </li>
+
+        <li class="sidebar-item " [class]="(navigationService.currentLocation.startsWith('/prisoner') ? 'selected' : '')" [routerLink]="'/prisoner'">
+          <a [routerLink]="'/prisoner'">
+            <i class="fa fa-user-circle ml-2"></i>
+            <span class="font-heading">زندانیان سیاسی</span>
+          </a>
+        </li>
+
+        <li class="sidebar-item" *ngIf="false" [class]="(navigationService.currentLocation === '/messages' ? 'selected' : '')" [routerLink]="'/messages'">
+          <a [routerLink]="'messages'">
+            <i class="fa fa-inbox"></i>
+            <span class="font-heading">پیام‌ها</span>
+            <span class="badge badge-pill badge-danger">3</span>
+          </a>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+  <!-- sidebar-content  -->
+</nav>

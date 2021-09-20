@@ -1,0 +1,54 @@
+.sidebar-wrapper{
+  background: #f0d489;
+  padding: 15px 0;
+  box-shadow: 0 3px 8px rgba(0,0,0,.25);
+  width: 200px;
+}
+
+
+.page-wrapper .sidebar-wrapper,
+.sidebar-wrapper .sidebar-brand > a,
+.sidebar-wrapper .sidebar-dropdown > a:before,
+.sidebar-wrapper .sidebar-menu .sidebar-dropdown .sidebar-submenu li a:before,
+.sidebar-wrapper ul li a i,
+.page-wrapper .page-content,
+.sidebar-wrapper .sidebar-search input.search-menu,
+.sidebar-wrapper .sidebar-search .input-group-text,
+.sidebar-wrapper .sidebar-menu ul li a,
+#show-sidebar,
+#close-sidebar {
+  -webkit-transition: all 0.03s ease;
+  -moz-transition: all 0.03s ease;
+  -ms-transition: all 0.03s ease;
+  -o-transition: all 0.03s ease;
+  transition: all 0.03s ease;
+}
+
+ul {
+  display: block;
+  list-style-type: none;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  padding-inline-start: 0;
+}
+
+ul li {
+  padding: 5px 15px;
+  border-bottom: 1px solid #eee;
+}
+
+ul .sidebar-item{
+  cursor: pointer;
+}
+ul .sidebar-item:hover{
+  background-color: #eccf86;
+}
+ul .sidebar-item.selected a{
+  font-weight: 900;
+}
+ul .sidebar-item a{
+  color: #b0172b;
+  text-decoration: none;
+}

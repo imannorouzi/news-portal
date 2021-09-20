@@ -1,0 +1,26 @@
+<div class="audio-player-wrapper">
+  <div id="audio-player-container" class="flexbox-parent-row">
+    <button (click)="start()" id="play-icon"><i [class]="'fa ' + (isPlaying() ? 'fa-pause' : 'fa-play')"></i></button>
+    <span id="current-time" class="font-heading time">{{getCurrentTime()}}</span>
+    <div class="position-relative slider flexbox-item-grow">
+      <input type="range" id="seek-slider" [max]="trackLength" [value]="getCurrentTime()" class="w-100">
+      <div class="bars">
+        <div class="bar" *ngFor="let bar of bars; let i=index"
+             [ngStyle]="getBarStyle(i)"></div>
+      </div>
+    </div>
+    <span id="duration" class="time font-heading">{{trackLength}}</span>
+  </div>
+
+</div>
+
+
+<!--<div class="audio-player">
+
+
+  <span class="title">مسائل منطقه</span>
+  <audio class="w-100" controls>
+    <source src="assets/files/audio/1.mp3" type="audio/mp3">
+    Your browser does not support the audio element.
+  </audio>
+</div>-->

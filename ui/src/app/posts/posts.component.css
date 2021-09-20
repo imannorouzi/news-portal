@@ -1,0 +1,6 @@
+.post:last-child{
+  margin-bottom: 0;
+}
+.post {
+  margin-bottom: 15px;
+}

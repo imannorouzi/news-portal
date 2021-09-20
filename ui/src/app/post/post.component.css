@@ -1,6 +1,3 @@
-.contact-image-container:first-child{
-  margin-right: 0;
-}
 .contact-image-container{
   display: inline-block;
   margin-right: -20px;
@@ -14,7 +11,6 @@
 
 .post-item{
   cursor: pointer;
-
   font-size: 16px;
 
   padding: 15px 15px;
@@ -22,7 +18,6 @@
   background: #fff;
   border-bottom-color: rgb(157, 163, 166);
   box-shadow: 0 3px 8px rgba(0,0,0,.25);
-
 }
 .post-item .post-content {
   line-height: 1.5;
