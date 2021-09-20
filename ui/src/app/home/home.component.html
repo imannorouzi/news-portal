@@ -1,30 +1,30 @@
-<reception-item-modal></reception-item-modal>
-<app-reception></app-reception>
-<app-qr-code-scanner #scanner ></app-qr-code-scanner>
 <overlay-spinner [text]="'در حال دریافت اطلاعات...'" *ngIf="loadingReception"></overlay-spinner>
 <confirm #prompt [type]="'PROMPT'" [title]="''">{{promptText}}</confirm>
-<app-audio-player></app-audio-player>
-<!--<app-floating-button></app-floating-button>-->
-<div [class]="(authService.isLoggedIn() ? '' : '' ) + ' flexbox-parent-row home h-100 '" id="home">
 
-  <app-sidebar></app-sidebar>
+<!--<app-floating-button></app-floating-button>-->
+<div class="flexbox-parent">
+<div [class]="(authService.isLoggedIn() ? '' : '' ) + ' flexbox-item-grow flexbox-parent-row home h-100 '" id="home">
+
+<!--  <app-sidebar></app-sidebar>-->
 
   <div class="flexbox-item-grow p-4">
-    <div class="row">
-      <div class="col-md-9">
-        <div [class]="'page-wrapper flexbox-parent chiller-theme ' + (authService.isLoggedIn() ? 'has-sidebar toggled ' : ' no-sidebar ')
-      + (sidebar ? 'open' : 'closed')" #pageWrapper>
-          <main class="page-content flexbox-item-grow">
-            <ng-content></ng-content>
-          </main>
+      <div class="row h-100">
+        <div class="col-md-8 p-0 h-100 ">
+          <div [class]="'page-wrapper chiller-theme h-100'">
+            <main class="page-content pl-3 pr-3 h-100 overflow-auto">
+              <ng-content></ng-content>
+            </main>
+          </div>
+        </div>
+        <div class="col-md-4 h-100">
+          <app-column ></app-column>
         </div>
       </div>
-      <div class="col-md-3">
-        <app-column ></app-column>
-      </div>
-    </div>
   </div>
 
+</div>
+
+  <app-audio-player></app-audio-player>
 </div>
 
 

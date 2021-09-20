@@ -1,10 +1,10 @@
 <!-- import contact Modal -->
-<modal #selectVenues
-       [modalTitle]="'مکان جلسات'"
-       [zIndex]="10"
-       [width]="700"
-       [size]="'lg'"
-       [maximizable]="true">
+<app-modal #selectVenues
+           [modalTitle]="'مکان جلسات'"
+           [zIndex]="10"
+           [width]="700"
+           [size]="'lg'"
+           [maximizable]="true">
   <ng-container class="app-modal-body">
 
     <div class="row p-3">
@@ -48,4 +48,4 @@
       <button type="button" class="btn secondary" (click)="selectVenues.hide()">لغو</button>
     </div>
   </ng-container>
-</modal>
+</app-modal>

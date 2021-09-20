@@ -8,10 +8,10 @@
       </div>
 
       <!-- Image Modal -->
-      <modal #imageCropperModal
-             [modalTitle]="'Edit Image Size'"
-             [zIndex]="10"
-             [maximizable]="true">
+      <app-modal #imageCropperModal
+                 [modalTitle]="'Edit Image Size'"
+                 [zIndex]="10"
+                 [maximizable]="true">
         <ng-container class="app-modal-body">
           <div class="text-center">
           <image-cropper #cropper
@@ -30,7 +30,7 @@
             <button type="button" class="btn primary" (click)="onImageCropperModalOk()">خوبه</button>
           </div>
         </ng-container>
-      </modal>
+      </app-modal>
 
       <input (change)="fileChanged($event)" #fileInput type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
 

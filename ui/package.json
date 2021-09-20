@@ -35,6 +35,8 @@
     "font-awesome": "^4.7.0",
     "glyphicons": "^0.2.0",
     "jquery": "^3.4.1",
+    "ng2-charts": "^2.4.2",
+    "chart.js": "2.9.3",
     "ngx-bootstrap": "^5.5.0",
     "ngx-image-cropper": "^3.3.5",
     "node-pre-gyp": "^0.14.0",

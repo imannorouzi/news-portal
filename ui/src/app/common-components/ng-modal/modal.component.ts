@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'app-modal',
+  selector: 'app-old-modal',
   templateUrl: 'modal.component.html',
   styleUrls: ['modal.component.css']
 })
@@ -13,12 +13,12 @@ export class ModalComponent implements OnInit, AfterViewChecked {
   @Input() modalTitle: string;
   @Input() width: any;
   @Input() zIndex: number;
-  @Input() size: string = 'lg'; // sm, md, lg
-  @Input() minWidth: number = 260;
-  @Input() minHeight: number = 200;
-  @Input() scrollTop: boolean = true;
+  @Input() size = 'lg'; // sm, md, lg
+  @Input() minWidth = 260;
+  @Input() minHeight = 200;
+  @Input() scrollTop = true;
   @Input() maximizable: boolean;
-  @Input() backdrop: boolean = true;
+  @Input() backdrop = true;
   @Input() styleClass: string;
 
   @Output() close: EventEmitter<boolean> = new EventEmitter();

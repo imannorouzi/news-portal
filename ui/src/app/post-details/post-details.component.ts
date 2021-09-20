@@ -2,7 +2,6 @@ import {Component, Input, OnInit, SimpleChanges, ViewChild} from '@angular/core'
 import {CommentsComponent} from '../comments/comments.component';
 import {DateService} from '../utils/date.service';
 import {CommonService} from '../utils/common.service';
-import {ReceptionService} from '../archive/reception/reception.service';
 import {NavigationService} from '../utils/navigation.service';
 
 @Component({

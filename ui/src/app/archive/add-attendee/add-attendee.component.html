@@ -1,9 +1,9 @@
 <!-- Add new contact Modal -->
-<modal #addAttendee
-       [modalTitle]="'مخاطب جدید'"
-       [width]="500"
-       [zIndex]="10"
-       [maximizable]="false">
+<app-modal #addAttendee
+           [modalTitle]="'مخاطب جدید'"
+           [width]="500"
+           [zIndex]="10"
+           [maximizable]="false">
   <ng-container class="app-modal-body">
 
 
@@ -39,4 +39,4 @@
       <button type="button" class="btn secondary " (click)="addAttendee.hide()">لغو</button>
     </div>
   </ng-container>
-</modal>
+</app-modal>

@@ -4,27 +4,45 @@
     <i class="fa fa-ellipsis-v"></i>
   </div>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent" *ngIf="!authService.isLoggedIn()">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav me-auto ">
 
+      <li class="nav-item mr-3 " [class]="(navigationService.currentLocation.startsWith('/posts') ? 'selected' : '')" [routerLink]="'/posts'">
+        <a class="nav-link" [routerLink]="'/posts'">
+          <i class="fa fa-newspaper-o ml-2"></i>
+          <span class="font-heading">اخبار</span>
+        </a>
+      </li>
+
+      <li class="nav-item " [class]="(navigationService.currentLocation.startsWith('/strikes') ? 'selected' : '')" [routerLink]="'/strikes'">
+        <a class="nav-link" [routerLink]="'/strikes'">
+          <i class="fa fa-map ml-2"></i>
+          <span class="font-heading">نقشه اعتصابات</span>
+        </a>
+      </li>
+
+      <li class="nav-item " [class]="(navigationService.currentLocation.startsWith('/prisoner') ? 'selected' : '')" [routerLink]="'/prisoner'">
+        <a class="nav-link" [routerLink]="'/prisoner'">
+          <i class="fa fa-user-circle ml-2"></i>
+          <span class="font-heading">زندانیان سیاسی</span>
+        </a>
+      </li>
+
       <li class="nav-item">
-        <a class="nav-link" routerLink="/register">ثبت نام</a>
+        <a class="nav-link" routerLink="/register">ارسال مطلب</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/login">ورود</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/create-meeting">ایجاد ملاقات</a>
+        <a class="nav-link" routerLink="/login">گزارش اعتصاب</a>
       </li>
     </ul>
   </div>
 
 
-  <div class="search-container flexbox-item-grow " id="" *ngIf="authService.isLoggedIn()">
-      <input class="form-control w-100" type="search" placeholder="بگردید..." aria-label="Search">
+  <div class="search-container mr-auto flexbox-item-grow " id="">
+      <input class="form-control w-100" type="search" placeholder="جستجو..." aria-label="Search">
   </div>
 
-  <div class="mr-auto ml-1" id="navbarText">
+  <div class=" ml-1" id="navbarText">
     <ul class="navbar-nav mr-auto ">
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle mr-3" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -34,14 +52,6 @@
           <a class="dropdown-item" routerLink="/about-us">
             <i class="fa fa-info"></i>
             <span>درباره ما</span>
-          </a>
-          <a class="dropdown-item" routerLink="/conditions">
-            <i class="fa fa-gavel"></i>
-            <span>قوانین سایت</span>
-          </a>
-          <a class="dropdown-item" routerLink="/faq">
-            <i class="fa fa-question"></i>
-            <span>سؤالات متداول</span>
           </a>
           <a class="dropdown-item" routerLink="/contact-us">
             <i class="fa fa-envelope"></i>

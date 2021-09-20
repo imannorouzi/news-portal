@@ -29,3 +29,14 @@ table td{
   text-overflow: ellipsis;
   line-height: 3;
 }
+
+.post-details .post-text{
+  vertical-align: top;
+}
+
+.post-details .post-thumbnail{
+  margin: 0 0 10px 10px;
+  width: 100px;
+  float: right;
+}
+

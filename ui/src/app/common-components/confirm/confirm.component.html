@@ -1,4 +1,4 @@
-<modal #childModal [size]="'sm'" [zIndex]="10" [modalTitle]="title">
+<app-modal #childModal [size]="'sm'" [zIndex]="10" [modalTitle]="title">
 
   <ng-container class="app-modal-body">
 
@@ -12,4 +12,4 @@
           <button class="btn primary ml-2" (click)="confirm()" *ngIf="type==='CONFIRM'"> بله </button>
           <button class="btn secondary" (click)="hide()"> {{type === 'CONFIRM' ? 'نه' : 'بستن'}} </button>
   </ng-container>
-</modal>
+</app-modal>

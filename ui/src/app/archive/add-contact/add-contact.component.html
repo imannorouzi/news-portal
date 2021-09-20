@@ -1,6 +1,6 @@
-<modal [modalTitle]=" 'ثبت ' + 'مخاطب' + ' جدید' "
-       [size]="'sm'"
-       [zIndex]="11" #childModal>
+<app-modal [modalTitle]=" 'ثبت ' + 'مخاطب' + ' جدید' "
+           [size]="'sm'"
+           [zIndex]="11" #childModal>
   <ng-container class="app-modal-body">
 
       <div class="">
@@ -44,12 +44,12 @@
       <button type="button" class="btn secondary" (click)="hide()">لغو</button>
   </ng-container>
 
-</modal>
+</app-modal>
 <!-- Image Modal -->
-<modal #imageCropperModal
-       [modalTitle]="'اندازه عکس'"
-       [size]="'auto'"
-       [zIndex]="11">
+<app-modal #imageCropperModal
+           [modalTitle]="'اندازه عکس'"
+           [size]="'auto'"
+           [zIndex]="11">
   <ng-container class="app-modal-body ">
     <div class="text-center">
     <image-cropper #cropper
@@ -66,4 +66,4 @@
       <button type="button" class="btn primary" (click)="onImageCropperModalOk()">خوبه</button>
     </div>
   </ng-container>
-</modal>
+</app-modal>

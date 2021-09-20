@@ -1,14 +1,21 @@
-.audio {
-  background: #a1a9a2;
-  padding: 10px 10px 10px 10px;
-  border-radius: 11px;
-  color: white;
+.voices-container{
 }
 
-audio::-webkit-media-controls-panel {
-  border-color: #a1a9a2;
+.voice:hover {
+  background-color: #f1f1f1;
+}
+.voice:last-child {
+  border-bottom: none;
+}
+.voice {
+  padding: 5px;
+  cursor: pointer;
+  border-bottom: #ddeeff 1px dashed;
 }
 
-.title {
-  padding: 0 10px 10px 10px;
+.voice-open-icon:hover {
+  color: darkred;
+}
+.voice-open-icon{
+  line-height: 1.5;
 }

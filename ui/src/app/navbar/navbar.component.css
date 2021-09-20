@@ -1,11 +1,11 @@
 .navbar a{
-  color: #fff;
+  color: white;
 }
 .navbar a:hover{
   /*color:#ffcc00;*/
 }
 .navbar{
-  background-color: #f1f1f1;
+  background-color: #b0172b;
   /*background-color: #0070ba;*/
   padding: 0;
   border-bottom: #444;
@@ -96,8 +96,18 @@
   line-height: 1;
 }
 
+.nav-item.selected:before{
+  content: ' ';
+  width: 100%;
+  height: 4px;
+  background: white;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
 .nav-item{
   margin-left: 15px;
+  position: relative;
 }
 
 .toggle-item .nav-text{

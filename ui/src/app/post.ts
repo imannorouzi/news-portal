@@ -9,6 +9,8 @@ export class Post {
   imageUrl = '';
   created = new Date();
   tags: string[] = [];
+  style = 1;
+  author = '';
 
   constructor(
     id: number = 0,
@@ -19,7 +21,9 @@ export class Post {
     type: string = '',
     imageUrl: string = '',
     created: Date = new Date(),
-    tags: string[] = ['برچسب']) {
+    tags: string[] = ['برچسب'],
+    style: number = 1,
+    author:string = '') {
 
     this.id = id;
     this.title = title;
@@ -30,5 +34,7 @@ export class Post {
     this.imageUrl = imageUrl;
     this.created = created;
     this.tags = tags;
+    this.style = style;
+    this.author = author;
   }
 }

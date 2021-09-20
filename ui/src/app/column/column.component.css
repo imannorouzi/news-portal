@@ -1,12 +1,10 @@
 .column-wrapper {
   /*padding: 15px 0 15px 15px;*/
-  height: 100%;
 }
 .column-content {
   /*width: 400px;*/
   border: 1px solid  #f5f7fa;
   border-radius: 5px;
-  height: 100%;
   box-sizing: border-box;
   padding: 15px;
   background-color: white;

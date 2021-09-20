@@ -102,6 +102,8 @@ import { ColumnComponent } from './column/column.component';
 import { PostsByWriterComponent } from './column/posts-by-writer/posts-by-writer.component';
 import { VoiceNewsComponent } from './column/voice-news/voice-news.component';
 import { AudioPlayerComponent } from './audio-player/audio-player.component';
+import { ChartComponent } from './chart/chart.component';
+import {ChartsModule} from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -182,7 +184,8 @@ import { AudioPlayerComponent } from './audio-player/audio-player.component';
     ColumnComponent,
     PostsByWriterComponent,
     VoiceNewsComponent,
-    AudioPlayerComponent
+    AudioPlayerComponent,
+    ChartComponent
   ],
   imports: [
     BrowserModule,
@@ -203,7 +206,8 @@ import { AudioPlayerComponent } from './audio-player/audio-player.component';
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     ZXingScannerModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    ChartsModule
   ],
   exports: [
   ],

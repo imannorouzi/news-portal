@@ -43,10 +43,10 @@
             </div>
 
             <!-- Image Modal -->
-            <modal #imageCropperModal
-                   [modalTitle]="'Edit Image Size'"
-                   [zIndex]="5"
-                   [maximizable]="true">
+            <app-modal #imageCropperModal
+                       [modalTitle]="'Edit Image Size'"
+                       [zIndex]="5"
+                       [maximizable]="true">
               <ng-container class="app-modal-body">
                 <image-cropper #cropper
                          [imageChangedEvent]="imageChangedEvent"
@@ -63,7 +63,7 @@
                   <button type="button" class="btn primary" (click)="imageCropperModal.hide()">OK</button>
                 </div>
               </ng-container>
-            </modal>
+            </app-modal>
 
             <!--Times-->
             <div class="form-group row " *ngFor="let time of event.times; let i = index" [attr.data-index]="i">

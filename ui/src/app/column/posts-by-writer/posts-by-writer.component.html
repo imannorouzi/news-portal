@@ -1,6 +1,12 @@
 <div class="posts-container">
-  <h3 class="font-heading">کاوه آهنگر</h3>
-  <div class="post flexbox-parent-row" *ngFor="let post of posts">
-    <span class="flexbox-item-grow">{{post.title}}</span> <i class="fa fa-external-link post-open-icon"></i>
+  <h3 class="font-heading">مقالات</h3>
+  <div class="post" *ngFor="let post of posts">
+    <div class=" flexbox-parent-row" >
+      <span class="flexbox-item-grow">{{post.title}}</span> <i class="fa fa-external-link post-open-icon"></i>
+    </div>
+
+    <div class="font-small mb-2 ">
+      <a [class]="'font-heading  author ml-2' " [href]="'/author/' + post.author">{{post.author}}</a>
+    </div>
   </div>
 </div>

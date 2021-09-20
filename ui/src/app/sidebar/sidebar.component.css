@@ -1,7 +1,7 @@
 .sidebar-wrapper{
-  background: #f0d489;
+  background: #f2ffca;
   padding: 15px 0;
-  box-shadow: 0 3px 8px rgba(0,0,0,.25);
+  box-shadow: 0 3px 8px #eed596;
   width: 200px;
 }
 
@@ -42,8 +42,11 @@ ul li {
 ul .sidebar-item{
   cursor: pointer;
 }
+ul .sidebar-item.selected{
+  background-color: #eed596;
+}
 ul .sidebar-item:hover{
-  background-color: #eccf86;
+  background-color: #e1ce9d;
 }
 ul .sidebar-item.selected a{
   font-weight: 900;

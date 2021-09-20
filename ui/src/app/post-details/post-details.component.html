@@ -1,15 +1,20 @@
-<h5 class="text-center">{{post.title}}</h5>
+<h3 class="text-center font-heading">{{post.title}}</h3>
 
-<div class="panel text-center font-weight-bold mb-3" >
+<div class=" panel text-right text-muted font-small mb-3" >
   <i class="fa fa-calendar ml-2"></i>
   <span> {{dateService.greToPersian(post.created, true)}}  </span>
 </div>
 
+<div class="d-table post-details" >
 
-<div class="post-content">
-  <p>{{post.excerpt}}</p>
+  <img class=" post-thumbnail" [src]="post.imageUrl" alt=""/>
+  <div class=" post-text" >
+    <div class="post-content">
+      <p>{{post.content}}</p>
+    </div>
+  </div>
+
 </div>
 
-<hr>
 
-<comments #comments [eventId]="post ? post.id : -1"></comments>
+<app-comments #comments [postId]="post ? post.id : -1"></app-comments>

@@ -6,9 +6,9 @@
   <div [class]="'modal-dialog modal-' + size + ' ' + ( expand ? 'h-80' : '')">
     <div class="modal-content flexbox-parent">
 
-      <div class="modal-header">
+      <div class="modal-header flexbox-parent-row">
         <i class="fa fa-remove action-icon" (click)="searchModal.hide()"></i>
-        <h4 class="modal-title pull-left">{{modalTitle}}</h4>
+        <h4 class="modal-title text-left font-heading flexbox-item-grow">{{modalTitle}}</h4>
       </div>
 
       <div class="modal-body scroll-auto " #scrollPane>

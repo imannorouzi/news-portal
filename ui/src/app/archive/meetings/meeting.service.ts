@@ -43,7 +43,7 @@ export class MeetingService {
       /*date: "Apr 6, 2021, 2:00:00 PM"
         dateString: "چهارشنبه، 18 فروردین 1400 از 13:37 تا 13:37"
         endTime: "Apr 7, 2021, 3:37:45 AM"
-        eventId: 412
+        postId: 412
         id: 413
         startTime: "Apr 7, 2021, 3:37:45 AM"*/
       ed.date = new Date(ed.date + ' UTC');

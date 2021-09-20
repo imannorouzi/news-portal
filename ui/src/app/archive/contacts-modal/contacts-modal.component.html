@@ -1,9 +1,9 @@
 <!-- import contact Modal -->
-<modal #selectContacts
-       [modalTitle]="'دعوت مخاطبان'"
-       [zIndex]="10"
-       [size]="'lg'"
-       [maximizable]="true">
+<app-modal #selectContacts
+           [modalTitle]="'دعوت مخاطبان'"
+           [zIndex]="10"
+           [size]="'lg'"
+           [maximizable]="true">
   <ng-container class="app-modal-body">
 
     <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -38,4 +38,4 @@
       <button type="button" class="btn secondary" (click)="selectContacts.hide()">لغو</button>
     </div>
   </ng-container>
-</modal>
+</app-modal>

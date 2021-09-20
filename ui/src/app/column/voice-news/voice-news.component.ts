@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Track } from 'ngx-audio-player';
-
+import {Post} from '../../post';
+import {DummyData} from '../../dummyData';
+import {AudioService} from "../../audio-player/audio.service";
+import {DateService} from "../../utils/date.service";
 
 @Component({
   selector: 'app-voice-news',
@@ -9,31 +11,19 @@ import { Track } from 'ngx-audio-player';
 })
 export class VoiceNewsComponent implements OnInit {
 
-  constructor() { }
+  posts: Post[];
 
-  msaapDisplayTitle = true;
-  msaapDisplayPlayList = true;
-  msaapPageSizeOptions = [2, 4, 6];
-  msaapDisplayVolumeControls = true;
-  msaapDisplayRepeatControls = true;
-  msaapDisplayArtist = false;
-  msaapDisplayDuration = false;
-  msaapDisablePositionSlider = true;
-
-// Material Style Advance Audio Player Playlist
-  msaapPlaylist: Track[] = [
-    {
-      title: 'Audio One Title',
-      link: 'assets/files/audio/1.mp3',
-      artist: 'Audio One Artist',
-      duration: 20
-    },
-  ];
+  constructor( private audioService: AudioService,
+               public dateService: DateService) { }
 
   ngOnInit(): void {
+    this.posts = DummyData.POSTS;
   }
 
   onEnded($event: string) {
+  }
 
+  voiceClicked() {
+    this.audioService.playAudio.next('assets/files/audio/bubble.mp3');
   }
 }

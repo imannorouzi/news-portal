@@ -1,14 +1,13 @@
-<modal [modalTitle]=" '' "
-       [size]="'lg'"
-       [zIndex]="11" #childModal>
+<app-modal [modalTitle]=" post ? post.type : '' "
+           [size]="'lg'"
+           [zIndex]="11" #childModal>
 
   <ng-container class="app-modal-body" *ngIf="post">
-    <app-meeting-details [event]="post" ></app-meeting-details>
+    <app-post-details [post]="post"></app-post-details>
   </ng-container>>
 
   <ng-container class="app-modal-footer">
-    <button class="btn ml-2 danger" > لغو ملاقات </button>
-    <button class="btn secondary " (click)="hide()"> بستن </button>
+    <button class="btn secondary app-button " (click)="hide()"> بستن </button>
   </ng-container>
 
-</modal>
+</app-modal>

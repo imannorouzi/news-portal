@@ -1,15 +1,15 @@
-<div class="audio-player-wrapper">
+<div class="audio-player-wrapper" *ngIf="show">
   <div id="audio-player-container" class="flexbox-parent-row">
-    <button (click)="start()" id="play-icon"><i [class]="'fa ' + (isPlaying() ? 'fa-pause' : 'fa-play')"></i></button>
-    <span id="current-time" class="font-heading time">{{getCurrentTime()}}</span>
+    <button (click)="toggle()" id="play-icon"><i [class]="'fa ' + (isPlaying() ? 'fa-pause' : 'fa-play')"></i></button>
+    <span id="current-time" class="font-heading time">{{timeString}}</span>
     <div class="position-relative slider flexbox-item-grow">
       <input type="range" id="seek-slider" [max]="trackLength" [value]="getCurrentTime()" class="w-100">
       <div class="bars">
-        <div class="bar" *ngFor="let bar of bars; let i=index"
-             [ngStyle]="getBarStyle(i)"></div>
+        <div class="bar" *ngFor="let bar of bars; let i=index" [ngStyle]="getBarStyle(i)"></div>
       </div>
     </div>
-    <span id="duration" class="time font-heading">{{trackLength}}</span>
+    <span id="duration" class="time font-heading">{{trackLengthString}}</span>
+    <button (click)="hide()" id="close-icon"><i class="fa fa-remove"></i></button>
   </div>
 
 </div>

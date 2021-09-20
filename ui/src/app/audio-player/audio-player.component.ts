@@ -1,4 +1,5 @@
 import {Component, ElementRef, OnInit, Output, ViewChild, EventEmitter, HostListener} from '@angular/core';
+import {AudioService} from './audio.service';
 
 @Component({
   selector: 'app-audio-player',
@@ -8,17 +9,25 @@ import {Component, ElementRef, OnInit, Output, ViewChild, EventEmitter, HostList
 export class AudioPlayerComponent implements OnInit {
 
   @Output() trackLengthEmitter: EventEmitter<any> = new EventEmitter();
-  constructor() { }
+  constructor( private audioService: AudioService) { }
 
   bars = new Array(255);
   analyser;
   audioDataArray;
   audio: HTMLAudioElement;
   trackLength = 0;
+  trackLengthString = '';
+
+  show = false;
 
   ngOnInit(): void {
     // this.audioElement.nativeElement.play();
-    this.loadAudio('assets/files/audio/1.mp3');
+
+    this.audioService.playAudio
+      .subscribe( url => {
+        this.loadAudio(url);
+        this.show = true;
+      });
   }
 
   loadAudio(url): void {
@@ -35,6 +44,7 @@ export class AudioPlayerComponent implements OnInit {
     this.audio.addEventListener('loadedmetadata', () => {
       this.trackLength = this.audio.duration;
       this.trackLengthEmitter.emit(this.audio.duration);
+      this.trackLengthString = this.timeToString(this.trackLength);
     });
 
     // Make a this.audio node
@@ -47,6 +57,8 @@ export class AudioPlayerComponent implements OnInit {
       const source = context.createMediaElementSource(this.audio);
       source.connect(this.analyser);
       this.analyser.connect(context.destination);
+
+      this.start();
     });
     this.audio.src = url;
     // this.audio.src = URL.createObjectURL(file);
@@ -78,9 +90,11 @@ export class AudioPlayerComponent implements OnInit {
   }
 
   getBarStyle(i: number): any {
+    const height = this.audioDataArray && i < this.audioDataArray.length ?
+      Math.floor(this.audioDataArray[i] / 6)  : 1;
     return {
-      height: (this.audioDataArray && i < this.audioDataArray.length ?
-        Math.floor(this.audioDataArray[i] / 6)  : 1) + 'px'
+      height: height + 'px',
+      marginBottom: ( height / -2) + 'px'
     };
   }
 
@@ -96,13 +110,33 @@ export class AudioPlayerComponent implements OnInit {
     return this.audio ? Math.floor(this.audio.currentTime) : 0;
   }
 
-  getTimeString(): string {
-    const date = new Date(null);
-    date.setSeconds(this.getCurrentTime()); // specify value for SECONDS here
-    return date.toISOString().substr(11, 8);
+  get timeString(): string {
+    return this.timeToString(this.getCurrentTime());
+  }
+
+  timeToString(time: number): string {
+    const hour = Math.floor(time / 3600);
+    const minute = Math.floor(time / 60);
+    const second = Math.floor( time % 60 );
+    return (hour > 0 ? hour + ':' : '') +
+      (minute > 9 ? '' + minute + ':' : '0' + minute + ':') +
+      (second > 9 ? '' + second : '0' + second );
   }
 
   setCurrentTime(time: number): void {
     if (this.audio) { this.audio.currentTime = time; }
+  }
+
+  toggle() {
+    if (this.isPlaying()) {
+      this.pause();
+    } else {
+      this.start();
+    }
+  }
+
+  hide() {
+    this.pause();
+    this.show = false;
   }
 }

@@ -1,6 +1,6 @@
-<modal [modalTitle]=" '' "
-       [size]="'lg'"
-       [zIndex]="11" #childModal>
+<app-modal [modalTitle]=" '' "
+           [size]="'lg'"
+           [zIndex]="11" #childModal>
 
   <ng-container class="app-modal-body" *ngIf="event">
     <app-meeting-details [event]="event" ></app-meeting-details>
@@ -11,4 +11,4 @@
     <button class="btn secondary " (click)="hide()"> بستن </button>
   </ng-container>
 
-</modal>
+</app-modal>

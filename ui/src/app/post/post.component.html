@@ -1,12 +1,17 @@
 <div class="">
-  <div [class]="'post-item  ' + post.status" (click)="onClicked($event, post)">
+  <div [class]="'post-item  ' + post.status + ' style-' + post.style" (click)="onClicked($event, post)">
 
-    <div class="d-table">
+    <h3 class="font-heading text-center w-100 title-1 font-weight-bolder mb-2">{{post.title}}</h3>
+    <div [class]="'d-table'">
 
       <img class=" post-thumbnail" [src]="post.imageUrl" alt=""/>
       <div class=" post-text" >
         <div class=" text-right post-title-wrapper ">
-          <span [class]="'font-heading post-title mr-2 ' + (post.title ? 'font-weight-bold' : 'text-muted')">{{post.title ? post.title : 'بدون عنوان'}}</span>
+          <span [class]="'font-heading post-title title-2 ml-2 ' + (post.title ? 'font-weight-bold' : 'text-muted')">{{post.title ? post.title : 'بدون عنوان'}}</span>
+          <div class="font-small mb-2 ">
+            <a [class]="'font-heading  author ml-2' " [href]="'/author/' + post.author">{{post.author}}</a>
+            <a class="font-heading post-type" [href]="'/type/' + post.type">{{post.type}}</a>
+          </div>
         </div>
 
         <div class="post-content">
@@ -17,11 +22,15 @@
     </div>
 
     <div class="post-footer flexbox-parent-row">
-      <span class="text-muted font-small font-heading flexbox-item-grow">۲ نظر</span>
-      <span class="text-muted font-small font-heading">{{dateService.greToPersian(post.created, true)}}</span>
+      <span class="text-muted font-small font-heading "><i class="fa fa-comment"></i> 2</span>
+      <span class="flexbox-item-grow ml-3 mr-3 font-small text-muted tags">
+        <a class="tag font-heading ml-2" *ngFor="let tag of post.tags">#{{tag}}</a>
+      </span>
+      <span class="text-muted font-small font-heading">
+        <a (click)="$event.stopPropagation()" href="/post-2" target="_blank"> <i class="fa fa-external-link ml-2 open-post-tab"></i></a>
+        <span>{{dateService.greToPersian(post.created, true)}} </span>
+      </span>
     </div>
-
-
 
   </div>
 </div>
