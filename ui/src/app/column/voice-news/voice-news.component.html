@@ -2,15 +2,23 @@
   <h3 class="font-heading">تحلیل خبری</h3>
 
   <div (click)="voiceClicked()" class="voice" *ngFor="let post of posts">
-    <div class=" flexbox-parent-row" >
-      <span class="flexbox-item-grow">{{post.title}}</span> <i class="fa fa-play voice-open-icon"></i>
-    </div>
 
-    <div class="font-small mb-2 ">
-      <a [class]="'font-heading  author ml-2' " [href]="'/author/' + post.author">{{post.author}}</a>
-      <span class="text-muted font-small font-heading">
+    <div class=" flexbox-parent-row" >
+      <div class="flexbox-item-grow">
+        <span class="flexbox-item-grow">{{post.title}}</span>
+        <div class="font-small mb-2 ">
+          <a [class]="'font-heading  author ml-2' " [href]="'/author/' + post.author">{{post.author}}</a>
+          <span class="text-muted font-small font-heading">
         <span>{{dateService.greToPersian(post.created, true)}} </span>
       </span>
+        </div>
+      </div>
+
+      <div class="voice-thumbnail-container">
+        <img [src]="post.imageUrl" class="voice-thumbnail"/>
+        <i class="fa fa-play voice-open-icon"></i>
+      </div>
     </div>
+
   </div>
 </div>

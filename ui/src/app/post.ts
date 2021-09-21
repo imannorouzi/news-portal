@@ -1,3 +1,5 @@
+import {PostSection} from "./post-section";
+
 export class Post {
   id = -1;
   title = '';
@@ -11,6 +13,8 @@ export class Post {
   tags: string[] = [];
   style = 1;
   author = '';
+  categories: string[] = [];
+  postSections: PostSection[] = [];
 
   constructor(
     id: number = 0,
@@ -23,7 +27,9 @@ export class Post {
     created: Date = new Date(),
     tags: string[] = ['برچسب'],
     style: number = 1,
-    author:string = '') {
+    author: string = '',
+    categories: string[] = [],
+    postSections: PostSection[] = []) {
 
     this.id = id;
     this.title = title;
@@ -36,5 +42,7 @@ export class Post {
     this.tags = tags;
     this.style = style;
     this.author = author;
+    this.categories = categories;
+    this.postSections = postSections;
   }
 }

@@ -1,0 +1,82 @@
+.post-section-container{
+  border:0 solid;
+  margin: 5px 0;
+  animation: fade-in 2s ease;
+  background-color: white;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  height: 40px;
+  background-color: #444442;
+}
+
+li {
+  float: right;
+}
+
+li i{
+  margin-top: -2px;
+}
+
+li .tool {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 4px 15px;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 5px;
+}
+
+li .tool:hover {
+  box-shadow: 0 4px 8px 0 rgba(241, 224, 186, 0.2), 0 6px 20px 0 rgba(241, 224, 186, 0.19);
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: 5px;
+}
+
+li .tool .fa{
+  line-height: 2;
+}
+
+select{
+  padding: 5px 10px;
+  line-height: 1;
+  text-align-last: center;
+}
+
+.tool{
+  position: relative;
+}
+
+.border-separator-right{
+ border-right: 1px solid white;
+}
+
+.border-separator-left{
+  border-left: 1px solid white;
+}
+
+.tool-drop-down{
+  position: absolute;
+  background: white;
+  border: 1px solid #333;
+  color: #18101f;
+  width: 100%;
+  top: 100%;
+  left:0;
+}
+
+.option-container:hover{
+  background-color: #524455;
+  cursor: default;
+}
+
+.select-container{
+  margin: 5px;
+}

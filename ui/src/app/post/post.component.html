@@ -7,10 +7,10 @@
       <img class=" post-thumbnail" [src]="post.imageUrl" alt=""/>
       <div class=" post-text" >
         <div class=" text-right post-title-wrapper ">
-          <span [class]="'font-heading post-title title-2 ml-2 ' + (post.title ? 'font-weight-bold' : 'text-muted')">{{post.title ? post.title : 'بدون عنوان'}}</span>
+          <h4 [class]="'font-heading post-title title-2 ml-2 mb-2 ' + (post.title ? 'font-weight-bold' : 'text-muted')">{{post.title ? post.title : 'بدون عنوان'}}</h4>
           <div class="font-small mb-2 ">
             <a [class]="'font-heading  author ml-2' " [href]="'/author/' + post.author">{{post.author}}</a>
-            <a class="font-heading post-type" [href]="'/type/' + post.type">{{post.type}}</a>
+            <a *ngFor="let category of post.categories" class="font-heading post-category" [href]="'/category/' + category">{{category}} </a>
           </div>
         </div>
 

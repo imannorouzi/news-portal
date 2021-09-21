@@ -99,11 +99,12 @@
   font-weight: bold;
   cursor: pointer;
 }
-.post-type{
+.post-category{
   padding: 2px 10px;
   background: #e0e0e0;
   border-radius: 3px;
   color: #222;
+  margin-right: 4px;
 }
 @keyframes post-item-hover {
   0% {

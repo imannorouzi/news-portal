@@ -16,7 +16,8 @@ export class DummyData {
       created: new Date(),
       tags: ['برچسب'],
       style: 1,
-      author: 'کاوه آهنگر'
+      author: 'کاوه آهنگر',
+      categories: ['خبر', 'تحلیل', 'فلسفه']
     }, {
       id: 1,
       title: 'در حمایت از مبارزات زنان شجاع و جوانان دلیر افغانستان',
@@ -29,7 +30,8 @@ export class DummyData {
       created: new Date(),
       tags: ['برچسب', 'افغانستان', 'طالبان'],
       style: 2,
-      author: 'کاوه آهنگر'
+      author: 'کاوه آهنگر',
+      categories: ['خبر', 'تحلیل', 'فلسفه']
     }, {
       id: 1,
       title: 'نه به جمهوری اسلامی هم استراتژی هم تاکتیک!',
@@ -42,7 +44,8 @@ export class DummyData {
       created: new Date(),
       tags: ['برچسب'],
       style: 2,
-      author: 'کاوه آهنگر'
+      author: 'کاوه آهنگر',
+      categories: ['خبر', 'تحلیل', 'فلسفه']
     }, {
       id: 1,
       title: 'اقتصاد سیاسی کشتار ۶۷ – راه کار سوسیالیستی',
@@ -55,7 +58,8 @@ export class DummyData {
       created: new Date(),
       tags: ['برچسب'],
       style: 2,
-      author: 'کاوه آهنگر'
+      author: 'کاوه آهنگر',
+      categories: ['خبر', 'تحلیل', 'فلسفه']
     },
   ];
 

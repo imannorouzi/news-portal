@@ -1,0 +1,59 @@
+<div class="post-section-container" [ngStyle]="postSection.style">
+  <ul>
+    <li (click)="removeClicked.emit($event)">
+      <div class="tool tooltipText" data-toggle="tooltip" data-placement="top" title="close">
+        <i class="fa fa-remove"></i>
+      </div>
+    </li>
+    <li>
+      <div class="select-container">
+        <select [(ngModel)]="postSection.type">
+          <option class="option-container" selected value="">خالی</option>
+          <option class="option-container" value="TEXT">متن</option>
+          <option class="option-container" value="VIDEO">ویدیو</option>
+          <option class="option-container" value="AUDIO">صدا</option>
+          <option value="FILE">فایل</option>
+        </select>
+      </div>
+    </li>
+    <li (click)="copyClicked.emit($event)">
+      <div class="tool" data-toggle="tooltip" data-placement="top" title="copy">
+        <i class="fa fa-copy"></i>
+      </div>
+    </li>
+    <li click-zone (clickOutside)="clickOutside($event)" (click)="borderDropDownOpened = !borderDropDownOpened">
+      <div class="tool" data-toggle="tooltip" data-placement="top" title="border">
+        <i class="fa fa-square-o"></i>
+        <div *ngIf="borderDropDownOpened" class="tool-drop-down ltr">
+          <div class="option-container" (click)="borderChanged('0px', $event)"><span>0 px</span></div>
+          <div class="option-container" (click)="borderChanged('1px', $event)"><span>1 px</span></div>
+          <div class="option-container" (click)="borderChanged('2px', $event)"><span>2 px</span></div>
+          <div class="option-container" (click)="borderChanged('3px', $event)"><span>3 px</span></div>
+        </div>
+      </div>
+    </li>
+    <li>
+      <div class="tool" data-toggle="tooltip" data-placement="top" title="border color">
+        <i class="fa fa-paint-brush" [(colorPicker)]="postSection.style.borderColor"></i>
+      </div>
+    </li>
+    <li>
+      <div class="tool" data-toggle="tooltip" data-placement="top" title="background color">
+        <i class="fa fa-square" [(colorPicker)]="postSection.style.backgroundColor"></i>
+      </div>
+    </li>
+  </ul>
+
+  <div class="bg-while" [hidden]="postSection.type !== 'TEXT'">
+    <ckeditor [editor]="Editor" [(ngModel)]="postSection.data.text" (ready)="onReady($event)"></ckeditor>
+  </div>
+  <div class="" *ngIf="postSection.type === 'VIDEO'">
+<!--    <img [src]="postSection.data.imageUrl" class="mb-2"/>-->
+    <video width="100%" height="300" controls>
+      <source src="/assets/images/smoking.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="" *ngIf="postSection.type === 'FILE'">
+  <app-upload-file></app-upload-file>
+  </div>
+</div>

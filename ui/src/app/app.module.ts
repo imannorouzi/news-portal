@@ -104,6 +104,8 @@ import { VoiceNewsComponent } from './column/voice-news/voice-news.component';
 import { AudioPlayerComponent } from './audio-player/audio-player.component';
 import { ChartComponent } from './chart/chart.component';
 import {ChartsModule} from 'ng2-charts';
+import {PostSectionComponent} from "./post-section/post-section.component";
+import {CreateArticleComponent} from "./create-article/create-article.component";
 
 @NgModule({
   declarations: [
@@ -185,7 +187,9 @@ import {ChartsModule} from 'ng2-charts';
     PostsByWriterComponent,
     VoiceNewsComponent,
     AudioPlayerComponent,
-    ChartComponent
+    ChartComponent,
+    PostSectionComponent,
+    CreateArticleComponent
   ],
   imports: [
     BrowserModule,

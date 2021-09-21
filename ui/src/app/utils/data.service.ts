@@ -6,6 +6,7 @@ import {environment} from '../../environments/environment';
 import {Venue} from '../archive/venue';
 import {AuthService} from './auth.service';
 import {catchError, map} from 'rxjs/operators';
+import {Post} from '../post';
 
 const serverUrl = environment.serverUrl;
 
@@ -35,32 +36,6 @@ export class DataService {
     const message = error.error || error || '';
     return throwError(message);
   }
-
-  getTinyEvents():  Observable<any> {
-    const apiURL = serverUrl + '/get-events';
-    return this.http.get(apiURL)
-      .pipe(map(this.extractData))
-      .pipe(catchError(this.handleError));
-  }
-
-  getMeetings(params):  Observable<any> {
-    const apiURL = serverUrl + '/get-posts';
-    return this.http.get(apiURL, {
-      params: params,
-    })
-      .pipe(map(this.extractData))
-      .pipe(catchError(this.handleError));
-  }
-
-  getContactEventMeeting(uuid: string) {
-    const apiURL = serverUrl + '/get-contact-post-meeting/' + uuid;
-    return this.http.get(apiURL, {
-      params: {},
-    })
-      .pipe(map(this.extractData))
-      .pipe(catchError(this.handleError));
-  }
-
   getTokens(date: Date):  Observable<any> {
     const apiURL = serverUrl + '/get-tokens';
     return this.http.get(apiURL, {
@@ -69,163 +44,11 @@ export class DataService {
       .pipe(catchError(this.handleError));
   }
 
-  getMeeting(id: any) {
-    const apiURL = serverUrl + '/get-meeting';
-    return this.http.get(apiURL, {
-      params: {meetingId: id}
-    }).pipe(map(this.extractData))
-      .pipe(catchError(this.handleError));
-  }
-
-  getMeetingByUUID(uuid: any, action: string) {
-    const apiURL = serverUrl + '/get-meeting-by-uuid';
-    return this.http.get(apiURL, {
-      params: {uuid: uuid, action: action}
-    }).pipe(map(this.extractData))
-      .pipe(catchError(this.handleError));
-  }
-
-  getContacts( hint: string = ''):  Observable<any> {
-    const apiURL = serverUrl + '/get-contacts';
-    return this.http.get(apiURL, {
-      params: {hint: hint}
-    }).pipe(map(this.extractData))
-      .pipe(catchError(this.handleError));
-  }
-
-  getReception(text: string):  Observable<any> {
-    const apiURL = serverUrl + '/get-reception';
-    return this.http.get(apiURL, {
-      params: {uuid: text},
-    })
-      .pipe(map(this.extractData))
-      .pipe(catchError(this.handleError));
-  }
-
   getUsers( hint: string = ''):  Observable<any> {
     const apiURL = serverUrl + '/get-users';
     return this.http.get(apiURL, {
       params: {hint: hint}
     }).pipe(map(this.extractData))
-      .pipe(catchError(this.handleError));
-  }
-
-  getEmployees( hint: string = '', role: string = ''):  Observable<any> {
-    const apiURL = serverUrl + '/get-employees';
-    return this.http.get(apiURL, {
-      params: {hint: hint, role: role}
-    }).pipe(map(this.extractData))
-      .pipe(catchError(this.handleError));
-  }
-
-  updateEmployee(emp: any) {
-    const apiURL = serverUrl + '/update-employee';
-
-    const employee = Object.assign({}, emp);
-    const formData: FormData = new FormData();
-    if (employee.image ) {
-      formData.append('file', this.dataURItoBlob(employee.image), employee.fileName);
-      formData.append('filename', employee.fileName);
-      employee.image = null;
-    } else {
-      formData.append('file', null);
-      formData.append('filename', '');
-    }
-
-    formData.append('employee', JSON.stringify(employee));
-
-    const hdrs = new HttpHeaders();
-    hdrs.append('Content-Type', 'multipart/form-data');
-    hdrs.append('Accept', 'application/json');
-    return this.http.post(`${apiURL}`, formData, {headers: hdrs})
-      .pipe(map(this.extractData))
-      .pipe(catchError(this.handleError));
-  }
-
-  deleteEmployee(id: number) {
-    const apiURL = serverUrl + '/delete-employee';
-    const headers = new HttpHeaders({
-      'Accept': 'application/json'
-    });
-    return this.http.post(`${apiURL}`, id, {headers: headers});
-  }
-
-  getVenues( hint: string = ''):  Observable<any> {
-    const apiURL = serverUrl + '/get-venues';
-    return this.http.get(apiURL, {
-      params: {hint: hint}
-    }).pipe(map(this.extractData))
-      .pipe(catchError(this.handleError));
-  }
-
-  deleteVenue(id: number) {
-    const apiURL = serverUrl + '/delete-venue';
-    const headers = new HttpHeaders({
-      'Content-Type': 'text/json',
-      'Accept': 'application/json'
-    });
-    return this.http.post(`${apiURL}`, id, {headers: headers})
-      .pipe(map(this.extractData))
-      .pipe(catchError(this.handleError));
-  }
-
-  updateVenue(venue: Venue) {
-    const apiURL = serverUrl + '/update-venue';
-
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    });
-    return this.http.post(`${apiURL}`, JSON.stringify(venue), {headers: headers})
-      .pipe(map(this.extractData))
-      .pipe(catchError(this.handleError));
-
-  }
-
-
-  postTinyEvent(event: any) {
-
-    const apiURL = serverUrl + '/create-tiny-post';
-
-    if (event.image) {
-      const file: File = event.image;
-      const formData: FormData = new FormData();
-      formData.append('file', file, file.name);
-      formData.append('contact', JSON.stringify(event));
-      formData.append('filename', JSON.stringify(event));
-
-      const headers = new HttpHeaders({
-        'Content-Type': 'multipart/form-data',
-        'Accept': 'application/json'
-      });
-      return this.http.post(`${apiURL}`, formData, {headers: headers})
-        .pipe(map(this.extractData))
-        .pipe(catchError(this.handleError));
-    }
-  }
-
-  updateContact(con: any) {
-    const apiURL = serverUrl + '/update-contact';
-
-    const contact = Object.assign({}, con);
-    const formData: FormData = new FormData();
-    if (contact.image ) {
-      formData.append('file', this.dataURItoBlob(contact.image), contact.fileName);
-      formData.append('filename', contact.fileName);
-      contact.image = null;
-      contact.imageUrl = null;
-    } else {
-      formData.append('file', null);
-      formData.append('filename', '');
-    }
-
-    formData.append('contact', JSON.stringify(contact));
-
-    const hdrs = new HttpHeaders();
-    hdrs.append('Content-Type', 'multipart/form-data');
-    hdrs.append('Accept', 'application/json');
-    return this.http.post(`${apiURL}`, formData, {headers: hdrs})
-      .pipe(map(this.extractData))
       .pipe(catchError(this.handleError));
   }
 
@@ -249,27 +72,6 @@ export class DataService {
       .pipe(catchError(this.handleError));
   }
 
-  deleteContact(id: number) {
-    const apiURL = serverUrl + '/delete-contact';
-    const headers = new HttpHeaders({
-      'Accept': 'application/json'
-    });
-    return this.http.post(`${apiURL}`, id, {headers: headers});
-
-  }
-
-  postMeeting(event: any) {
-    const apiURL = serverUrl + '/create-meeting';
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': 'Bearer ' + this.jwtHeaders
-    });
-    return this.http.post(`${apiURL}`, JSON.stringify(event), {headers: headers})
-      .pipe(map(this.extractData))
-      .pipe(catchError(this.handleError));
-  }
-
   getComments(eventId, page):  Observable<any> {
       const apiURL = serverUrl + '/get-comments/' + eventId + '/' + page;
       return this.http.get(apiURL, {}).pipe(map(this.extractData))
@@ -282,14 +84,6 @@ export class DataService {
       return this.http.get(apiURL, {
         params: {event_id: eventId, page: page, uuid: uuid}
       });
-  }
-
-  getDatesByPeriod(startDate, endDate):  Observable<any> {
-    const apiURL = serverUrl + '/get-meeting-dates';
-    return this.http.get(apiURL, {
-      params: {startDate: startDate.toUTCString(), endDate: endDate.toUTCString()}
-    }).pipe(map(this.extractData))
-      .pipe(catchError(this.handleError));
   }
 
   deleteComment(comment: any) {
@@ -318,21 +112,6 @@ export class DataService {
     }
 
 
-  }
-
-
-  updateContactStatus(contactEventId: number, status: string) {
-    let apiURL;
-
-    const headers = new HttpHeaders({
-      'Content-Type': 'text/json',
-      'Accept': 'application/json'
-    });
-
-    apiURL = serverUrl + '/update-contact-status';
-    return this.http.post(`${apiURL}`, JSON.stringify({contactEventId: contactEventId, status: status}), {headers: headers})
-      .pipe(map(this.extractData))
-      .pipe(catchError(this.handleError));
   }
 
   contactUs(message: { name: any; email: any; title: any; message: any }) {
@@ -367,6 +146,52 @@ export class DataService {
     }
 
     return new Blob([ia], {type: mimeString});
+  }
+
+  addPost(post: Post): Observable<Post> {
+    const apiURL = serverUrl + '/new-post';
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    });
+    return this.http.post(`${apiURL}`, post, {headers: headers})
+      .pipe(map(this.extractData))
+      .pipe(catchError(this.handleError));
+  }
+
+  getPost(id: string): Observable<any> {
+    const url = '/assets/data/post.json';
+    // const url = '/api/' + id;
+    // const url = `${this.heroesUrl}/${id}`;
+    return this.http.get(url)
+      .pipe(map(this.extractData))
+      .pipe(catchError(this.handleError));
+  }
+
+  getPosts(): Observable<any> {
+    const url = '/assets/data/post.json';
+    return this.http.get(url)
+      .pipe(map(this.extractData))
+      .pipe(catchError(this.handleError));
+  }
+
+  uploadFile(file: File) {
+    const apiURL = serverUrl + '/uploadFile';
+
+    const formData: FormData = new FormData();
+    if (file) {
+      formData.append('file', (file), file.name);
+      formData.append('filename', file.name);
+    } else {
+      formData.append('file', null);
+      formData.append('filename', '');
+    }
+    const hdrs = new HttpHeaders();
+    hdrs.append('Content-Type', 'multipart/form-data');
+    hdrs.append('Accept', 'application/json');
+    return this.http.post(`${apiURL}`, formData, {headers: hdrs})
+      .pipe(map(this.extractData))
+      .pipe(catchError(this.handleError));
   }
 
 }
