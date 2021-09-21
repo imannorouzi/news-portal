@@ -2,15 +2,14 @@ import {Component, ElementRef, EventEmitter, NgZone, OnInit, Output, ViewChild} 
 import {ModalComponent} from '../common-components/ng-modal/modal.component';
 import {DataService} from '../utils/data.service';
 import {SpinnerComponent} from '../spinner/spinner.component';
-import {AlertService} from '../alert.service';
+import {AlertService} from '../utils/alert.service';
 import {User} from '../user';
 import {MapsAPILoader} from '@agm/core';
 import {AuthService} from '../utils/auth.service';
-import {TEHRAN} from '../archive/venue';
 import {ImageCroppedEvent, ImageCropperComponent} from 'ngx-image-cropper';
 
 @Component({
-  selector: 'profile',
+  selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
@@ -29,9 +28,6 @@ export class ProfileComponent implements OnInit {
 
 
   imageChangedEvent: any = '';
-
-  mapLat: number = TEHRAN.lat;
-  mapLng: number = TEHRAN.lng;
 
   public zoom: number;
 
@@ -71,8 +67,6 @@ export class ProfileComponent implements OnInit {
           this.user.latitude = place.geometry.location.lat();
           this.user.longitude = place.geometry.location.lng();
           this.zoom = 12;
-          this.mapLat = place.geometry.location.lat();
-          this.mapLng = place.geometry.location.lng();
         });
       });
     });

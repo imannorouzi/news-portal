@@ -1,9 +1,8 @@
-import {PostSection} from "./post-section";
+import {PostSection} from './post-section';
 
 export class Post {
   id = -1;
   title = '';
-  content = '';
   link = '';
   excerpt = '';
   status = '';
@@ -20,7 +19,6 @@ export class Post {
     id: number = 0,
     title: string = '',
     excerpt: string = '',
-    content: string = '',
     status: string = '',
     type: string = '',
     imageUrl: string = '',
@@ -33,7 +31,6 @@ export class Post {
 
     this.id = id;
     this.title = title;
-    this.content = content;
     this.excerpt = excerpt;
     this.status = status;
     this.type = type;

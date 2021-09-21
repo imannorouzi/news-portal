@@ -1,56 +1,40 @@
-<div class="row">
-  <div  class="rtl col-9 text-right post formal-font font-dark">
-    <div class="container post-container p-3 container-shadow">
-      <div [class]="'text-center justify-content-center mb-3 bg-white'
+<div class="container post-container p-3 container-shadow">
+  <div [class]="'text-center justify-content-center mb-3 bg-white'
       + (post.imageUrl ? '' : 'image-container')">
-        <div class="m-auto text-center">
-          <img class=" w-100" (click)="onImageClick()" [src]="post.imageUrl">
-          <div *ngIf="!post.imageUrl" class="m-5">
-            <h5 class="">لطفا عکس مورد نظر را اینجا بارگذاری نمایید</h5>
-            <a [routerLink]="" class="btn-white-inside" (click)="onImageClick()">انتخاب</a>
-          </div>
-        </div>
-
-        <input (change)="fileChanged($event)" #fileInput type="file" hidden="hidden">
+    <div class="m-auto text-center">
+      <img class=" w-100" (click)="onImageClick()" [src]="post.imageUrl">
+      <div *ngIf="!post.imageUrl" class="m-5">
+        <a [routerLink]="" class="btn-white-inside" (click)="onImageClick()">عکس</a>
       </div>
+    </div>
 
-      <div class="">
-        <label class="">عنوان</label>
-        <input id="title" type="text" class="" placeholder="عنوان" [(ngModel)]="post.title" class="mb-2 bg-white">
-      </div>
+    <input (change)="fileChanged($event)" #fileInput type="file" hidden="hidden">
+  </div>
 
-      <div class="">
-        <label class="">نام نویسنده</label>
-        <input id="author" type="text" class="" placeholder="نام نویسنده" [(ngModel)]="post.author" class="mb-2 bg-white">
-      </div>
-      <!--          <div highlight class="editor-container">-->
+  <div class="">
+    <input id="title" type="text" class="" placeholder="عنوان" [(ngModel)]="post.title" class="mb-2 bg-white">
+  </div>
 
-      <!-- Post Sections -->
-      <div class="mt-2">
-        <label class="">متن مقاله</label>
-      </div>
-      <div class="mb-4">
-        <div *ngFor="let postSection of post.postSections; let i = index;">
-          <app-section-separator (btnClicked)="addSection(i)"></app-section-separator>
-          <app-post-section (copyClicked)="copySection(i)" (removeClicked)="removeSection(i)" [postSection]="postSection" ></app-post-section>
-          <app-section-separator (btnClicked)="addSection(i+1)" *ngIf="i === post.postSections.length - 1" ></app-section-separator>
-        </div>
-      </div>
+  <div class="">
+    <input id="author" type="text" class="" placeholder="نام نویسنده" [(ngModel)]="post.author" class="mb-2 bg-white">
+  </div>
+  <!--          <div highlight class="editor-container">-->
 
-      <a [routerLink]="" class="btn-white-inside" (click)="postArticle()">ذخیره</a>
-
+  <!-- Post Sections -->
+  <div class="mb-4">
+    <div *ngFor="let postSection of post.postSections; let i = index;">
+      <app-section-separator (btnClicked)="addSection(i)"></app-section-separator>
+      <app-post-section (copyClicked)="copySection(i)" (removeClicked)="removeSection(i)" [postSection]="postSection" ></app-post-section>
+      <app-section-separator (btnClicked)="addSection(i+1)" *ngIf="i === post.postSections.length - 1" ></app-section-separator>
     </div>
   </div>
-  <div class="col-3 sidebar text-right post formal-font container-shadow">
-    <div class="">
-      <label class="">متن</label>
-      <textarea #editor [(ngModel)]="post.body" placeholder="متن" class="mb-2 bg-white"></textarea>
-    </div>
-  </div>
+
+  <a [routerLink]="" class="btn-white-inside" (click)="postArticle()">ذخیره</a>
+
 </div>
 
 <!-- Image Modal -->
-<modal #imageCropperModal
+<!--<modal #imageCropperModal
        [modalTitle]="'Edit Image Size'"
        [zIndex]="6"
        [maximizable]="true">
@@ -62,4 +46,4 @@
       <a [routerLink]="" class="btn-dark-inside" (click)="onImageCropperModalOk()">خوبه</a>
     </div>
   </ng-container>
-</modal>
+</modal>-->

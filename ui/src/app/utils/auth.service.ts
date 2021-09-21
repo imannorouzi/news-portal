@@ -3,7 +3,7 @@ import {Subject} from 'rxjs';
 import {LocalStorageService} from './local-storage.service';
 import { map} from 'rxjs/operators';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {AlertService} from '../alert.service';
+import {AlertService} from '../utils/alert.service';
 import {environment} from '../../environments/environment';
 import {User} from '../user';
 import {CommonService} from './common.service';

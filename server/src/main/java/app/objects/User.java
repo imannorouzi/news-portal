@@ -7,10 +7,10 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlElement;
 import java.sql.Timestamp;
 
-@Entity(name = "sh_user")
-public class User extends Attendee{
+@Entity(name = "wk_user")
+public class User{
 
-    public User(){super(ContactEvent.TYPE.USER.name());}
+    public User(){}
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -42,7 +42,6 @@ public class User extends Attendee{
     @Column(name = "google_password") String googlePassword;
 
     public User(String name, String type, String email, String password, String imageUrl, String phone) {
-        super(ContactEvent.TYPE.USER.name());
 
         this.name = name;
         this.userType = USER_TYPE.valueOf(type);
@@ -58,7 +57,6 @@ public class User extends Attendee{
     }
 
     public User(String name, String password, String role) {
-        super(ContactEvent.TYPE.USER.name());
         this.name = name;
         this.role = role;
         this.password = password;
@@ -84,8 +82,6 @@ public class User extends Attendee{
                 Timestamp modified,
                 int modifiedBy) {
 
-        super(ContactEvent.TYPE.USER.name());
-
         this.id = id;
         this.userType = USER_TYPE.valueOf(type);
         this.name  = name;
@@ -110,8 +106,6 @@ public class User extends Attendee{
     }
 
     public User (JSONObject jo) throws JSONException {
-        super(ContactEvent.TYPE.USER.name());
-
         this.setId(jo.getInt("id"));
         this.setUsername(jo.getString("username"));
         this.setName(jo.getString("name"));

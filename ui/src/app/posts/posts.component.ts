@@ -1,15 +1,13 @@
 import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {SpinnerComponent} from '../spinner/spinner.component';
-import {MeetingItemModalComponent} from '../archive/meeting-item-modal/meeting-item-modal.component';
 import {Subscription} from 'rxjs/internal/Subscription';
 import {DataService} from '../utils/data.service';
 import {DateService} from '../utils/date.service';
-import {AlertService} from '../alert.service';
-import {MeetingService, readMethod} from '../archive/meetings/meeting.service';
+import {AlertService} from '../utils/alert.service';
 import {CommonService} from '../utils/common.service';
 import {of} from 'rxjs';
 import {DummyData} from '../dummyData';
-import {PostModalComponent} from "../post-modal/post-modal.component";
+import {PostModalComponent} from '../post-modal/post-modal.component';
 
 @Component({
   selector: 'app-posts',
@@ -35,7 +33,6 @@ export class PostsComponent implements OnInit {
   constructor(private dataService: DataService,
               public dateService: DateService,
               private alertService: AlertService,
-              public meetingService: MeetingService,
               public commonService: CommonService,
               private cdRef: ChangeDetectorRef) {
   }

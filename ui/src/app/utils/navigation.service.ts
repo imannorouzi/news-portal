@@ -1,6 +1,5 @@
 import {Injectable, OnInit} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
-import {MeetingService} from '../archive/meetings/meeting.service';
 
 const homeUrls = [
   '/',
@@ -24,7 +23,7 @@ export class NavigationService {
     });
   }
 
-  navigate(url, params = undefined) {
+  navigate(url, params = undefined ) {
     if (params) {
       this.router.navigate([url, params]);
     } else {

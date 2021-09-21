@@ -1,0 +1,36 @@
+.btn-circle{
+  border-radius: 50%;
+  padding: 5px;
+  background-color: #bfbfbf;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.btn-add-section-container{
+ margin-top: 18px;
+}
+
+.btn-add-section-container:hover .btn-circle{
+  opacity: 1;
+}
+.btn-add-section-container:hover .separator-border{
+  width: 100%;
+}
+
+.separator-border{
+  background-color: #a59e98;
+  width: 0;
+  margin: auto;
+  box-shadow: 2px 2px 2px #bfbfbf;
+}
+
+.btn-add-section {
+  margin: -14px auto 0 auto;
+}
+
+.separator-border{
+  height: 1px;
+}
+

@@ -1,7 +1,7 @@
 import {Component, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
-import {TEHRAN, Venue} from "../archive/venue";
-import {ModalComponent} from "../common-components/ng-modal/modal.component";
-import { MapsAPILoader} from "@agm/core";
+import {ModalComponent} from '../common-components/ng-modal/modal.component';
+import { MapsAPILoader} from '@agm/core';
+import {Venue} from '../venue';
 
 @Component({
   selector: 'app-map',
@@ -13,14 +13,16 @@ export class MapComponent implements OnInit {
   @ViewChild('searchBox') searchInput: ElementRef;
   @ViewChild('address2') address2: ElementRef;
 
-  mapLat: number = TEHRAN.lat;
-  mapLng: number = TEHRAN.lng;
-  public zoom: number = 12;
+  mapLat =  0;
+  mapLng = 0;
+  public zoom = 12;
   map: any;
+  latitude = 0;
+  longitude = 0;
 
   venue = new Venue();
   constructor(private ngZone: NgZone,
-              private mapsAPILoader: MapsAPILoader,) { }
+              private mapsAPILoader: MapsAPILoader, ) { }
 
   ngOnInit(): void {
 
@@ -61,7 +63,7 @@ export class MapComponent implements OnInit {
         this.mapLng = position.coords.longitude;
 
       });
-    }else {
+    } else {
       this.mapLat = this.venue.latitude;
       this.mapLng = this.venue.longitude;
     }
@@ -108,7 +110,7 @@ export class MapComponent implements OnInit {
   mapReady($event: any) {
     this.map = $event;
 
-    this.map.addListener("dragend", () => {
+    this.map.addListener('dragend', () => {
       const geocoder = new google.maps.Geocoder;
       geocoder.geocode({'location': {lat: this.venue.latitude, lng: this.venue.longitude}}, (res, status) => {
         if (status === google.maps.GeocoderStatus.OK && res.length) {

@@ -1,6 +1,5 @@
 package app.auth;
 
-import app.objects.User;
 import app.repositories.UserRepository;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,7 +21,7 @@ public class JwtUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        User user = userRepository.findByUsername(username);
+        app.objects.User user = userRepository.findByUsername(username);
         if (user != null) {
             return new User(user.getUsername(), user.getPassword(),
                     new ArrayList<>());

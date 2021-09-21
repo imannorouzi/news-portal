@@ -1,11 +1,9 @@
 package app.api;
 
-import app.mail.MailUtils;
 import app.objects.*;
 import app.repositories.RepositoryFactory;
 import com.amazonaws.util.json.JSONObject;
 import com.google.gson.Gson;
-import com.sholop.objects.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -54,9 +52,9 @@ public class commentAPIs {
                         comment.setUserImageUrl(author.get().getImageUrl());
                     }
                 }else if (comment.getContactId() != -1) {
-                    Optional<Contact> author = repositoryFactory.getContactRepository().findById(comment.getContactId());
+                    Optional<Post> author = repositoryFactory.getPostRepository().findById(comment.getContactId());
                     if (author.isPresent()) {
-                        comment.setUserName(author.get().getName());
+                        comment.setUserName(author.get().getTitle());
                         comment.setUserImageUrl(author.get().getImageUrl());
                     }
                 }
@@ -111,10 +109,6 @@ public class commentAPIs {
             comment.setUserName(user.getName());
 
 
-            Optional<Event> event = repositoryFactory.getEventRepository().findById(comment.getEventId());
-            if(event.isPresent()){
-                MailUtils.sendCommentEmails(event.get(), comment);
-            }
             return Response.ok(gson.toJson(new ResponseObject("OK", comment))).build();
 
         } catch (Exception e) {
@@ -133,16 +127,10 @@ public class commentAPIs {
             JSONObject jsonComment = new JSONObject(jsonCommentString);
 
             String uuid = jsonComment.getString("uuid");
-            ContactEvent contactEvent = repositoryFactory.getContactEventRepository().findByUuid(uuid);
-            Contact contact = repositoryFactory.getContactRepository().findById(contactEvent.getContactId()).orElse(null);
 
             Comment comment = new Comment(jsonComment);
 
             comment.setUserId(-1);
-            comment.setContactId(contactEvent.getContactId());
-            comment.setEventId(contactEvent.getEventId());
-            comment.setUserName(contact.getName());
-            comment.setUserImageUrl(contact.getImageUrl());
             comment = repositoryFactory.getCommentRepository().save(comment);
 
             return Response.ok(gson.toJson(new ResponseObject("OK", comment))).build();

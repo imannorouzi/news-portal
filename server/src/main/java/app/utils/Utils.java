@@ -1,8 +1,5 @@
 package app.utils;
 
-import app.objects.ContactEvent;
-import app.objects.Event;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -23,34 +20,8 @@ public class Utils {
         return UUID.randomUUID().toString();
     }
 
-    public static CharSequence getIconUrl(String icon) {
-        switch (icon){
-            case "logo":
-                return WEBSITE_URL + "/assets/images/Sholop-Logo.png";
-
-            case "accept":
-                return WEBSITE_URL + "/assets/images/correct-symbol.png";
-
-            case "refuse":
-                return WEBSITE_URL + "/assets/images/remove-symbol.png";
-
-            case "maybe":
-                return WEBSITE_URL + "/assets/images/exclamation.png";
-        }
-        return WEBSITE_URL + "/assets/images/Sholop-Logo.png";
-    }
-
     public static String formatTimeString(String timeString){
         return timeString.substring(0, 2) + ":" + timeString.substring(2);
-    }
-
-    public static String getMyMeetingUrl(ContactEvent ce, Event event) {
-
-        return new StringBuilder()
-                .append(WEBSITE_URL)
-                .append("/#/contact-meeting")
-                .append("/").append(ce.getUuid())
-                .append("/").append(event.getPointedDate().getId()).toString();
     }
 
     public static String fixUri(String fileDownloadUri) {

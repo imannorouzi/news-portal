@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import {Subject} from 'rxjs';
-import {GlobalDataService} from "./global-data.service";
-import {AlertService} from "../alert.service";
+import {GlobalDataService} from './global-data.service';
+import {AlertService} from './alert.service';
 
 @Injectable()
 export class LocalStorageService {
 
-  checkedIn: boolean = false;
+  checkedIn = false;
 
   checkInChanged: Subject<boolean> = new Subject<boolean>();
 
-  session : any = { id: '', lastCheckIn: undefined };
+  session: any = { id: '', lastCheckIn: undefined };
 
   interval;
 
@@ -18,13 +18,13 @@ export class LocalStorageService {
               private globalDataService: GlobalDataService) { }
 
   private getValidOpenSessions(openSessions: any) {
-    let retVal = [];
-    if(!Array.isArray(openSessions)) openSessions = [];
+    const retVal = [];
+    if (!Array.isArray(openSessions)) { openSessions = []; }
 
-    let now = new Date();
+    const now = new Date();
     openSessions.forEach( os => {
-      let lastCheckedIn = new Date(os.lastCheckIn);
-      if(now.getTime() - lastCheckedIn.getTime() <= 40000){
+      const lastCheckedIn = new Date(os.lastCheckIn);
+      if (now.getTime() - lastCheckedIn.getTime() <= 40000) {
         // Could be still active
         retVal.push(os);
       }
@@ -32,22 +32,22 @@ export class LocalStorageService {
     return retVal;
   }
 
-  public checkIn(userId = '') : boolean {
+  public checkIn(userId = ''): boolean {
     // It's an array of objects [{id: XX, lastCheckIn: XX}, ... ]
     let openSessions;
-    try{
+    try {
       openSessions = JSON.parse(localStorage.getItem('open-sessions-' + userId));
-    }catch(e){
+    } catch (e) {
       openSessions = [];
     }
 
-    if(openSessions !== undefined ){
+    if (openSessions !== undefined ) {
       openSessions = this.getValidOpenSessions(openSessions);
-      if(openSessions.length > 2){
+      if (openSessions.length > 2) {
         this.alertService.error('Too many sessions');
         return false;
       }
-    }else{
+    } else {
       openSessions = [];
     }
 
@@ -57,11 +57,11 @@ export class LocalStorageService {
     localStorage.setItem('open-sessions-' + userId, JSON.stringify(openSessions));
     this.globalDataService.loadFromLocalStorage(userId);
     this.checkedIn = true;
-    setTimeout( () => {this.checkInChanged.next(this.checkedIn);}, 10);
+    setTimeout( () => {this.checkInChanged.next(this.checkedIn); }, 10);
 
     this.interval = setInterval( () => {
       this.session.lastCheckIn = new Date();
-      let os = openSessions.find( os => os.id === this.session.id);
+      const os = openSessions.find( os => os.id === this.session.id);
       os.lastCheckIn = this.session.lastCheckIn;
       localStorage.setItem('open-sessions-' + userId, JSON.stringify(openSessions));
     }, 30000);
@@ -70,21 +70,21 @@ export class LocalStorageService {
 
   }
 
-  public checkOut(userId: number){
-    if(!this.checkedIn){
+  public checkOut(userId: number) {
+    if (!this.checkedIn) {
       return;
     }
 
     let openSessions;
-    try{
+    try {
       openSessions = JSON.parse(localStorage.getItem('open-sessions-' + userId));
       openSessions = this.getValidOpenSessions(openSessions);
-    }catch (e) {
+    } catch (e) {
       openSessions = [];
     }
 
-    let os = openSessions.find( os => os.id === this.session.id);
-    if(os) openSessions.splice(openSessions.indexOf(os), 1);
+    const os = openSessions.find( os => os.id === this.session.id);
+    if (os) { openSessions.splice(openSessions.indexOf(os), 1); }
 
     localStorage.setItem('open-sessions-' + userId, JSON.stringify(openSessions));
 
@@ -94,14 +94,14 @@ export class LocalStorageService {
     this.checkInChanged.next(this.checkedIn);
   }
 
-  public isCheckedIn(): boolean{
+  public isCheckedIn(): boolean {
     return this.checkedIn;
   }
 
   private makeId(length) {
     let result           = '';
-    let characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let charactersLength = characters.length;
+    const characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
     for ( let i = 0; i < length; i++ ) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }

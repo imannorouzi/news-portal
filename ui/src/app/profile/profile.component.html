@@ -66,19 +66,6 @@
                    autocomplete="off"
                    #address2  name="address_2" placeholder="کوچه،‌ پلاک، واحد" /> <!--on-place-changed="vm.placeChanged()"-->
 
-          <div class="mb-3">
-            <agm-map class="map"
-                     [latitude]="mapLat"
-                     [longitude]="mapLng"
-                     [scrollwheel]="true"
-                     [zoom]="zoom"
-                     (mapClick)="mapClicked($event)">
-              <agm-marker [markerDraggable]="true"
-                          (dragEnd)="markerMoved($event)"
-                          [latitude]="user.latitude" [longitude]="user.longitude"></agm-marker>
-            </agm-map>
-          </div>
-
       </div>
 
       <div class=" ">

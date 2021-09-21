@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AfService } from '../providers/af.service';
 
 
-import {AlertService} from '../alert.service';
+import {AlertService} from '../utils/alert.service';
 import {SpinnerService} from '../utils/spinner.service';
 import { of} from 'rxjs';
 import {AuthService} from '../utils/auth.service';

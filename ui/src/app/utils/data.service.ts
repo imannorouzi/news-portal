@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {User} from '../user';
 import {environment} from '../../environments/environment';
-import {Venue} from '../archive/venue';
 import {AuthService} from './auth.service';
 import {catchError, map} from 'rxjs/operators';
 import {Post} from '../post';

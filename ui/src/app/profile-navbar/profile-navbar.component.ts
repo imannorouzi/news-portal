@@ -1,7 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {DataService} from '../utils/data.service';
-import {AlertService} from '../alert.service';
-import {User} from '../user';
 import {AuthService} from '../utils/auth.service';
 
 

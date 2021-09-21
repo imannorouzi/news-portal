@@ -10,22 +10,13 @@ public class RepositoryFactory {
 
 
     @Autowired
-    ContactRepository contactRepository;
+    PostRepository postRepository;
 
     @Autowired
     CommentRepository commentRepository;
 
     @Autowired
-    EventRepository eventRepository;
-
-    @Autowired
     UserRepository userRepository;
-
-    @Autowired
-    ContactEventRepository contactEventRepository;
-
-    @Autowired
-    SholopDateRepository sholopDateRepository;
 
     @Autowired
     LocationRepository locationRepository;
@@ -34,28 +25,16 @@ public class RepositoryFactory {
     }
 
 
-    public ContactRepository getContactRepository() {
-        return contactRepository;
+    public PostRepository getPostRepository() {
+        return postRepository;
     }
 
     public CommentRepository getCommentRepository() {
         return commentRepository;
     }
 
-    public EventRepository getEventRepository() {
-        return eventRepository;
-    }
-
     public UserRepository getUserRepository() {
         return userRepository;
-    }
-
-    public ContactEventRepository getContactEventRepository() {
-        return contactEventRepository;
-    }
-
-    public SholopDateRepository getSholopDateRepository() {
-        return sholopDateRepository;
     }
 
     public LocationRepository getLocationRepository() {

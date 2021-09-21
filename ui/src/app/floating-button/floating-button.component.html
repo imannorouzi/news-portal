@@ -1,4 +1,4 @@
-<div [class.toggled]="toggled" class="wrapper floating-button-container" click-zone (clickOutside)="clickOutside($event)">
+<div [class.toggled]="toggled" class="wrapper floating-button-container" appClickZone (clickOutside)="clickOutside($event)">
   <ul class="action-list">
     <li class="action-item" (click)="route('/create-meeting')">
       <i class="fa fa-handshake-o ml-3"></i>

@@ -10,7 +10,7 @@ import java.sql.Timestamp;
  * Created by Pooyan on 12/11/2017.
  */
 
-@Entity(name = "sh_comment")
+@Entity(name = "wk_comment")
 public class Comment {
 
     public Comment(){}

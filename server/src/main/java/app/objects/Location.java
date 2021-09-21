@@ -14,7 +14,7 @@ import javax.ws.rs.client.WebTarget;
 /**
  * Created by Pooyan on 12/11/2017.
  */
-@Entity(name = "sh_venue")
+@Entity(name = "wk_venue")
 public class Location {
 
     public Location(){

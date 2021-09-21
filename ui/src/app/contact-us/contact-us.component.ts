@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {first} from "rxjs/operators";
-import {DataService} from "../utils/data.service";
-import {AlertService} from "../alert.service";
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {first} from 'rxjs/operators';
+import {DataService} from '../utils/data.service';
+import {AlertService} from '../utils/alert.service';
 
 @Component({
   selector: 'app-contact-us',
@@ -13,8 +13,8 @@ export class ContactUsComponent implements OnInit {
 
 
   contactUsForm: FormGroup;
-  submitted: boolean = false;
-  loading: boolean = false;
+  submitted = false;
+  loading = false;
 
 
   constructor(private formBuilder: FormBuilder,
@@ -43,7 +43,7 @@ export class ContactUsComponent implements OnInit {
     }
 
     this.loading = true;
-    let message  = {
+    const message  = {
       name: this.f.name.value,
       email: this.f.email.value,
       title: this.f.title.value,
@@ -54,7 +54,7 @@ export class ContactUsComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
-          this.alertService.success("پیام شما ارسال شد.")
+          this.alertService.success('پیام شما ارسال شد.');
         },
         error => {
           this.alertService.error(error);
