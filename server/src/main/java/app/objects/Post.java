@@ -72,10 +72,12 @@ public class Post {
         this.id = jo.has("id") && jo.getInt("id") != 0 ? jo.getInt("id") : -1;
         this.type = jo.has("type") && !"".equals(jo.getString("type")) ?
                 jo.getString("type").toUpperCase() : POST_TYPE.UNKNOWN.name();
-        this.title = jo.getString("name");
+        this.title = jo.getString("title");
         this.status = jo.getString("status");
         this.author = jo.getString("author");
         this.link = jo.getString("link");
+        this.excerpt = jo.getString("excerpt");
+        this.tags = jo.getString("tags");
         this.userId = jo.has("userId")   ? jo.getInt("userId") : 0;
         this.style = jo.has("style")   ? jo.getString("style") : "1";
         this.imageUrl = jo.has("imageUrl") && !"null".equals(imageUrl) ? jo.getString("imageUrl") : "";
@@ -86,6 +88,13 @@ public class Post {
             ps.add(new PostSection(postSections.getJSONObject(i)));
         }
         this.setPostSections(ps);
+
+        JSONArray co = jo.getJSONArray("categories");
+        List<Category> categories = new ArrayList<>();
+        for(int i = 0; i < co.length(); i++ ) {
+            categories.add(new Category(co.getJSONObject(i)));
+        }
+        this.setCategories(categories);
     }
 
     public int getId() {
@@ -207,4 +216,5 @@ public class Post {
     public void setPostSections(List<PostSection> postSections) {
         this.postSections = postSections;
     }
+
 }

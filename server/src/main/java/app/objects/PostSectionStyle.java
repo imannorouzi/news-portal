@@ -31,6 +31,10 @@ public class PostSectionStyle {
         this.tag = tag;
         this.value = value;
     }
+    public PostSectionStyle(String tag, String value){
+        this.tag = tag;
+        this.value = value;
+    }
 
     /**
      * Created by Pooyan on 12/11/2017.

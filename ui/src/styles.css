@@ -376,3 +376,9 @@ table.table  td{
   -o-transition: all 0.1s linear;
   transition: all 0.1s linear;
 }
+
+
+/* CK editor */
+.ck-editor__editable_inline {
+  min-height: 200px;
+}

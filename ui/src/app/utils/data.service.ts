@@ -200,7 +200,7 @@ export class DataService {
     const formData: FormData = new FormData();
     if (contact.image ) {
       formData.append('file', this.dataURItoBlob(contact.image), contact.fileName);
-      formData.append('filename', contact.fileName);
+      formData.append('filename', contact.filename);
       contact.image = null;
       contact.imageUrl = null;
     } else {

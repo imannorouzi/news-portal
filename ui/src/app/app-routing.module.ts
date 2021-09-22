@@ -5,7 +5,6 @@ import { RouterModule, Routes } from '@angular/router';
 import {AuthGuard} from './utils/auth-guard.service';
 import {LoginComponent} from './login/login.component';
 import {ContactUsComponent} from './contact-us/contact-us.component';
-import {ProfileComponent} from './profile/profile.component';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import {AboutUsComponent} from './about-us/about-us.component';
 import {ConditionsComponent} from './conditions/conditions.component';
@@ -18,7 +17,6 @@ const routes: Routes = [
   { path: 'posts', component: PostsComponent},
   { path: 'about-us', component: AboutUsComponent },
   { path: 'faq', component: FaqComponent },
-  { path: 'settings', component: ProfileComponent },
   { path: 'conditions', component: ConditionsComponent },
   { path: 'contact-us', component: ContactUsComponent },
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard]  },

@@ -45,8 +45,9 @@
   </ul>
 
   <div class="bg-while" [hidden]="postSection.type !== 'TEXT'">
-    <angular-editor [config]="editorConfig" [placeholder]="'Enter text here...'" [(ngModel)]="postSection.text"></angular-editor>
+    <ckeditor [config]="config" [editor]="Editor" [(ngModel)]="postSection.text" (ready)="onReady($event)"></ckeditor>
   </div>
+
   <div class="" *ngIf="postSection.type === 'VIDEO'">
 <!--    <img [src]="postSection.data.imageUrl" class="mb-2"/>-->
     <video width="100%" height="300" controls>

@@ -30,7 +30,6 @@ import {AfService} from './providers/af.service';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { FooterComponent } from './footer/footer.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
-import { ProfileComponent } from './profile/profile.component';
 import { ConfirmComponent } from './common-components/confirm/confirm.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { FaqComponent } from './faq/faq.component';
@@ -53,7 +52,6 @@ import { PostsComponent } from './posts/posts.component';
 import { PostComponent } from './post/post.component';
 import { PostModalComponent } from './post-modal/post-modal.component';
 import { PostDetailsComponent } from './post-details/post-details.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
 import { ColumnComponent } from './column/column.component';
 import { PostsByWriterComponent } from './column/posts-by-writer/posts-by-writer.component';
 import { VoiceNewsComponent } from './column/voice-news/voice-news.component';
@@ -66,7 +64,7 @@ import { AdminComponent } from './admin/admin.component';
 import {AlertComponent} from './common-components/alert/alert.component';
 import {ColorPickerModule} from 'ngx-color-picker';
 import {SectionSeparatorComponent} from './common-components/section-separator/section-separator.component';
-import {AngularEditorModule} from '@kolkov/angular-editor';
+import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
   declarations: [
@@ -82,7 +80,6 @@ import {AngularEditorModule} from '@kolkov/angular-editor';
     CommentsComponent,
     FooterComponent,
     ContactUsComponent,
-    ProfileComponent,
     ConfirmComponent,
     PageNotFoundComponent,
     FaqComponent,
@@ -101,7 +98,6 @@ import {AngularEditorModule} from '@kolkov/angular-editor';
     PostComponent,
     PostModalComponent,
     PostDetailsComponent,
-    SidebarComponent,
     ColumnComponent,
     PostsByWriterComponent,
     VoiceNewsComponent,
@@ -135,7 +131,7 @@ import {AngularEditorModule} from '@kolkov/angular-editor';
     ChartsModule,
     ColorPickerModule,
     HttpClientModule,
-    AngularEditorModule
+    CKEditorModule
   ],
   exports: [
   ],

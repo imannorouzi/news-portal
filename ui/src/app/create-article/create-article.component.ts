@@ -136,6 +136,7 @@ export class CreateArticleComponent implements OnInit {
     // if (!this.validateForm()) { return; }
 
     this.post['userId'] = this.authService.userId;
+    this.post['type'] = 'POST';
 
     this.dataService.updatePost(this.post).subscribe(
       (value: any) => {

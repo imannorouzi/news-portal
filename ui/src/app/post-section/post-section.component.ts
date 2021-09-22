@@ -1,8 +1,9 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {DataService} from '../utils/data.service';
 import {PostSection} from '../post-section';
-import {AngularEditorConfig} from '@kolkov/angular-editor';
 
+import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
+import {CKEditor5} from '@ckeditor/ckeditor5-angular/ckeditor';
 
 @Component({
   selector: 'app-post-section',
@@ -17,51 +18,29 @@ export class PostSectionComponent implements OnInit, AfterViewInit {
   @Output() removeClicked: EventEmitter<any> = new EventEmitter<any>();
   @Output() copyClicked: EventEmitter<any> = new EventEmitter<any>();
 
-  editorConfig: AngularEditorConfig = {
-    editable: true,
-    spellcheck: true,
-    height: 'auto',
-    minHeight: '0',
-    maxHeight: 'auto',
-    width: 'auto',
-    minWidth: '0',
-    translate: 'yes',
-    enableToolbar: true,
-    showToolbar: true,
-    placeholder: 'Enter text here...',
-    defaultParagraphSeparator: '',
-    defaultFontName: '',
-    defaultFontSize: '',
-    fonts: [
-      {class: 'arial', name: 'Arial'},
-      {class: 'times-new-roman', name: 'Times New Roman'},
-      {class: 'calibri', name: 'Calibri'},
-      {class: 'comic-sans-ms', name: 'Comic Sans MS'}
-    ],
-    customClasses: [
-      {
-        name: 'quote',
-        class: 'quote',
-      },
-      {
-        name: 'redText',
-        class: 'redText'
-      },
-      {
-        name: 'titleText',
-        class: 'titleText',
-        tag: 'h1',
-      },
-    ],
-    uploadUrl: '/uploadFile/image',
-    uploadWithCredentials: false,
-    sanitize: true,
-    toolbarPosition: 'top',
-    toolbarHiddenButtons: [
-      ['bold', 'italic'],
-      ['fontSize']
-    ]
-  };
+
+  public Editor = DecoupledEditor;
+
+  config: CKEditor5.Config =
+    {
+      toolbar: {
+        items: [
+          'heading', '|',
+          'fontfamily', 'fontsize', '|',
+          'alignment', '|',
+          'fontColor', 'fontBackgroundColor', '|',
+          'bold', 'italic', 'strikethrough', 'underline', 'subscript', 'superscript', '|',
+          'link', '|',
+          'outdent', 'indent', '|',
+          'bulletedList', 'numberedList', 'todoList', '|',
+          'code', 'codeBlock', '|',
+          'insertTable', '|',
+          'uploadImage', 'blockQuote', '|',
+          'undo', 'redo'
+        ],
+      }
+    };
+
 
   ngOnInit() {
   }
@@ -88,18 +67,18 @@ export class PostSectionComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-  /*  DecoupledEditor
-      .create( document.querySelector( '#editor' ), {
-        language: 'es'
-      } )
-      .then( editor => {
-        const toolbarContainer = document.querySelector( '#toolbar-container' );
+    /*  DecoupledEditor
+        .create( document.querySelector( '#editor' ), {
+          language: 'es'
+        } )
+        .then( editor => {
+          const toolbarContainer = document.querySelector( '#toolbar-container' );
 
-        toolbarContainer.appendChild( editor.ui.view.toolbar.element );
-      } )
-      .catch( error => {
-        console.error( error );
-      } );*/
+          toolbarContainer.appendChild( editor.ui.view.toolbar.element );
+        } )
+        .catch( error => {
+          console.error( error );
+        } );*/
   }
 }
 
