@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import * as DecoupledEditor from '../../ckeditor-build-decoupled/ckeditor';
 import {DataService} from '../utils/data.service';
 import {PostSection} from '../post-section';
+import {AngularEditorConfig} from '@kolkov/angular-editor';
 
 
 @Component({
@@ -10,14 +10,58 @@ import {PostSection} from '../post-section';
   styleUrls: ['./post-section.component.css']
 })
 export class PostSectionComponent implements OnInit, AfterViewInit {
+  constructor(private dataService: DataService) { }
 
   borderDropDownOpened = false;
   @Input() postSection: PostSection = new PostSection('TEXT');
   @Output() removeClicked: EventEmitter<any> = new EventEmitter<any>();
   @Output() copyClicked: EventEmitter<any> = new EventEmitter<any>();
-  public Editor = DecoupledEditor;
 
-  constructor(private dataService: DataService) { }
+  editorConfig: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    height: 'auto',
+    minHeight: '0',
+    maxHeight: 'auto',
+    width: 'auto',
+    minWidth: '0',
+    translate: 'yes',
+    enableToolbar: true,
+    showToolbar: true,
+    placeholder: 'Enter text here...',
+    defaultParagraphSeparator: '',
+    defaultFontName: '',
+    defaultFontSize: '',
+    fonts: [
+      {class: 'arial', name: 'Arial'},
+      {class: 'times-new-roman', name: 'Times New Roman'},
+      {class: 'calibri', name: 'Calibri'},
+      {class: 'comic-sans-ms', name: 'Comic Sans MS'}
+    ],
+    customClasses: [
+      {
+        name: 'quote',
+        class: 'quote',
+      },
+      {
+        name: 'redText',
+        class: 'redText'
+      },
+      {
+        name: 'titleText',
+        class: 'titleText',
+        tag: 'h1',
+      },
+    ],
+    uploadUrl: '/uploadFile/image',
+    uploadWithCredentials: false,
+    sanitize: true,
+    toolbarPosition: 'top',
+    toolbarHiddenButtons: [
+      ['bold', 'italic'],
+      ['fontSize']
+    ]
+  };
 
   ngOnInit() {
   }

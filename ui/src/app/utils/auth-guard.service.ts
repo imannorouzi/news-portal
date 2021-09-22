@@ -14,13 +14,13 @@ export class AuthGuard implements CanActivate {
   }
 
   checkLogin(url: string): boolean {
-    /*if (this.authService.jsonWebToken !== null) {
+    if (this.authService.jsonWebToken !== null) {
       return true;
     }
 
     this.authService.redirectUrl = url;
-    this.router.navigate(['/login']);*/
+    this.router.navigate(['/login']);
 
-    return true;
+    return false;
   }
 }

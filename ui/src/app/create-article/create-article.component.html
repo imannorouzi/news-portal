@@ -29,7 +29,7 @@
     </div>
   </div>
 
-  <a [routerLink]="" class="btn-white-inside" (click)="postArticle()">ذخیره</a>
+  <a [routerLink]="" class="btn-white-inside" (click)="updatePost()">ذخیره</a>
 
 </div>
 
@@ -47,3 +47,25 @@
     </div>
   </ng-container>
 </modal>-->
+
+<app-modal #imageCropperModal
+       [modalTitle]="'اندازه عکس'"
+       [size]="'auto'"
+       [zIndex]="11">
+  <ng-container class="app-modal-body ">
+    <div class="text-center">
+      <image-cropper #cropper
+                     [imageChangedEvent]="imageChangedEvent"
+                     [maintainAspectRatio]="true"
+                     [aspectRatio]="4 / 4"
+                     format="png"
+                     (imageCropped)="imageCropped($event)"
+                     (loadImageFailed)="loadImageFailed()"></image-cropper>
+    </div>
+  </ng-container>
+  <ng-container class="app-modal-footer">
+    <div class="text-right">
+      <button type="button" class="btn primary" (click)="onImageCropperModalOk()">خوبه</button>
+    </div>
+  </ng-container>
+</app-modal>

@@ -37,24 +37,24 @@ public class PostAPIs {
 //    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
-    @GetMapping("/contact/{id}")
-    public Post getContact(@PathVariable String id){
+    @GetMapping("/post/{id}")
+    public Post getpost(@PathVariable String id){
         int blogId = Integer.parseInt(id);
         return repositoryFactory.getPostRepository().findById(blogId).orElse(null);
     }
 
 
-    @GetMapping("/get-contacts")
-    public Response getContacts(@AuthenticationPrincipal UserDetails u,
+    @GetMapping("/get-posts")
+    public Response getposts(@AuthenticationPrincipal UserDetails u,
                                 @RequestParam("hint") String hint)  {
 
         try {
 
-            List<Post> contacts = null;
+            List<Post> posts = null;
             User user = repositoryFactory.getUserRepository().findByUsername(u.getUsername());
 
 
-            return Response.ok(gson.toJson(new ResponseObject("OK", contacts))).build();
+            return Response.ok(gson.toJson(new ResponseObject("OK", posts))).build();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -62,8 +62,8 @@ public class PostAPIs {
         }
     }
 
-    @PostMapping("/update-contact-status")
-    public ResponseObject updateContactStatus(@RequestBody User user, String objectString){
+    @PostMapping("/update-post-status")
+    public ResponseObject updatePostStatus(@RequestBody User user, String objectString){
 
         Gson gson = new Gson();
         try {
@@ -86,37 +86,37 @@ public class PostAPIs {
     }
 
 
-    @PostMapping("/update-contact")
-    public Response updateContact(@AuthenticationPrincipal UserDetails u,
+    @PostMapping("/update-post")
+    public Response updatePost(@AuthenticationPrincipal UserDetails u,
                                   @RequestParam(value = "file", required = false) MultipartFile file,
-                                  @RequestParam("contact") String contactJsonString,
+                                  @RequestParam("post") String postJsonString,
                                   @RequestParam(value = "filename", required = false) String filename) {
 
 
         User user = repositoryFactory.getUserRepository().findByUsername(u.getUsername());
-        Post contact;
+        Post post;
         try {
-            JSONObject jsonContact = new JSONObject(contactJsonString);
-            contact = new Post(jsonContact);
+            JSONObject jsonpost = new JSONObject(postJsonString);
+            post = new Post(jsonpost);
 
             // check if any user has been registered with the same email
 
             if(filename != null && !filename.isEmpty() && file != null) {
-                filename = "contact_" + user.getId() + "_" + filename.replaceAll("\\s+", "");
+                filename = "post_" + user.getId() + "_" + filename.replaceAll("\\s+", "");
 
-                String fileName = fileStorageService.storeFile(file, "images/contacts/" + filename, "/");
+                String fileName = fileStorageService.storeFile(file, "images/posts/" + filename, "/");
 
                 String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                         .path("/download/")
                         .path(fileName)
                         .toUriString();
 
-                contact.setImageUrl(Utils.fixUri(fileDownloadUri));
+                post.setImageUrl(Utils.fixUri(fileDownloadUri));
             }
 
-            contact.setUserId(user.getId());
+            post.setUserId(user.getId());
 
-            contact = repositoryFactory.getPostRepository().save(contact);
+            post = repositoryFactory.getPostRepository().save(post);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -125,21 +125,21 @@ public class PostAPIs {
         }
 
 
-        return Response.ok(gson.toJson(new ResponseObject("OK", contact))).build();
+        return Response.ok(gson.toJson(new ResponseObject("OK", post))).build();
     }
 
     @PermitAll
-    @PostMapping("/delete-contact")
-    public Response deleteContact( @AuthenticationPrincipal UserDetails u,
+    @PostMapping("/delete-post")
+    public Response deletePost( @AuthenticationPrincipal UserDetails u,
                                    @RequestBody Integer id){
 
         User user = repositoryFactory.getUserRepository().findByUsername(u.getUsername());
-        Post contact = null;
+        Post post = null;
         try {
-            contact = repositoryFactory.getPostRepository().findContactById(id);
-            if(contact != null && contact.getUserId() == user.getId()){
-                repositoryFactory.getPostRepository().delete(contact);
-                return Response.ok(gson.toJson(new ResponseObject("OK", contact))).build();
+            post = repositoryFactory.getPostRepository().findPostById(id);
+            if(post != null && post.getUserId() == user.getId()){
+                repositoryFactory.getPostRepository().delete(post);
+                return Response.ok(gson.toJson(new ResponseObject("OK", post))).build();
             }else{
                 return Response.ok(gson.toJson(new ResponseObject("FAIL", "NOT FOUND."))).build();
             }

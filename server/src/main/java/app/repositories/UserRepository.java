@@ -16,15 +16,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     User findByUsername(String username);
 
-    List<User> findAllByParentId(int id);
-
-    List<User> findAllByParentIdAndRole(int id, String role);
-
-    List<User> findAllByParentIdOrParentId(int id, int parentId);
-
-    @Query("select s FROM wk_user s WHERE s.id in :ids")
-    List<User> getUsersByContactIds(@Param("ids") List<Integer> userIds);
-
-
 }
 

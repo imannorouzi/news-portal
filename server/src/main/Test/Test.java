@@ -1,5 +1,4 @@
-import com.sholop.objects.Event;
-import com.sholop.repositories.RepositoryFactory;
+import app.repositories.RepositoryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -18,22 +17,25 @@ public class Test {
 
     public static void main(String []args){
 
-        try {
+        /*try {
             (new Test()).readByDate();
         } catch (ParseException e) {
             e.printStackTrace();
-        }
+        }*/
+
+
+        (new Test()).hash();
     }
 
     public void hash(){
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        String bc = bCryptPasswordEncoder.encode("password");
+        String bc = bCryptPasswordEncoder.encode("mingus");
 
         System.out.println(bc);
     }
 
 
-    public void readByDate() throws ParseException {
+    /*public void readByDate() throws ParseException {
 
         String dateString = "2020-07-20T14:00:00.000Z";
         TimeZone tz = TimeZone.getTimeZone("UTC");
@@ -50,7 +52,7 @@ public class Test {
                 true
         );
         System.out.println(events.size());
-    }
+    }*/
 
 
 }

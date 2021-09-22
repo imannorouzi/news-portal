@@ -14,6 +14,8 @@ export class Post {
   author = '';
   categories: string[] = [];
   postSections: PostSection[] = [];
+  image = '';
+  filename = '';
 
   constructor(
     id: number = 0,
@@ -27,7 +29,9 @@ export class Post {
     style: number = 1,
     author: string = '',
     categories: string[] = [],
-    postSections: PostSection[] = []) {
+    postSections: PostSection[] = [],
+    image: string = '',
+    filename: string = '') {
 
     this.id = id;
     this.title = title;
@@ -41,5 +45,7 @@ export class Post {
     this.author = author;
     this.categories = categories;
     this.postSections = postSections;
+    this.image = image;
+    this.filename = filename;
   }
 }

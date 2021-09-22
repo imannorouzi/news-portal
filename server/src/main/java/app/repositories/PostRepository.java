@@ -15,7 +15,7 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
 //    List<Contact> findByTitleContainingOrContentContaining(String name, String textAgain);
 
 
-    Post findContactById(int contactId);
+    Post findPostById(int postId);
 
 }
 

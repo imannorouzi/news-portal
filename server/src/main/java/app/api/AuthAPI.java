@@ -227,10 +227,6 @@ public class AuthAPI {
 
             user.setName(updatedUser.getName());
             user.setPhone(updatedUser.getPhone());
-            user.setLatitude(updatedUser.getLatitude());
-            user.setLongitude(updatedUser.getLongitude());
-            user.setFarsiAddress1(updatedUser.getFarsiAddress1());
-            user.setFarsiAddress2(updatedUser.getFarsiAddress2());
             user.setDescription(updatedUser.getDescription());
 
             user = repositoryFactory.getUserRepository().save(user);

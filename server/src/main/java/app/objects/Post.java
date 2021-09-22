@@ -1,10 +1,12 @@
 package app.objects;
 
+import com.amazonaws.util.json.JSONArray;
 import com.amazonaws.util.json.JSONException;
 import com.amazonaws.util.json.JSONObject;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "wk_post")
@@ -17,7 +19,7 @@ public class Post {
      * Created by Pooyan on 12/11/2017.
      */
 
-    public enum CONTACT_TYPE {EMPLOYEE, CONTACT, UNKNOWN}
+    public enum POST_TYPE {POST, AUDIO, VIDEO, POLL, STRIKE, UNKNOWN}
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -54,10 +56,10 @@ public class Post {
     String tags; // comma separated
 
     @Column(name = "author")
-    String author; // comma separated
+    String author;
 
     @Column(name = "link")
-    String link; // comma separated
+    String link;
 
     @ManyToMany
     List<Category> categories;
@@ -69,11 +71,21 @@ public class Post {
     public Post(JSONObject jo) throws JSONException {
         this.id = jo.has("id") && jo.getInt("id") != 0 ? jo.getInt("id") : -1;
         this.type = jo.has("type") && !"".equals(jo.getString("type")) ?
-                jo.getString("type").toUpperCase() : CONTACT_TYPE.UNKNOWN.name();
+                jo.getString("type").toUpperCase() : POST_TYPE.UNKNOWN.name();
         this.title = jo.getString("name");
-        this.status = jo.getString("phone");
-        this.userId = jo.has("chairId")   ? jo.getInt("chairId") : 0;
+        this.status = jo.getString("status");
+        this.author = jo.getString("author");
+        this.link = jo.getString("link");
+        this.userId = jo.has("userId")   ? jo.getInt("userId") : 0;
+        this.style = jo.has("style")   ? jo.getString("style") : "1";
         this.imageUrl = jo.has("imageUrl") && !"null".equals(imageUrl) ? jo.getString("imageUrl") : "";
+
+        JSONArray postSections = jo.getJSONArray("postSections");
+        List<PostSection> ps = new ArrayList<>();
+        for(int i = 0; i < postSections.length(); i++ ) {
+            ps.add(new PostSection(postSections.getJSONObject(i)));
+        }
+        this.setPostSections(ps);
     }
 
     public int getId() {

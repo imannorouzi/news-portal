@@ -15,13 +15,13 @@ import {AdminComponent} from './admin/admin.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'posts', pathMatch: 'full' },
-  { path: 'posts', component: PostsComponent, canActivate: [AuthGuard] },
+  { path: 'posts', component: PostsComponent},
   { path: 'about-us', component: AboutUsComponent },
   { path: 'faq', component: FaqComponent },
   { path: 'settings', component: ProfileComponent },
   { path: 'conditions', component: ConditionsComponent },
   { path: 'contact-us', component: ContactUsComponent },
-  { path: 'admin', component: AdminComponent },
+  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard]  },
 
   { path: 'login', component: LoginComponent },
 

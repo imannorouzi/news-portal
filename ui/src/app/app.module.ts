@@ -43,14 +43,12 @@ import {AuthService} from './utils/auth.service';
 import {LocalStorageService} from './utils/local-storage.service';
 import {GlobalDataService} from './utils/global-data.service';
 import { SlidingTextComponent } from './sliding-text/sliding-text.component';
-import { LandingPageComponent } from './landing-page/landing-page.component';
 import {GeneralPipe, KeysPipe} from './utils/general-pipe';
 import {OverlaySpinnerComponent} from './common-components/overlay-spinner/overlay.spinner.component';
 import {ContentModalComponent} from './common-components/content-modal/content-modal.component';
 import {ModalModule} from 'ngx-bootstrap/modal';
 import { ProfileNavbarComponent } from './profile-navbar/profile-navbar.component';
 import { FloatingButtonComponent } from './floating-button/floating-button.component';
-import { MapComponent } from './map/map.component';
 import { PostsComponent } from './posts/posts.component';
 import { PostComponent } from './post/post.component';
 import { PostModalComponent } from './post-modal/post-modal.component';
@@ -67,8 +65,8 @@ import {CreateArticleComponent} from './create-article/create-article.component'
 import { AdminComponent } from './admin/admin.component';
 import {AlertComponent} from './common-components/alert/alert.component';
 import {ColorPickerModule} from 'ngx-color-picker';
-import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
 import {SectionSeparatorComponent} from './common-components/section-separator/section-separator.component';
+import {AngularEditorModule} from '@kolkov/angular-editor';
 
 @NgModule({
   declarations: [
@@ -93,14 +91,12 @@ import {SectionSeparatorComponent} from './common-components/section-separator/s
     IconedInputComponent,
     SwitchButtonComponent,
     SlidingTextComponent,
-    LandingPageComponent,
     GeneralPipe,
     KeysPipe,
     OverlaySpinnerComponent,
     ContentModalComponent,
     ProfileNavbarComponent,
     FloatingButtonComponent,
-    MapComponent,
     PostsComponent,
     PostComponent,
     PostModalComponent,
@@ -138,7 +134,8 @@ import {SectionSeparatorComponent} from './common-components/section-separator/s
     ModalModule.forRoot(),
     ChartsModule,
     ColorPickerModule,
-    CKEditorModule
+    HttpClientModule,
+    AngularEditorModule
   ],
   exports: [
   ],

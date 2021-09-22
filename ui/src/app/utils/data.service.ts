@@ -193,4 +193,29 @@ export class DataService {
       .pipe(catchError(this.handleError));
   }
 
+  updatePost(con: any) {
+    const apiURL = serverUrl + '/update-post';
+
+    const contact = Object.assign({}, con);
+    const formData: FormData = new FormData();
+    if (contact.image ) {
+      formData.append('file', this.dataURItoBlob(contact.image), contact.fileName);
+      formData.append('filename', contact.fileName);
+      contact.image = null;
+      contact.imageUrl = null;
+    } else {
+      formData.append('file', null);
+      formData.append('filename', '');
+    }
+
+    formData.append('post', JSON.stringify(contact));
+
+    const hdrs = new HttpHeaders();
+    hdrs.append('Content-Type', 'multipart/form-data');
+    hdrs.append('Accept', 'application/json');
+    return this.http.post(`${apiURL}`, formData, {headers: hdrs})
+      .pipe(map(this.extractData))
+      .pipe(catchError(this.handleError));
+  }
+
 }

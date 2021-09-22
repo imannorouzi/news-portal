@@ -43,33 +43,7 @@ export class ProfileComponent implements OnInit {
 
     this.zoom = 12;
 
-    // set current position
-    if (this.user.latitude === 0 ) {
-      this.setCurrentPosition();
-    }
 
-    // load Places Autocomplete
-    this.mapsAPILoader.load().then(() => {
-      const autocomplete = new google.maps.places.Autocomplete(this.searchInput.nativeElement, {
-        types: ['address']
-      });
-      autocomplete.addListener('place_changed', () => {
-        this.ngZone.run(() => {
-          // get the place result
-          const place: google.maps.places.PlaceResult = autocomplete.getPlace();
-
-          // verify result
-          if (place.geometry === undefined || place.geometry === null) {
-            return;
-          }
-
-          // set latitude, longitude and zoom
-          this.user.latitude = place.geometry.location.lat();
-          this.user.longitude = place.geometry.location.lng();
-          this.zoom = 12;
-        });
-      });
-    });
   }
 
 
@@ -133,39 +107,4 @@ export class ProfileComponent implements OnInit {
     this.imageCropperModal.hide();
   }
 
-  markerMoved(e) {
-
-    this.user.latitude = e.coords.lat;
-    this.user.longitude = e.coords.lng;
-
-    const geocoder = new google.maps.Geocoder;
-    geocoder.geocode({'location': e.coords}, (res, status) => {
-      if (status === google.maps.GeocoderStatus.OK && res.length) {
-        this.ngZone.run(() => this.user.farsiAddress1 = res[0].formatted_address);
-      }
-    });
-  }
-
-  mapClicked(e) {
-
-    this.user.latitude = e.coords.lat;
-    this.user.longitude = e.coords.lng;
-
-    const geocoder = new google.maps.Geocoder;
-    geocoder.geocode({'location': e.coords}, (res, status) => {
-      if (status === google.maps.GeocoderStatus.OK && res.length) {
-        this.ngZone.run(() => this.user.farsiAddress1 = res[0].formatted_address);
-      }
-    });
-  }
-
-  private setCurrentPosition() {
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        this.user.latitude = position.coords.latitude;
-        this.user.longitude = position.coords.longitude;
-        this.zoom = 12;
-      });
-    }
-  }
 }
