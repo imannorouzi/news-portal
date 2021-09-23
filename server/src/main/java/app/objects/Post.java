@@ -82,12 +82,12 @@ public class Post {
         this.style = jo.has("style")   ? jo.getString("style") : "1";
         this.imageUrl = jo.has("imageUrl") && !"null".equals(imageUrl) ? jo.getString("imageUrl") : "";
 
-        JSONArray postSections = jo.getJSONArray("postSections");
+        /*JSONArray postSections = jo.getJSONArray("postSections");
         List<PostSection> ps = new ArrayList<>();
         for(int i = 0; i < postSections.length(); i++ ) {
             ps.add(new PostSection(postSections.getJSONObject(i)));
         }
-        this.setPostSections(ps);
+        this.setPostSections(ps);*/
 
         JSONArray co = jo.getJSONArray("categories");
         List<Category> categories = new ArrayList<>();

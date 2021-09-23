@@ -1,6 +1,7 @@
 package app.api;
 
 import app.objects.Post;
+import app.objects.PostSection;
 import app.objects.ResponseObject;
 import app.objects.User;
 import app.utils.FileStorageService;
@@ -46,13 +47,15 @@ public class PostAPIs {
 
     @GetMapping("/get-posts")
     public Response getposts(@AuthenticationPrincipal UserDetails u,
-                                @RequestParam("hint") String hint)  {
+                                @RequestParam(value = "hint", required = false) String hint)  {
 
         try {
+            List<Post> posts = repositoryFactory.getPostRepository().findAll();
 
-            List<Post> posts = null;
-            User user = repositoryFactory.getUserRepository().findByUsername(u.getUsername());
-
+            for( Post post: posts ){
+                List<PostSection> postSections = repositoryFactory.getPostSectionRepository().findPostSectionByPostId(post.getId());
+                post.setPostSections(postSections);
+            }
 
             return Response.ok(gson.toJson(new ResponseObject("OK", posts))).build();
 
@@ -126,6 +129,46 @@ public class PostAPIs {
 
 
         return Response.ok(gson.toJson(new ResponseObject("OK", post))).build();
+    }
+
+    @PostMapping("/update-post-section")
+    public Response updatePostSection(@AuthenticationPrincipal UserDetails u,
+                               @RequestParam(value = "file", required = false) MultipartFile file,
+                               @RequestParam("postSection") String postJsonString,
+                               @RequestParam(value = "filename", required = false) String filename) {
+
+
+        User user = repositoryFactory.getUserRepository().findByUsername(u.getUsername());
+        PostSection postSection;
+        try {
+            JSONObject jsonpost = new JSONObject(postJsonString);
+            postSection = new PostSection(jsonpost);
+
+            // check if any user has been registered with the same email
+
+            if(filename != null && !filename.isEmpty() && file != null) {
+                filename = "post_" + user.getId() + "_" + filename.replaceAll("\\s+", "");
+
+                String fileName = fileStorageService.storeFile(file, "files/post-section/" + filename, "/");
+
+                String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                        .path("/download/")
+                        .path(fileName)
+                        .toUriString();
+
+                postSection.setFileUrl(Utils.fixUri(fileDownloadUri));
+            }
+
+            postSection = repositoryFactory.getPostSectionRepository().save(postSection);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return Response.status(500).entity(gson.toJson(new ResponseObject("FAIL", ""))).build();
+        }
+
+
+        return Response.ok(gson.toJson(new ResponseObject("OK", postSection.getId()))).build();
     }
 
     @PermitAll

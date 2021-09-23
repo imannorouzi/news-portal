@@ -45,7 +45,7 @@
   </ul>
 
   <div class="bg-while" [hidden]="postSection.type !== 'TEXT'">
-    <ckeditor [config]="config" [editor]="Editor" [(ngModel)]="postSection.text" (ready)="onReady($event)"></ckeditor>
+    <ckeditor [(ngModel)]="postSection.text" [config]="config" [editor]="Editor" (ready)="onReady($event)"></ckeditor>
   </div>
 
   <div class="" *ngIf="postSection.type === 'VIDEO'">

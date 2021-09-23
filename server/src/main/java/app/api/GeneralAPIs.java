@@ -1,8 +1,10 @@
 package app.api;
 
+import app.Application;
 import app.mail.MailMessage;
 import app.objects.*;
 import app.utils.FileStorageService;
+import app.utils.Utils;
 import com.amazonaws.util.json.JSONException;
 import com.amazonaws.util.json.JSONObject;
 import com.google.gson.Gson;
@@ -15,11 +17,16 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.annotation.security.PermitAll;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.File;
@@ -86,29 +93,31 @@ public class GeneralAPIs {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @PermitAll
     @PostMapping("/upload-file")
-    public Response uploadFile(@FormDataParam("file") InputStream uploadedInputStream,
-                               @FormDataParam("file") FormDataContentDisposition fileDetail,
-                               @FormDataParam("file") FormDataBodyPart body) throws JSONException, IOException {
+    public Response uploadFile(@AuthenticationPrincipal UserDetails u,
+                               @RequestParam(value = "file", required = false) MultipartFile file,
+                               @FormDataParam("file") FormDataBodyPart body,
+                               @RequestParam(value = "filename", required = false) String filename) {
 
-
-        final String SRC_UPLOAD_PATH = "./ui/app/images/event/";
-
-
-        String uploadedFileName =  fileDetail.getFileName();
-        String uniqueUploadedFileName =  (uploadedFileName + "_"
-                + (new Date()).toString()).replace(" ", "").replace(":","")
-                + "." + body.getMediaType().getSubtype();
-
-        Files.copy(uploadedInputStream, Paths.get(SRC_UPLOAD_PATH + uniqueUploadedFileName),
-                StandardCopyOption.REPLACE_EXISTING);
-
-
-        Gson gson = new Gson();
         try {
+            String fileUrl = "";
+            if(filename != null && !filename.isEmpty() && file != null) {
 
-            String url = "/images/event/" + uniqueUploadedFileName;
+                String uniqueUploadedFileName =  (
+                        (new Date()).toString()).replace(" ", "").replace(":","")
+                        + "_" + filename;
 
-            return Response.ok(gson.toJson(new ResponseObject("OK", url)))
+
+                String fileName = fileStorageService.storeFile(file, "files/" + uniqueUploadedFileName, "/");
+
+                String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                        .path("/download/")
+                        .path(fileName)
+                        .toUriString();
+
+                fileUrl = Utils.fixUri(fileDownloadUri);
+            }
+            Gson gson = new Gson();
+            return Response.ok(gson.toJson(new ResponseObject("OK", fileUrl)))
                     .build();
 
         } catch (Exception e) {
@@ -153,5 +162,32 @@ public class GeneralAPIs {
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
         return ResponseEntity.ok(new InputStreamResource(Objects.requireNonNull(classloader.getResourceAsStream("public/index.html"))));
 
+    }
+
+    @GetMapping("/download/{dir}/{type}/{fileName:.+}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName,
+                                                 @PathVariable String type,
+                                                 @PathVariable String dir,
+                                                 HttpServletRequest request) throws Exception {
+        // type could be venues, users, contacts
+        Resource resource = fileStorageService.loadFileAsResource(fileName, dir + "/" + type);
+
+        // Try to determine file's content type
+        String contentType = null;
+        try {
+            contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+        } catch (IOException ex) {
+            Application.logger.info("Could not determine file type.");
+        }
+
+        // Fallback to the default content type if type could not be determined
+        if(contentType == null) {
+            contentType = "application/octet-stream";
+        }
+
+        return ResponseEntity.ok()
+                .contentType(org.springframework.http.MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                .body(resource);
     }
 }

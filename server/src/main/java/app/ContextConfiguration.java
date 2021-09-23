@@ -76,6 +76,7 @@ public class ContextConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/authenticate").permitAll()
                 .antMatchers("/register").permitAll()
+                .antMatchers("/get-posts").permitAll()
 //                .antMatchers("/content/**").permitAll()
 //                .antMatchers("/uploadFile/**").permitAll()
                 .antMatchers("/download/**").permitAll()

@@ -6,6 +6,7 @@ import {environment} from '../../environments/environment';
 import {AuthService} from './auth.service';
 import {catchError, map} from 'rxjs/operators';
 import {Post} from '../post';
+import {PostSection} from '../post-section';
 
 const serverUrl = environment.serverUrl;
 
@@ -72,17 +73,17 @@ export class DataService {
   }
 
   getComments(eventId, page):  Observable<any> {
-      const apiURL = serverUrl + '/get-comments/' + eventId + '/' + page;
-      return this.http.get(apiURL, {}).pipe(map(this.extractData))
-        .pipe(catchError(this.handleError));
+    const apiURL = serverUrl + '/get-comments/' + eventId + '/' + page;
+    return this.http.get(apiURL, {}).pipe(map(this.extractData))
+      .pipe(catchError(this.handleError));
 
   }
   getCommentsGuest(eventId, page, uuid):  Observable<any> {
-      // It is a guest user
-      const apiURL = serverUrl + '/get-comments-guest';
-      return this.http.get(apiURL, {
-        params: {event_id: eventId, page: page, uuid: uuid}
-      });
+    // It is a guest user
+    const apiURL = serverUrl + '/get-comments-guest';
+    return this.http.get(apiURL, {
+      params: {event_id: eventId, page: page, uuid: uuid}
+    });
   }
 
   deleteComment(comment: any) {
@@ -175,7 +176,7 @@ export class DataService {
   }
 
   uploadFile(file: File) {
-    const apiURL = serverUrl + '/uploadFile';
+    const apiURL = serverUrl + '/upload-file';
 
     const formData: FormData = new FormData();
     if (file) {
@@ -218,4 +219,34 @@ export class DataService {
       .pipe(catchError(this.handleError));
   }
 
+  updatePostSection(ps: PostSection): Promise<any> {
+    const apiURL = serverUrl + '/update-post-section';
+
+    const postSection = Object.assign({}, ps);
+    const formData: FormData = new FormData();
+
+    return new Promise((resolve, reject) => {
+
+      if (postSection.file ) {
+        formData.append('file', this.dataURItoBlob(postSection.file), postSection.filename);
+        formData.append('filename', postSection.filename);
+        postSection.file = null;
+      } else {
+        formData.append('file', null);
+        formData.append('filename', '');
+      }
+
+      formData.append('postSection', JSON.stringify(postSection));
+
+      const hdrs = new HttpHeaders();
+      hdrs.append('Content-Type', 'multipart/form-data');
+      hdrs.append('Accept', 'application/json');
+      return this.http.post(`${apiURL}`, formData, {headers: hdrs})
+        .pipe(map(this.extractData))
+        .pipe(catchError(this.handleError))
+        .subscribe( () => {
+          resolve();
+        });
+    });
+  }
 }

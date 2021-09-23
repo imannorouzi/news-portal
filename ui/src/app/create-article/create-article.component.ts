@@ -10,6 +10,8 @@ import {ModalComponent} from '../common-components/ng-modal/modal.component';
 import {ImageCroppedEvent, ImageCropperComponent} from 'ngx-image-cropper';
 import {CommonService} from '../utils/common.service';
 import {AlertService} from '../utils/alert.service';
+import {map, switchMap} from 'rxjs/operators';
+import {of} from 'rxjs';
 
 @Component({
   selector: 'app-create-article',
@@ -34,6 +36,9 @@ export class CreateArticleComponent implements OnInit {
   // public Editor = DecoupledEditor;
   public message: string;
   post: Post = new Post();
+
+  image = '';
+  imageUrl = '';
 
   constructor(
     private authService: AuthService,
@@ -100,12 +105,14 @@ export class CreateArticleComponent implements OnInit {
   }
 
   onImageCropperModalOk() {
+    this.post.image = this.image;
+    this.post.imageUrl = this.imageUrl;
     this.imageCropperModal.hide();
   }
 
   imageCropped(event: ImageCroppedEvent) {
-    this.post.image = event.base64;
-    this.post.imageUrl = event.base64;
+    this.image = event.base64;
+    this.imageUrl = event.base64;
   }
 
   categoryClicked(message: string) {
@@ -138,18 +145,24 @@ export class CreateArticleComponent implements OnInit {
     this.post['userId'] = this.authService.userId;
     this.post['type'] = 'POST';
 
-    this.dataService.updatePost(this.post).subscribe(
-      (value: any) => {
-        if (value.msg === 'OK') {
-          if (value.object.imageUrl && this.commonService.getBase()) {
-            value.object.imageUrl = this.commonService.getBase() + value.object.imageUrl;
+    this.dataService.updatePost(this.post)
+      .pipe(
+        map(data => data),
+        switchMap(
+          (value) => {
+            if (value.msg === 'OK') {
+              return of(value.object.id);
+            }
+            return of(-1);
           }
-          this.postAdded.emit(value.object);
-        } else if (value.msg === 'CONTACT_EXISTS') {
-          this.alertService.warn('مخاطبی با این ایمیل قبلا ثبت شده است.');
-        } else if (value.msg === 'USER_EXISTS') {
-          this.alertService.warn('همکاری با این ایمیل ثبت شده است.');
-        }
+        )
+      )
+      .subscribe(
+      (postId: any) => {
+        this.uploadPostSections(postId).then( () => {
+          console.log('Uploaded');
+          this.postAdded.emit(postId);
+        });
       },
       (error: any) => {
         console.log(error);
@@ -161,5 +174,20 @@ export class CreateArticleComponent implements OnInit {
   loadImageFailed() {
     // show message
     console.log('failed');
+  }
+
+  public async uploadPostSections(postId) {
+    // set upload progress as 0 for all files
+
+    for (let i = 0; i < this.post.postSections.length && this.post.postSections[i].status !== 'removed'; ++i) {
+      try {
+        this.post.postSections[i].postId = postId;
+        await this.dataService.updatePostSection( this.post.postSections[i]);
+      } catch (error) {
+        // This is to update file status
+        console.error('Failed to upload post-section-' + (i));
+        throw error;
+      }
+    }
   }
 }

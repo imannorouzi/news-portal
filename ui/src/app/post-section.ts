@@ -1,11 +1,15 @@
 export class PostSection {
   id = -1;
-  type = ''; // IMAGE, FILE, VIDEO, AUDIO
+  postId = -1;
+  type = 'TEXT'; // TEXT, IMAGE, FILE, VIDEO, AUDIO
   imageUrl: './assets/images/home/1.png';
-  text: '';
+  text: '<p>Hello</p>';
   style: any = {};
+  status = '';
+  file = '';
+  filename = '';
 
-  constructor(type: string = '') {
+  constructor(type: string = 'TEXT') {
     this.type = type;
   }
 }

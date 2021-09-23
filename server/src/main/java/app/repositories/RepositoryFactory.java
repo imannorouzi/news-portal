@@ -1,16 +1,16 @@
 package app.repositories;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class RepositoryFactory {
 
-
-
     @Autowired
     PostRepository postRepository;
+
+    @Autowired
+    PostSectionRepository postSectionRepository;
 
     @Autowired
     CommentRepository commentRepository;
@@ -39,5 +39,9 @@ public class RepositoryFactory {
 
     public LocationRepository getLocationRepository() {
         return locationRepository;
+    }
+
+    public PostSectionRepository getPostSectionRepository() {
+        return postSectionRepository;
     }
 }

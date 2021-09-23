@@ -1,11 +1,9 @@
 package app.objects;
 
-import com.amazonaws.util.json.JSONArray;
 import com.amazonaws.util.json.JSONException;
 import com.amazonaws.util.json.JSONObject;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -21,11 +19,11 @@ public class PostSection {
              int id,
              int postId,
              String type,
-             String imageUrl,
+             String fileUrl,
              String text,
              List<PostSectionStyle> styles) {
 
-        this.imageUrl = "null".equals(imageUrl) ? "" : imageUrl;
+        this.fileUrl = "null".equals(fileUrl) ? "" : fileUrl;
         this.type = "null".equals(type) ? POST_SECTION_TYPE.UNKNOWN.name() : type;
         this.postId = postId;
         this.id = id;
@@ -46,8 +44,8 @@ public class PostSection {
     @Column(name = "post_id")
     Integer postId;
 
-    @Column(name = "image_url")
-    String imageUrl;
+    @Column(name = "file_url")
+    String fileUrl;
 
     @Column(name = "text")
     private String text;
@@ -55,14 +53,18 @@ public class PostSection {
     @Column(name = "type")
     private String type;
 
+    @Column(name = "status")
+    private String status;
+
     @OneToMany
     private List<PostSectionStyle> postSectionStyles;
 
     public PostSection(JSONObject jo) throws JSONException {
         this.id = jo.has("id") && jo.getInt("id") != 0 ? jo.getInt("id") : -1;
+        this.id = jo.has("postId") && jo.getInt("postId") != 0 ? jo.getInt("postId") : -1;
         this.type = jo.has("type") && !"".equals(jo.getString("type")) ?
                 jo.getString("type").toUpperCase() : POST_SECTION_TYPE.UNKNOWN.name();
-        this.imageUrl = jo.has("imageUrl") ? jo.getString("imageUrl") : "";
+        this.fileUrl = jo.has("fileUrl") ? jo.getString("fileUrl") : "";
         this.text = jo.has("text") ? jo.getString("text") : "";
 
         JSONObject psso = jo.getJSONObject("style");
@@ -91,12 +93,12 @@ public class PostSection {
         this.postId = postId;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getFileUrl() {
+        return fileUrl;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setFileUrl(String imageUrl) {
+        this.fileUrl = imageUrl;
     }
 
     public String getText() {
@@ -121,5 +123,13 @@ public class PostSection {
 
     public void setPostSectionStyles(List<PostSectionStyle> postSectionStyles) {
         this.postSectionStyles = postSectionStyles;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

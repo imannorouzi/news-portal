@@ -29,11 +29,10 @@ export class PostSectionComponent implements OnInit, AfterViewInit {
           'fontfamily', 'fontsize', '|',
           'alignment', '|',
           'fontColor', 'fontBackgroundColor', '|',
-          'bold', 'italic', 'strikethrough', 'underline', 'subscript', 'superscript', '|',
+          'bold', 'italic', 'strikethrough', 'underline', '|',
           'link', '|',
           'outdent', 'indent', '|',
-          'bulletedList', 'numberedList', 'todoList', '|',
-          'code', 'codeBlock', '|',
+          'bulletedList', 'numberedList', '|',
           'insertTable', '|',
           'uploadImage', 'blockQuote', '|',
           'undo', 'redo'
@@ -99,11 +98,14 @@ class UploadAdapter {
         console.log(file);
         this.dataService.uploadFile(file)
           .subscribe( (data: any) => {
-            console.log(data);
-            resolve( {
-              default: data.msg === 'OK' ? data.object : '/assets/images/home/1.png'
-            } );
-          });
+              console.log(data);
+              resolve( {
+                default: data.msg === 'OK' ? data.object : '/assets/images/home/1.png'
+              } );
+            },
+            error => {
+              console.error(error);
+            });
       }));
   }
 
@@ -113,3 +115,4 @@ class UploadAdapter {
   }
 
 }
+
