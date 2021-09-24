@@ -11,7 +11,7 @@ export class Post {
   imageUrl = '';
   created = new Date();
   tags: string[] = [];
-  style = 1;
+  style = '1';
   author = '';
   categories: Category[] = [];
   postSections: PostSection[] = [];
@@ -27,7 +27,7 @@ export class Post {
     imageUrl: string = '',
     created: Date = new Date(),
     tags: string[] = ['برچسب'],
-    style: number = 1,
+    style: string = '1',
     author: string = '',
     categories: Category[] = [],
     postSections: PostSection[] = [],

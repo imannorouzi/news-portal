@@ -66,3 +66,7 @@ a.btn-dark-inside{
   transition: all 0.2s;
   background-color: #afd274;
 }
+
+label {
+  margin-bottom: 2px;
+}

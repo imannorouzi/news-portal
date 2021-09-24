@@ -249,4 +249,11 @@ export class DataService {
         });
     });
   }
+
+  getTags() {
+    const url = '/api/get-tags';
+    return this.http.get(url)
+      .pipe(map(this.extractData))
+      .pipe(catchError(this.handleError));
+  }
 }

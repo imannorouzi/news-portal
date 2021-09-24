@@ -1,17 +1,18 @@
 import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 // import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
-import {DataService} from '../utils/data.service';
+import {DataService} from '../../utils/data.service';
 // import {CropperSettings, ImageCropperComponent} from "ngx-img-cropper";
 // import {ModalComponent} from "../common-components/ng-modal/modal.component";
-import {Post} from '../post';
-import {PostSection} from '../post-section';
-import {AuthService} from '../utils/auth.service';
-import {ModalComponent} from '../common-components/ng-modal/modal.component';
+import {Post} from '../../post';
+import {PostSection} from '../../post-section';
+import {AuthService} from '../../utils/auth.service';
+import {ModalComponent} from '../../common-components/ng-modal/modal.component';
 import {ImageCroppedEvent, ImageCropperComponent} from 'ngx-image-cropper';
-import {CommonService} from '../utils/common.service';
-import {AlertService} from '../utils/alert.service';
+import {CommonService} from '../../utils/common.service';
+import {AlertService} from '../../utils/alert.service';
 import {map, switchMap} from 'rxjs/operators';
 import {of} from 'rxjs';
+import {Category} from "../../category";
 
 @Component({
   selector: 'app-create-article',
@@ -39,6 +40,7 @@ export class CreateArticleComponent implements OnInit {
 
   image = '';
   imageUrl = '';
+  categories: Category[] = [ new Category(), new Category()];
 
   constructor(
     private authService: AuthService,

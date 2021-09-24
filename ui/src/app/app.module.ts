@@ -59,13 +59,14 @@ import { AudioPlayerComponent } from './audio-player/audio-player.component';
 import { ChartComponent } from './chart/chart.component';
 import {ChartsModule} from 'ng2-charts';
 import {PostSectionComponent} from './post-section/post-section.component';
-import {CreateArticleComponent} from './create-article/create-article.component';
+import {CreateArticleComponent} from './admin/create-article/create-article.component';
 import { AdminComponent } from './admin/admin.component';
 import {AlertComponent} from './common-components/alert/alert.component';
 import {ColorPickerModule} from 'ngx-color-picker';
 import {SectionSeparatorComponent} from './common-components/section-separator/section-separator.component';
 import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
 import { AdminPostsComponent } from './admin/admin-posts/admin-posts.component';
+import { CreateTagsComponent } from './admin/create-tags/create-tags.component';
 
 @NgModule({
   declarations: [
@@ -109,7 +110,8 @@ import { AdminPostsComponent } from './admin/admin-posts/admin-posts.component';
     AdminComponent,
     AlertComponent,
     SectionSeparatorComponent,
-    AdminPostsComponent
+    AdminPostsComponent,
+    CreateTagsComponent
   ],
   imports: [
     BrowserModule,

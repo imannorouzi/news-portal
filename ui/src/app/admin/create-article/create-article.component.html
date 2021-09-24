@@ -1,10 +1,13 @@
 <div class="container post-container p-3 container-shadow">
+  <div class="text-left">
+    <a class="app-button secondary" routerLink="/admin"><i class="fa fa-arrow-left"></i></a>
+  </div>
   <div [class]="'text-center justify-content-center mb-3 bg-white'
       + (post.imageUrl ? '' : 'image-container')">
     <div class="m-auto text-center">
       <img class=" w-100" (click)="onImageClick()" [src]="post.imageUrl">
       <div *ngIf="!post.imageUrl" class="m-5">
-        <a [routerLink]="" class="btn-white-inside" (click)="onImageClick()">عکس</a>
+        <a [routerLink]="" class="app-button secondary" (click)="onImageClick()">عکس</a>
       </div>
     </div>
 
@@ -33,7 +36,31 @@
     <textarea id="excerpt" rows="8" placeholder="خلاصه و متن تلگرام" [(ngModel)]="post.excerpt" class="mb-2 bg-white"></textarea>
   </div>
 
-  <a [routerLink]="" class="btn-white-inside" (click)="updatePost()">ذخیره</a>
+  <app-create-tags #tags></app-create-tags>
+
+
+  <div class="form-group row" >
+    <label class="col-md-3 col-form-label text-right font-heading">قیافه</label>
+    <div class="col-md-9 text-right btn-group btn-group-toggle ltr" data-toggle="type">
+      <label class="btn btn-outline-primary " [class.active]="post.style === '2'">
+        <input type="radio" [(ngModel)]="post.style" class="form-control" checked value="2"> معمولی
+      </label>
+      <label class="btn btn-outline-primary" [class.active]="post.style === '1'">
+        <input type="radio" [(ngModel)]="post.style" class="form-control" value="1"> مهم
+      </label>
+    </div>
+  </div>
+
+  <div class="form-group " >
+    <label class="l col-form-label text-right font-heading">دسته‌ها</label>
+    <div class="text-left">
+      <label class="mr-3"  *ngFor="let cat of categories">
+        <input type="checkbox" [(ngModel)]="cat.checked" class="">  {{cat.name}}
+      </label>
+    </div>
+  </div>
+
+  <a [routerLink]="" class="btn-white-inside font-heading" (click)="updatePost()">ذخیره</a>
 
 </div>
 
@@ -69,7 +96,7 @@
   </ng-container>
   <ng-container class="app-modal-footer">
     <div class="text-right">
-      <button type="button" class="btn primary" (click)="onImageCropperModalOk()">خوبه</button>
+      <button type="button" class="app-button" (click)="onImageCropperModalOk()">خوبه</button>
     </div>
   </ng-container>
 </app-modal>
