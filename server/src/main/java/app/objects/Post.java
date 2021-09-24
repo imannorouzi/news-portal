@@ -16,7 +16,7 @@ public class Post {
     }
 
     /**
-     * Created by Pooyan on 12/11/2017.
+     * Created by puyan on 12/11/2017.
      */
 
     public enum POST_TYPE {POST, AUDIO, VIDEO, POLL, STRIKE, UNKNOWN}
@@ -49,6 +49,7 @@ public class Post {
     @Column(name = "style")
     String style;
 
+    @Lob
     @Column(name = "excerpt")
     String excerpt;
 
@@ -61,12 +62,10 @@ public class Post {
     @Column(name = "link")
     String link;
 
-    @ManyToMany
+    @Transient
     List<Category> categories;
-
-    @OneToMany
+    @Transient
     List<PostSection> postSections;
-
 
     public Post(JSONObject jo) throws JSONException {
         this.id = jo.has("id") && jo.getInt("id") != 0 ? jo.getInt("id") : -1;

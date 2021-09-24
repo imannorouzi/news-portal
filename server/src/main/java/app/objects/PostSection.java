@@ -32,7 +32,7 @@ public class PostSection {
     }
 
     /**
-     * Created by Pooyan on 12/11/2017.
+     * Created by puyan on 12/11/2017.
      */
 
     public enum POST_SECTION_TYPE {IMAGE, FILE, VIDEO, AUDIO, UNKNOWN}
@@ -47,6 +47,7 @@ public class PostSection {
     @Column(name = "file_url")
     String fileUrl;
 
+    @Lob
     @Column(name = "text")
     private String text;
 
@@ -56,12 +57,12 @@ public class PostSection {
     @Column(name = "status")
     private String status;
 
-    @OneToMany
+    @Transient
     private List<PostSectionStyle> postSectionStyles;
 
     public PostSection(JSONObject jo) throws JSONException {
         this.id = jo.has("id") && jo.getInt("id") != 0 ? jo.getInt("id") : -1;
-        this.id = jo.has("postId") && jo.getInt("postId") != 0 ? jo.getInt("postId") : -1;
+        this.postId = jo.has("postId") && jo.getInt("postId") != 0 ? jo.getInt("postId") : -1;
         this.type = jo.has("type") && !"".equals(jo.getString("type")) ?
                 jo.getString("type").toUpperCase() : POST_SECTION_TYPE.UNKNOWN.name();
         this.fileUrl = jo.has("fileUrl") ? jo.getString("fileUrl") : "";

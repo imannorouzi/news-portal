@@ -1,4 +1,5 @@
 import {PostSection} from './post-section';
+import {Category} from "./category";
 
 export class Post {
   id = -1;
@@ -12,7 +13,7 @@ export class Post {
   tags: string[] = [];
   style = 1;
   author = '';
-  categories: string[] = [];
+  categories: Category[] = [];
   postSections: PostSection[] = [];
   image = '';
   filename = '';
@@ -28,7 +29,7 @@ export class Post {
     tags: string[] = ['برچسب'],
     style: number = 1,
     author: string = '',
-    categories: string[] = [],
+    categories: Category[] = [],
     postSections: PostSection[] = [],
     image: string = '',
     filename: string = '') {

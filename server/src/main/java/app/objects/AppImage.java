@@ -4,7 +4,7 @@ import com.amazonaws.util.json.JSONException;
 import com.amazonaws.util.json.JSONObject;
 
 /**
- * Created by Pooyan on 3/20/2018.
+ * Created by puyan on 3/20/2018.
  */
 public class AppImage {
 

@@ -1,9 +1,6 @@
 package app.api;
 
-import app.objects.Post;
-import app.objects.PostSection;
-import app.objects.ResponseObject;
-import app.objects.User;
+import app.objects.*;
 import app.utils.FileStorageService;
 import app.utils.Utils;
 import com.amazonaws.util.json.JSONObject;
@@ -17,6 +14,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.annotation.security.PermitAll;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,10 +49,18 @@ public class PostAPIs {
 
         try {
             List<Post> posts = repositoryFactory.getPostRepository().findAll();
+            for(Post post: posts) {
+                List<PostMeta> catPostMetas = repositoryFactory.getPostMetaRepository()
+                        .findPostMetaByPostIdAndAttribute(post.getId(), "category");
+                List<Category> categories = new ArrayList<>();
+                for(PostMeta pm: catPostMetas) {
+                    categories.add(new Category(pm.getValue()));
+                }
+                post.setCategories(categories);
 
-            for( Post post: posts ){
-                List<PostSection> postSections = repositoryFactory.getPostSectionRepository().findPostSectionByPostId(post.getId());
-                post.setPostSections(postSections);
+                post.setPostSections(
+                        repositoryFactory.getPostSectionRepository().findPostSectionByPostId(post.getId())
+                );
             }
 
             return Response.ok(gson.toJson(new ResponseObject("OK", posts))).build();
@@ -119,7 +125,17 @@ public class PostAPIs {
 
             post.setUserId(user.getId());
 
-            post = repositoryFactory.getPostRepository().save(post);
+            Post savedPost = repositoryFactory.getPostRepository().save(post);
+            post.setId(savedPost.getId());
+            for( Category cat: post.getCategories()){
+                if( cat.getId() == -1) {
+                    cat = repositoryFactory.getCategoryRepository().save(cat);
+                }
+                PostMeta postMeta = new PostMeta(savedPost.getId(), "category", cat.getName());
+                repositoryFactory.getPostMetaRepository().save(postMeta);
+            }
+
+            // post sections will be saved in subsequent requests from the UI
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -159,7 +175,12 @@ public class PostAPIs {
                 postSection.setFileUrl(Utils.fixUri(fileDownloadUri));
             }
 
-            postSection = repositoryFactory.getPostSectionRepository().save(postSection);
+            PostSection savedPostSection = repositoryFactory.getPostSectionRepository().save(postSection);
+            postSection.setId(savedPostSection.getId());
+            for(PostSectionStyle pss: postSection.getPostSectionStyles()){
+                pss.setPostSectionId(postSection.getId());
+                repositoryFactory.getPostSectionStyleRepository().save(pss);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

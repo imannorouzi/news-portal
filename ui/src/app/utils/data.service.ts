@@ -169,7 +169,7 @@ export class DataService {
   }
 
   getPosts(): Observable<any> {
-    const url = '/assets/data/post.json';
+    const url = '/api/get-posts';
     return this.http.get(url)
       .pipe(map(this.extractData))
       .pipe(catchError(this.handleError));

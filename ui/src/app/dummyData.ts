@@ -1,4 +1,5 @@
 import {Post} from './post';
+import {Category} from "./category";
 
 export class DummyData {
 
@@ -15,7 +16,7 @@ export class DummyData {
       tags: ['برچسب'],
       style: 1,
       author: 'کاوه آهنگر',
-      categories: ['خبر', 'تحلیل', 'فلسفه'],
+      categories: [new Category()],
       postSections: [],
       image: '',
       filename: ''
@@ -31,7 +32,7 @@ export class DummyData {
       tags: ['برچسب', 'افغانستان', 'طالبان'],
       style: 2,
       author: 'کاوه آهنگر',
-      categories: ['خبر', 'تحلیل', 'فلسفه'],
+      categories: [new Category()],
       postSections: [],
       image: '',
       filename: ''
@@ -47,7 +48,7 @@ export class DummyData {
       tags: ['برچسب'],
       style: 2,
       author: 'کاوه آهنگر',
-      categories: ['خبر', 'تحلیل', 'فلسفه'],
+      categories: [new Category()],
       postSections: [],
       image: '',
       filename: ''
@@ -63,7 +64,7 @@ export class DummyData {
       tags: ['برچسب'],
       style: 2,
       author: 'کاوه آهنگر',
-      categories: ['خبر', 'تحلیل', 'فلسفه'],
+      categories: [new Category()],
       postSections: [],
       image: '',
       filename: ''

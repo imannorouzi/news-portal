@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
- * Created by Pooyan on 12/11/2017.
+ * Created by puyan on 12/11/2017.
  */
 
 @Entity(name = "wk_comment")

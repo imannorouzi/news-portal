@@ -65,6 +65,7 @@ import {AlertComponent} from './common-components/alert/alert.component';
 import {ColorPickerModule} from 'ngx-color-picker';
 import {SectionSeparatorComponent} from './common-components/section-separator/section-separator.component';
 import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
+import { AdminPostsComponent } from './admin/admin-posts/admin-posts.component';
 
 @NgModule({
   declarations: [
@@ -107,7 +108,8 @@ import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
     CreateArticleComponent,
     AdminComponent,
     AlertComponent,
-    SectionSeparatorComponent
+    SectionSeparatorComponent,
+    AdminPostsComponent
   ],
   imports: [
     BrowserModule,

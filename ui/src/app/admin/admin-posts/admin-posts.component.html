@@ -1,0 +1,12 @@
+<div class="  post-container ">
+  <div class="text-center owl-container" *ngIf="!loading && (commonService.isEmpty(posts))">
+    <div>چیزی پیدا نکردم</div>
+  </div>
+
+  <spinner [showing]="loading" #spinner></spinner>
+
+  <div class="post" *ngFor="let item of posts">
+    <app-post [post]="item">
+    </app-post>
+  </div>
+</div>

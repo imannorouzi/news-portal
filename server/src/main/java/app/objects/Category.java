@@ -13,15 +13,14 @@ public class Category {
     public Category() {}
 
     public Category(
-             int id,
              String name) {
-
-        this.id = id;
         this.name = name;
     }
 
+
+
     /**
-     * Created by Pooyan on 12/11/2017.
+     * Created by puyan on 12/11/2017.
      */
 
     public enum CONTACT_TYPE {EMPLOYEE, CONTACT, UNKNOWN}
@@ -35,6 +34,14 @@ public class Category {
 
     public Category(JSONObject jo) throws JSONException {
         this.id = jo.has("id") && jo.getInt("id") != 0 ? jo.getInt("id") : -1;
+        this.name = jo.has("name") ? jo.getString("name") : "";
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
 }

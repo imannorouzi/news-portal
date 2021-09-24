@@ -12,7 +12,7 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 
 /**
- * Created by Pooyan on 12/11/2017.
+ * Created by puyan on 12/11/2017.
  */
 @Entity(name = "wk_venue")
 public class Location {
