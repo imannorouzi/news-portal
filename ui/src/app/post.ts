@@ -1,5 +1,6 @@
 import {PostSection} from './post-section';
-import {Category} from "./category";
+import {Category} from './category';
+import {Tag} from './tag';
 
 export class Post {
   id = -1;
@@ -10,7 +11,7 @@ export class Post {
   type = '';
   imageUrl = '';
   created = new Date();
-  tags: string[] = [];
+  tags: Tag[] = [];
   style = '1';
   author = '';
   categories: Category[] = [];
@@ -23,11 +24,11 @@ export class Post {
     title: string = '',
     excerpt: string = '',
     status: string = '',
-    type: string = '',
+    type: string = 'ARTICLE',
     imageUrl: string = '',
     created: Date = new Date(),
-    tags: string[] = ['برچسب'],
-    style: string = '1',
+    tags: Tag[] = [],
+    style: string = '2',
     author: string = '',
     categories: Category[] = [],
     postSections: PostSection[] = [],

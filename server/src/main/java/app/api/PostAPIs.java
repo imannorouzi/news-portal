@@ -6,6 +6,10 @@ import app.utils.Utils;
 import com.amazonaws.util.json.JSONObject;
 import com.google.gson.Gson;
 import app.repositories.RepositoryFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.annotation.security.PermitAll;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,10 +37,6 @@ public class PostAPIs {
         this.fileStorageService = fileStorageService;
     }
 
-//    @Autowired
-//    private BCryptPasswordEncoder bCryptPasswordEncoder;
-
-
     @GetMapping("/post/{id}")
     public Post getpost(@PathVariable String id){
         int blogId = Integer.parseInt(id);
@@ -44,26 +45,40 @@ public class PostAPIs {
 
 
     @GetMapping("/get-posts")
-    public Response getposts(@AuthenticationPrincipal UserDetails u,
-                                @RequestParam(value = "hint", required = false) String hint)  {
-
+    public Response getPosts(@AuthenticationPrincipal UserDetails u,
+                             @RequestParam(value = "page") int page,
+                             @RequestParam(value = "size") int size,
+                             @RequestParam(value = "attribute", required = false) String attribute,
+                             @RequestParam(value = "value",required = false) String value,
+                             @RequestParam(value = "hint", required = false) String hint)  {
         try {
-            List<Post> posts = repositoryFactory.getPostRepository().findAll();
-            for(Post post: posts) {
-                List<PostMeta> catPostMetas = repositoryFactory.getPostMetaRepository()
-                        .findPostMetaByPostIdAndAttribute(post.getId(), "category");
-                List<Category> categories = new ArrayList<>();
-                for(PostMeta pm: catPostMetas) {
-                    categories.add(new Category(pm.getValue()));
-                }
-                post.setCategories(categories);
+            PostAttribute postAttribute = null;
 
-                post.setPostSections(
-                        repositoryFactory.getPostSectionRepository().findPostSectionByPostId(post.getId())
-                );
+            if (!"null".equals(attribute) &&
+                    attribute != null &&
+                    !"null".equals(value) &&
+                    value != null){
+                postAttribute = new PostAttribute(attribute, value);
             }
+            List<Post> posts = getPosts(page, size, postAttribute);
 
             return Response.ok(gson.toJson(new ResponseObject("OK", posts))).build();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(500).entity(gson.toJson(new ResponseObject("FAIL", e.getMessage()))).build();
+        }
+    }
+
+    @GetMapping("/get-post/{postId}")
+    public Response getPost(@AuthenticationPrincipal UserDetails u,
+                            @PathVariable(value = "postId") int postId )  {
+        try {
+            Post post = repositoryFactory.getPostRepository().findPostById(postId);
+            post.setPostSections(
+                    repositoryFactory.getPostSectionRepository().findPostSectionByPostId(post.getId())
+            );
+            return Response.ok(gson.toJson(new ResponseObject("OK", post))).build();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -80,12 +95,11 @@ public class PostAPIs {
 
             Optional<Post> pst = repositoryFactory.getPostRepository().findById(jsonObject.getInt("postId"));
             if(pst.isPresent()){
-//                pst.get().setStatus(Post.STATUS.valueOf(jsonObject.getString("status")));
                 pst.get().setStatus(jsonObject.getString("status"));
                 repositoryFactory.getPostRepository().save(pst.get());
-                return new ResponseObject("OK", pst);
+                return new ResponseObject("OK", gson.toJson(pst));
             }else{
-                return new ResponseObject("FAIL", pst);
+                return new ResponseObject("FAIL", gson.toJson(pst));
             }
 
         } catch (Exception e) {
@@ -94,17 +108,52 @@ public class PostAPIs {
         }
     }
 
+    @PostMapping("/update-post-attribute/{postId}")
+    public Response updatePostAttribute(@AuthenticationPrincipal UserDetails user,
+                                        @PathVariable(value = "postId") int postId,
+                                        @RequestBody String objectString){
 
+        Gson gson = new Gson();
+        try {
+            PostAttribute postAttribute = gson.fromJson(objectString, PostAttribute.class);
+
+            Optional<Post> pst = repositoryFactory.getPostRepository().findById(postId);
+            if(pst.isPresent()){
+                switch (postAttribute.getAttribute()) {
+                    case "status":
+                        pst.get().setStatus(postAttribute.getValue());
+                        break;
+                    case "author":
+                        pst.get().setAuthor(postAttribute.getValue());
+                        break;
+                    case "type":
+                        pst.get().setType(postAttribute.getValue());
+                        break;
+                    case "style":
+                        pst.get().setStyle(postAttribute.getValue());
+                        break;
+                }
+                repositoryFactory.getPostRepository().save(pst.get());
+                return Response.ok().entity(gson.toJson(new ResponseObject("OK", pst.get()))).build();
+            }else{
+                return Response.status(500).entity(gson.toJson(new ResponseObject("FAIL", ""))).build();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(500).entity(gson.toJson(new ResponseObject("FAIL", ""))).build();
+        }
+    }
+
+    @PermitAll
     @PostMapping("/update-post")
     public Response updatePost(@AuthenticationPrincipal UserDetails u,
-                                  @RequestParam(value = "file", required = false) MultipartFile file,
-                                  @RequestParam("post") String postJsonString,
-                                  @RequestParam(value = "filename", required = false) String filename) {
-
-
-        User user = repositoryFactory.getUserRepository().findByUsername(u.getUsername());
+                               @RequestParam(value = "file", required = false) MultipartFile file,
+                               @RequestParam("post") String postJsonString,
+                               @RequestParam(value = "filename", required = false) String filename) {
         Post post;
         try {
+            User user = repositoryFactory.getUserRepository().findByUsername(u.getUsername());
             JSONObject jsonpost = new JSONObject(postJsonString);
             post = new Post(jsonpost);
 
@@ -125,16 +174,7 @@ public class PostAPIs {
 
             post.setUserId(user.getId());
 
-            Post savedPost = repositoryFactory.getPostRepository().save(post);
-            post.setId(savedPost.getId());
-            for( Category cat: post.getCategories()){
-                if( cat.getId() == -1) {
-                    cat = repositoryFactory.getCategoryRepository().save(cat);
-                }
-                PostMeta postMeta = new PostMeta(savedPost.getId(), "category", cat.getName());
-                repositoryFactory.getPostMetaRepository().save(postMeta);
-            }
-
+            post = repositoryFactory.getPostRepository().save(post);
             // post sections will be saved in subsequent requests from the UI
 
         } catch (Exception e) {
@@ -143,74 +183,90 @@ public class PostAPIs {
             return Response.status(500).entity(gson.toJson(new ResponseObject("FAIL", ""))).build();
         }
 
-
         return Response.ok(gson.toJson(new ResponseObject("OK", post))).build();
     }
-
-    @PostMapping("/update-post-section")
-    public Response updatePostSection(@AuthenticationPrincipal UserDetails u,
-                               @RequestParam(value = "file", required = false) MultipartFile file,
-                               @RequestParam("postSection") String postJsonString,
-                               @RequestParam(value = "filename", required = false) String filename) {
-
-
-        User user = repositoryFactory.getUserRepository().findByUsername(u.getUsername());
-        PostSection postSection;
-        try {
-            JSONObject jsonpost = new JSONObject(postJsonString);
-            postSection = new PostSection(jsonpost);
-
-            // check if any user has been registered with the same email
-
-            if(filename != null && !filename.isEmpty() && file != null) {
-                filename = "post_" + user.getId() + "_" + filename.replaceAll("\\s+", "");
-
-                String fileName = fileStorageService.storeFile(file, "files/post-section/" + filename, "/");
-
-                String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                        .path("/download/")
-                        .path(fileName)
-                        .toUriString();
-
-                postSection.setFileUrl(Utils.fixUri(fileDownloadUri));
-            }
-
-            PostSection savedPostSection = repositoryFactory.getPostSectionRepository().save(postSection);
-            postSection.setId(savedPostSection.getId());
-            for(PostSectionStyle pss: postSection.getPostSectionStyles()){
-                pss.setPostSectionId(postSection.getId());
-                repositoryFactory.getPostSectionStyleRepository().save(pss);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-
-            return Response.status(500).entity(gson.toJson(new ResponseObject("FAIL", ""))).build();
-        }
-
-
-        return Response.ok(gson.toJson(new ResponseObject("OK", postSection.getId()))).build();
-    }
-
     @PermitAll
     @PostMapping("/delete-post")
     public Response deletePost( @AuthenticationPrincipal UserDetails u,
-                                   @RequestBody Integer id){
+                                @RequestBody Integer id){
 
         User user = repositoryFactory.getUserRepository().findByUsername(u.getUsername());
         Post post = null;
         try {
             post = repositoryFactory.getPostRepository().findPostById(id);
-            if(post != null && post.getUserId() == user.getId()){
-                repositoryFactory.getPostRepository().delete(post);
-                return Response.ok(gson.toJson(new ResponseObject("OK", post))).build();
-            }else{
-                return Response.ok(gson.toJson(new ResponseObject("FAIL", "NOT FOUND."))).build();
-            }
+            repositoryFactory.getPostRepository().delete(post);
+            return Response.ok().entity(gson.toJson(new ResponseObject("OK", ""))).build();
         } catch (Exception e) {
             e.printStackTrace();
-            return Response.ok(gson.toJson(new ResponseObject("FAIL", e.getMessage()))).build();
+            return Response.status(500).entity(gson.toJson(new ResponseObject("FAIL", e.getMessage()))).build();
+        }
+    }
+
+    @GetMapping("/get-categories")
+    public Response getCategories(@AuthenticationPrincipal UserDetails u,
+                                  @RequestParam(value = "hint", required = false) String hint)  {
+        try {
+            List<Category> cate = repositoryFactory.getCategoryRepository().findAll();
+            return Response.ok(gson.toJson(new ResponseObject("OK", cate))).build();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(500).entity(gson.toJson(new ResponseObject("FAIL", e.getMessage()))).build();
+        }
+    }
+
+    @GetMapping("/get-tags")
+    public Response getTags(@AuthenticationPrincipal UserDetails u,
+                            @RequestParam(value = "hint", required = false) String hint)  {
+        try {
+            List<Tag> tags = repositoryFactory.getTagRepository().findAll();
+            return Response.ok(gson.toJson(new ResponseObject("OK", tags))).build();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(500).entity(gson.toJson(new ResponseObject("FAIL", e.getMessage()))).build();
+        }
+    }
+
+    List<Post> getPosts(int page, int size, PostAttribute pa) {
+        Pageable sortedByIds = PageRequest
+                .of(page, size, Sort.by("id")
+                        .ascending());
+
+        List<Post> posts = new ArrayList<>();
+
+        if (pa == null) {
+            posts = repositoryFactory.getPostRepository().findAll(sortedByIds).getContent();
+        } else {
+//                PostAttribute pa = gson.fromJson(postAttribute, PostAttgson.fromJsonribute.class);
+            switch ( pa.getAttribute() ){
+                case "type":
+                    posts = repositoryFactory.getPostRepository().findAllByType(pa.getValue(), sortedByIds);
+                    break;
+                case "author":
+                    posts = repositoryFactory.getPostRepository().findAllByAuthor(pa.getValue(), sortedByIds);
+                    break;
+                case "status":
+                    posts = repositoryFactory.getPostRepository().findAllByStatus(pa.getValue(), sortedByIds);
+                    break;
+                case "category":
+
+                    List<Category> categories = repositoryFactory.getCategoryRepository().findAllByName(pa.getValue());
+                    posts = repositoryFactory.getPostRepository().findAllByCategoriesIn(categories, sortedByIds);
+                    break;
+                case "tag":
+                    List<Tag> tags = repositoryFactory.getTagRepository().findAllByName(pa.getValue());
+                    posts = repositoryFactory.getPostRepository().findAllByTagsIn(tags, sortedByIds);
+                    break;
+            }
+
         }
 
+        for(Post post: posts) {
+            post.setPostSections(
+                    repositoryFactory.getPostSectionRepository().findPostSectionByPostId(post.getId())
+            );
+        }
+        return posts;
     }
 }

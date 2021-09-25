@@ -27,13 +27,13 @@ public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    int id;
+    Integer id;
 
     @Column(name = "name")
     private String name;
 
     public Category(JSONObject jo) throws JSONException {
-        this.id = jo.has("id") && jo.getInt("id") != 0 ? jo.getInt("id") : -1;
+        this.id = jo.has("id") && jo.getInt("id") != 0 ? jo.getInt("id") : null;
         this.name = jo.has("name") ? jo.getString("name") : "";
     }
 

@@ -107,7 +107,7 @@ public class GeneralAPIs {
                         + "_" + filename;
 
 
-                String fileName = fileStorageService.storeFile(file, "files/" + uniqueUploadedFileName, "/");
+                String fileName = fileStorageService.storeFile(file, "files/file/" + uniqueUploadedFileName, "/");
 
                 String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                         .path("/download/")

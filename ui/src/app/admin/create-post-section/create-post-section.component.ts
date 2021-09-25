@@ -1,16 +1,17 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {DataService} from '../utils/data.service';
-import {PostSection} from '../post-section';
+import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {DataService} from '../../utils/data.service';
+import {PostSection} from '../../post-section';
 
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import {CKEditor5} from '@ckeditor/ckeditor5-angular/ckeditor';
 
 @Component({
-  selector: 'app-post-section',
-  templateUrl: './post-section.component.html',
-  styleUrls: ['./post-section.component.css']
+  selector: 'app-create-post-section',
+  templateUrl: './create-post-section.component.html',
+  styleUrls: ['./create-post-section.component.css']
 })
-export class PostSectionComponent implements OnInit, AfterViewInit {
+export class CreatePostSectionComponent implements OnInit, AfterViewInit {
+  @ViewChild('audioElement', {static: false}) audioElement: ElementRef;
   constructor(private dataService: DataService) { }
 
   borderDropDownOpened = false;
@@ -18,6 +19,7 @@ export class PostSectionComponent implements OnInit, AfterViewInit {
   @Output() removeClicked: EventEmitter<any> = new EventEmitter<any>();
   @Output() copyClicked: EventEmitter<any> = new EventEmitter<any>();
 
+  audios: any[] = [];
 
   public Editor = DecoupledEditor;
 
@@ -79,6 +81,26 @@ export class PostSectionComponent implements OnInit, AfterViewInit {
           console.error( error );
         } );*/
   }
+
+  audioFileChanged($event) {
+    const file = $event.target.files[0];
+    if (file) {
+      this.audios.push({
+        name: file.name,
+        file: file
+      });
+      setTimeout ( () => {
+        const audioEle = (<HTMLAudioElement>document.getElementById('audio-' + ( this.audios.length - 1 ) ));
+        audioEle.src = URL.createObjectURL(file);
+        audioEle.load();
+      }, 100);
+
+      /*$event.target.innerHTML = '';
+      this.audioElement.nativeElement.src = URL.createObjectURL(file);
+      this.audioElement.nativeElement.load();*/
+    }
+  }
+
 }
 
 class UploadAdapter {

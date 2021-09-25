@@ -44,7 +44,7 @@ export class ContentModalComponent implements OnInit, OnDestroy {
     return this.rootModal.hide();
   }
 
-  @HostListener('document:keydown', ['$post'])
+  @HostListener('document:keydown', ['$postSection'])
   keyboardInput(e: KeyboardEvent) {
     if (this.rootModal.isShown) {
       if (e.key === 'Escape' || e.key === 'Esc') {

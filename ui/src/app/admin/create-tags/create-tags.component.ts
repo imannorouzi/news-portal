@@ -18,7 +18,9 @@ export class CreateTagsComponent implements OnInit {
   ngOnInit(): void {
     this.dataService.getTags()
       .subscribe( tags => {
-        this.loadedTags = tags;
+        if ( tags.msg === 'OK' ) {
+          this.loadedTags = tags.object;
+        }
       }, error => console.error(error));
   }
 
@@ -26,7 +28,7 @@ export class CreateTagsComponent implements OnInit {
     if ( this.tag === '' || !this.tag) {
       return;
     }
-    this.tags.push(new Tag(-1, this.tag.trim().replace(' ', '_')));
+    this.tags.push(new Tag(this.tag.trim().replace(' ', '_')));
     this.tag = '';
   }
 
@@ -36,5 +38,9 @@ export class CreateTagsComponent implements OnInit {
 
   addTag(tag: any) {
     this.tags.push(tag);
+  }
+
+  getTags() {
+    return this.tags;
   }
 }

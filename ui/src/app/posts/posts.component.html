@@ -1,14 +1,17 @@
 <app-post-modal #postModal  [post]="selectedPost"></app-post-modal>
 <div class="  post-container ">
-    <div class="text-center owl-container" *ngIf="!loading && (commonService.isEmpty(posts))">
-      <img class="w-75"  src="../../../assets/images/home/owl.svg">
-      <div>چیزی پیدا نکردم</div>
-    </div>
+  <div class="text-center owl-container" *ngIf="!loading && (commonService.isEmpty(posts))">
+    <div>چیزی پیدا نکردم</div>
+  </div>
 
-    <spinner [showing]="loading" #spinner></spinner>
+  <spinner [showing]="loading" #spinner></spinner>
 
-    <div class="post" *ngFor="let item of posts" (click)="onPostClick(item)">
-        <app-post [post]="item">
-        </app-post>
-    </div>
+  <div class="post" *ngFor="let item of posts" (click)="onPostClick(item)">
+    <app-post [post]="item">
+    </app-post>
+  </div>
+  <div *ngIf="!loading && !loadingMore && !noMoreForward" class="text-center">
+    <a routerLink="" class=" font-heading" (click)="loadMore()">مطالب بیشتر</a>
+  </div>
+  <spinner [showing]="loadingMore"></spinner>
 </div>

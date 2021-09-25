@@ -5,8 +5,12 @@
 
   <spinner [showing]="loading" #spinner></spinner>
 
-  <div class="post" *ngFor="let item of posts">
-    <app-post [post]="item">
-    </app-post>
+  <div class="post" *ngFor="let item of posts; let i = index;">
+    <app-admin-post (removed)="removed(i)" [post]="item"></app-admin-post>
   </div>
+
+  <div *ngIf="!loading && !loadingMore && !noMoreForward" class="text-center">
+    <a [routerLink]="" class=" font-heading" (click)="loadMore()">مطالب بیشتر</a>
+  </div>
+  <spinner [showing]="loadingMore"></spinner>
 </div>

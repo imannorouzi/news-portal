@@ -19,7 +19,12 @@ export class AlertComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription = this.alertService.getMessage().subscribe(message => {
-      this.alerts.push({message: message});
+      const al = {message: message};
+      this.alerts.push(al);
+
+      setTimeout( () => {
+        this.alerts.splice(0, 1);
+      }, 4000);
     });
   }
 

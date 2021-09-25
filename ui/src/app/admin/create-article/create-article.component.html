@@ -27,7 +27,7 @@
   <div class="mb-4">
     <div *ngFor="let postSection of post.postSections; let i = index;">
       <app-section-separator (btnClicked)="addSection(i)"></app-section-separator>
-      <app-post-section (copyClicked)="copySection(i)" (removeClicked)="removeSection(i)" [postSection]="postSection" ></app-post-section>
+      <app-create-post-section (copyClicked)="copySection(i)" (removeClicked)="removeSection(i)" [postSection]="postSection" ></app-create-post-section>
       <app-section-separator (btnClicked)="addSection(i+1)" *ngIf="i === post.postSections.length - 1" ></app-section-separator>
     </div>
   </div>
@@ -36,31 +36,36 @@
     <textarea id="excerpt" rows="8" placeholder="خلاصه و متن تلگرام" [(ngModel)]="post.excerpt" class="mb-2 bg-white"></textarea>
   </div>
 
+  <div class="style-wrapper">
+    <div class="row " >
+      <label class="col-md-3 col-form-label text-right font-heading">قیافه</label>
+      <div class="col-md-9 text-right btn-group btn-group-toggle ltr" data-toggle="type">
+        <label class="btn btn-outline-primary " [class.active]="post.style === '2'">
+          <input type="radio" [(ngModel)]="post.style" class="" checked value="2"> معمولی
+        </label>
+        <label class="btn btn-outline-primary" [class.active]="post.style === '1'">
+          <input type="radio" [(ngModel)]="post.style" class="" value="1"> مهم
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="type-wrapper flexbox-parent-row">
+    <label class="font-heading">نوع پست</label>
+    <div class="type mr-2 flexbox-item-grow">
+      <select [(ngModel)]="post.type" class="ltr text-left">
+        <option value="ARTICLE">Article</option>
+        <option value="VOICE">Voice</option>
+        <option value="VOICE_ALBUM">Voice Album</option>
+      </select>
+    </div>
+  </div>
+
   <app-create-tags #tags></app-create-tags>
 
+  <app-create-categories #categories></app-create-categories>
 
-  <div class="form-group row" >
-    <label class="col-md-3 col-form-label text-right font-heading">قیافه</label>
-    <div class="col-md-9 text-right btn-group btn-group-toggle ltr" data-toggle="type">
-      <label class="btn btn-outline-primary " [class.active]="post.style === '2'">
-        <input type="radio" [(ngModel)]="post.style" class="form-control" checked value="2"> معمولی
-      </label>
-      <label class="btn btn-outline-primary" [class.active]="post.style === '1'">
-        <input type="radio" [(ngModel)]="post.style" class="form-control" value="1"> مهم
-      </label>
-    </div>
-  </div>
-
-  <div class="form-group " >
-    <label class="l col-form-label text-right font-heading">دسته‌ها</label>
-    <div class="text-left">
-      <label class="mr-3"  *ngFor="let cat of categories">
-        <input type="checkbox" [(ngModel)]="cat.checked" class="">  {{cat.name}}
-      </label>
-    </div>
-  </div>
-
-  <a [routerLink]="" class="btn-white-inside font-heading" (click)="updatePost()">ذخیره</a>
+  <a [routerLink]="" class="app-button font-heading" (click)="updatePost('PUBLISH')">ذخیره</a>
+  <a [routerLink]="" class="app-button secondary mr-2 font-heading" (click)="updatePost('DRAFT')">پیش‌نویس</a>
 
 </div>
 
@@ -80,9 +85,9 @@
 </modal>-->
 
 <app-modal #imageCropperModal
-       [modalTitle]="'اندازه عکس'"
-       [size]="'auto'"
-       [zIndex]="11">
+           [modalTitle]="'اندازه عکس'"
+           [size]="'auto'"
+           [zIndex]="11">
   <ng-container class="app-modal-body ">
     <div class="text-center">
       <image-cropper #cropper

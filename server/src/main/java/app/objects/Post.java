@@ -53,17 +53,18 @@ public class Post {
     @Column(name = "excerpt")
     String excerpt;
 
-    @Column(name = "tags")
-    String tags; // comma separated
-
     @Column(name = "author")
     String author;
 
     @Column(name = "link")
     String link;
 
-    @Transient
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     List<Category> categories;
+
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    List<Tag> tags;
+
     @Transient
     List<PostSection> postSections;
 
@@ -76,7 +77,6 @@ public class Post {
         this.author = jo.getString("author");
         this.link = jo.getString("link");
         this.excerpt = jo.getString("excerpt");
-        this.tags = jo.getString("tags");
         this.userId = jo.has("userId")   ? jo.getInt("userId") : 0;
         this.style = jo.has("style")   ? jo.getString("style") : "1";
         this.imageUrl = jo.has("imageUrl") && !"null".equals(imageUrl) ? jo.getString("imageUrl") : "";
@@ -94,6 +94,13 @@ public class Post {
             categories.add(new Category(co.getJSONObject(i)));
         }
         this.setCategories(categories);
+
+        JSONArray to = jo.getJSONArray("tags");
+        List<Tag> tags = new ArrayList<>();
+        for(int i = 0; i < to.length(); i++ ) {
+            tags.add(new Tag(to.getJSONObject(i)));
+        }
+        this.setTags(tags);
     }
 
     public int getId() {
@@ -176,11 +183,11 @@ public class Post {
         this.excerpt = excerpt;
     }
 
-    public String getTags() {
+    public List<Tag> getTags() {
         return tags;
     }
 
-    public void setTags(String tags) {
+    public void setTags(List<Tag> tags) {
         this.tags = tags;
     }
 

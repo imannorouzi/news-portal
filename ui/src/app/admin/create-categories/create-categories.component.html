@@ -1,0 +1,14 @@
+<div class="tags-wrapper">
+  <div class="form-group " >
+    <label class="l col-form-label text-right font-heading">دسته‌ها</label>
+    <div class="text-left">
+      <label class="mr-3"  *ngFor="let cat of categories">
+        <input type="checkbox" [(ngModel)]="cat.checked" class="">  {{cat.name}}
+      </label>
+    </div>
+  </div>
+
+  <div>
+    <input type="text" class="" (keydown.enter)="insertCategory()" [(ngModel)]="category"/>
+  </div>
+</div>

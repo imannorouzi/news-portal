@@ -50,9 +50,10 @@
 }
 
 .post-title-wrapper{
-  white-space: nowrap;
+  /*white-space: nowrap;*/
   text-overflow: ellipsis;
   overflow: hidden;
+  line-height: 2;
 }
 .dropdown-item{
   cursor: pointer;
@@ -115,5 +116,13 @@
   100% {
     margin-left: -.5%;
     margin-right: -.5%;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .post-item.style-1 .post-thumbnail,
+  .post-item.style-2 .post-thumbnail{
+    width: 100%;
+    float: none;
   }
 }

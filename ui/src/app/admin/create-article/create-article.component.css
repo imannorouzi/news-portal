@@ -70,3 +70,17 @@ a.btn-dark-inside{
 label {
   margin-bottom: 2px;
 }
+
+.style-wrapper {
+  border: 1px dashed #909090;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.type-wrapper {
+  border: 1px dashed #909090;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}

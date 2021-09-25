@@ -159,17 +159,22 @@ export class DataService {
       .pipe(catchError(this.handleError));
   }
 
-  getPost(id: string): Observable<any> {
-    const url = '/assets/data/post.json';
-    // const url = '/api/' + id;
-    // const url = `${this.heroesUrl}/${id}`;
-    return this.http.get(url)
+  getPosts(page: number, pageLimit: number, attribute: string, value: string): Observable<any> {
+    const url = '/api/get-posts/';
+    return this.http.get(url, {
+        params: {
+          page: page.toString(),
+          size: pageLimit.toString(),
+          attribute: attribute,
+          value: value
+        }
+      })
       .pipe(map(this.extractData))
       .pipe(catchError(this.handleError));
   }
 
-  getPosts(): Observable<any> {
-    const url = '/api/get-posts';
+  getPost(postId: string): Observable<any> {
+    const url = '/api/get-post/' + postId;
     return this.http.get(url)
       .pipe(map(this.extractData))
       .pipe(catchError(this.handleError));
@@ -219,6 +224,18 @@ export class DataService {
       .pipe(catchError(this.handleError));
   }
 
+  updatePostAttribute(postId: number, postAttribute: any) {
+    const apiURL = serverUrl + '/update-post-attribute/' + postId;
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    });
+    return this.http.post(`${apiURL}`, postAttribute, {headers: headers})
+      .pipe(map(this.extractData))
+      .pipe(catchError(this.handleError));
+  }
+
   updatePostSection(ps: PostSection): Promise<any> {
     const apiURL = serverUrl + '/update-post-section';
 
@@ -253,6 +270,24 @@ export class DataService {
   getTags() {
     const url = '/api/get-tags';
     return this.http.get(url)
+      .pipe(map(this.extractData))
+      .pipe(catchError(this.handleError));
+  }
+
+  getCategories() {
+    const url = '/api/get-categories';
+    return this.http.get(url)
+      .pipe(map(this.extractData))
+      .pipe(catchError(this.handleError));
+  }
+
+  deletePost(postId: any) {
+    const apiURL = serverUrl + '/delete-post';
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    });
+    return this.http.post(`${apiURL}`, postId, {headers: headers})
       .pipe(map(this.extractData))
       .pipe(catchError(this.handleError));
   }

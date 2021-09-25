@@ -11,11 +11,14 @@ import {ConditionsComponent} from './conditions/conditions.component';
 import {FaqComponent} from './faq/faq.component';
 import {PostsComponent} from './posts/posts.component';
 import {AdminComponent} from './admin/admin.component';
-import {CreateArticleComponent} from "./admin/create-article/create-article.component";
+import {CreateArticleComponent} from './admin/create-article/create-article.component';
+import {PostPageComponent} from './post-page/post-page.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'posts', pathMatch: 'full' },
+  { path: 'posts/:attribute/:value', component: PostsComponent},
   { path: 'posts', component: PostsComponent},
+  { path: 'post/:postId', component: PostPageComponent},
   { path: 'about-us', component: AboutUsComponent },
   { path: 'faq', component: FaqComponent },
   { path: 'conditions', component: ConditionsComponent },

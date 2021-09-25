@@ -1,5 +1,6 @@
 import {Injectable, OnInit} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
+import {Location} from '@angular/common';
 
 const homeUrls = [
   '/',
@@ -15,7 +16,8 @@ export class NavigationService {
 
   currentPath = '';
 
-  constructor(private router: Router) {
+  constructor(private router: Router,
+              private location: Location) {
     this.router.events.forEach((event) => {
       if (event instanceof NavigationEnd) {
         this.currentPath = this.router.url;
@@ -41,5 +43,9 @@ export class NavigationService {
 
   get currentLocation() {
     return this.currentPath;
+  }
+
+  back() {
+    this.location.back();
   }
 }

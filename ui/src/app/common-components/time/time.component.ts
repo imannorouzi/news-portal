@@ -79,18 +79,18 @@ export class TimeComponent implements OnInit {
     this.onTimeChanged();
   }
 
-  onHourScroll($post) {
-    $post.preventDefault();
-    if($post.wheelDeltaY>0){
+  onHourScroll($postSection) {
+    $postSection.preventDefault();
+    if($postSection.wheelDeltaY>0){
       this.listUp(this.hours);
     }else{
       this.listDown(this.hours);
     }
   }
 
-  onMinuteScroll($post) {
-    $post.preventDefault();
-    if($post.wheelDeltaY>0){
+  onMinuteScroll($postSection) {
+    $postSection.preventDefault();
+    if($postSection.wheelDeltaY>0){
       this.listUp(this.minutes);
     }else{
       this.listDown(this.minutes)

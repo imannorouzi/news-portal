@@ -5,9 +5,10 @@ import {DataService} from '../utils/data.service';
 import {DateService} from '../utils/date.service';
 import {AlertService} from '../utils/alert.service';
 import {CommonService} from '../utils/common.service';
-import {of} from 'rxjs';
-import {DummyData} from '../dummyData';
 import {PostModalComponent} from '../post-modal/post-modal.component';
+import {Subject} from 'rxjs';
+import {take} from 'rxjs/operators';
+import {ActivatedRoute, ActivationEnd, NavigationEnd, Router} from '@angular/router';
 
 @Component({
   selector: 'app-posts',
@@ -19,7 +20,11 @@ export class PostsComponent implements OnInit {
   @ViewChild('postModal', {static: true}) postModal: PostModalComponent;
 
   posts = [];
-  loading = false;
+  loading = true;
+  loadingMore = false;
+
+  PAGE_SIZE = 10;
+  page = 0;
 
   selectedPost = undefined;
 
@@ -28,13 +33,16 @@ export class PostsComponent implements OnInit {
   filter = '';
   interval;
 
-  subscriptions: Subscription[] = [];
+  attribute = '';
+  value = '';
 
   constructor(private dataService: DataService,
               public dateService: DateService,
               private alertService: AlertService,
               public commonService: CommonService,
-              private cdRef: ChangeDetectorRef) {
+              private cdRef: ChangeDetectorRef,
+              private router: Router,
+              private route: ActivatedRoute) {
   }
 
   ngAfterViewChecked()  {
@@ -42,10 +50,17 @@ export class PostsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.subscriptions.push(
-      of(DummyData.POSTS)
-        .subscribe( posts => this.posts = posts)
-    );
+    // this.readPosts();
+    this.router.events.subscribe(data => {
+      if (data instanceof ActivationEnd) {
+        this.page = 0;
+        this.loading = true;
+        this.posts = [];
+        this.readPosts();
+      }
+    });
+    this.readPosts();
+
   }
 
   ngAfterViewInit(): void {
@@ -58,12 +73,36 @@ export class PostsComponent implements OnInit {
 
   ngOnDestroy(): void {
     clearInterval(this.interval);
-
-    this.subscriptions.forEach( sub => {
-      sub.unsubscribe();
-    });
-
-    this.subscriptions = [];
   }
 
+  readPosts() {
+    this.attribute = this.route.snapshot.paramMap.get('attribute');
+    this.value = this.route.snapshot.paramMap.get('value');
+
+    this.dataService.getPosts(this.page++, this.PAGE_SIZE, this.attribute, this.value)
+      .pipe(take(1))
+      .subscribe( data => {
+          if (data.msg === 'OK') {
+            this.posts = [...this.posts, ...data.object];
+            if ( data.object.length < this.PAGE_SIZE ) {
+              this.noMoreForward = true;
+            }
+          } else {
+            this.alertService.error('مشکلی پیش آمده. دوباره تلاش کنید.');
+          }
+          this.loading = false;
+          this.loadingMore = false;
+        },
+        error => {
+          console.error(error);
+          this.alertService.error('مشکلی پیش آمده. دوباره تلاش کنید.');
+          this.loading = false;
+          this.loadingMore = false;
+        });
+  }
+
+  loadMore() {
+    this.loadingMore = true;
+    this.readPosts();
+  }
 }

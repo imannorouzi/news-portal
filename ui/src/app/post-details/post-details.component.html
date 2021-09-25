@@ -3,8 +3,8 @@
 
     <h1 class="font-heading w-100 title-1 font-weight-bolder">{{post.title}}</h1>
     <div class=" mb-4 ">
-      <a [class]="'font-heading  author ml-2' " [href]="'/author/' + post.author">{{post.author}}</a>
-      <a *ngFor="let category of post.categories" class="font-heading post-category" [href]="'/category/' + category">{{category}} </a>
+      <a [class]="'font-heading  author ml-2' " [routerLink]="'/posts/author/' + post.author"> {{post.author}} </a>
+      <a *ngFor="let category of post.categories" class="font-heading post-category" [routerLink]="'/posts/category/' + category"> {{category.name}} </a>
     </div>
     <div [class]="'d-table'">
 
@@ -12,7 +12,8 @@
       <div class=" post-text">
 
         <div class="post-content">
-          <p>{{post.content}}</p>
+          <div class="post-section" [innerHTML]="postSection.text" *ngFor="let postSection of post.postSections">
+          </div>
         </div>
 
       </div>
@@ -21,10 +22,9 @@
     <div class="post-footer flexbox-parent-row">
       <span class="text-muted font-small font-heading "><i class="fa fa-comment"></i> 2</span>
       <span class="flexbox-item-grow ml-3 mr-3 font-small text-muted tags">
-        <a class="tag font-heading ml-2" *ngFor="let tag of post.tags">#{{tag}}</a>
+        <a class="tag font-heading ml-2" *ngFor="let tag of post.tags"> #{{tag.name}} </a>
       </span>
       <span class="text-muted font-small font-heading">
-        <a (click)="$event.stopPropagation()" href="/post-2" target="_blank"> <i class="fa fa-external-link ml-2 open-post-tab"></i></a>
         <span>{{dateService.greToPersian(post.created, true)}} </span>
       </span>
     </div>

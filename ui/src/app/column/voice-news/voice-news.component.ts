@@ -24,6 +24,6 @@ export class VoiceNewsComponent implements OnInit {
   }
 
   voiceClicked() {
-    this.audioService.playAudio.next('assets/files/audio/bubble.mp3');
+    this.audioService.playAudio.next('assets/files/audios/bubble.mp3');
   }
 }

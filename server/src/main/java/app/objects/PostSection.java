@@ -21,14 +21,14 @@ public class PostSection {
              String type,
              String fileUrl,
              String text,
-             List<PostSectionStyle> styles) {
+             List<Style> styles) {
 
         this.fileUrl = "null".equals(fileUrl) ? "" : fileUrl;
         this.type = "null".equals(type) ? POST_SECTION_TYPE.UNKNOWN.name() : type;
         this.postId = postId;
         this.id = id;
         this.text = text;
-        this.postSectionStyles = styles;
+        this.styles = styles;
     }
 
     /**
@@ -57,8 +57,8 @@ public class PostSection {
     @Column(name = "status")
     private String status;
 
-    @Transient
-    private List<PostSectionStyle> postSectionStyles;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Style> styles;
 
     public PostSection(JSONObject jo) throws JSONException {
         this.id = jo.has("id") && jo.getInt("id") != 0 ? jo.getInt("id") : -1;
@@ -69,13 +69,13 @@ public class PostSection {
         this.text = jo.has("text") ? jo.getString("text") : "";
 
         JSONObject psso = jo.getJSONObject("style");
-        List<PostSectionStyle> styles = new ArrayList<>();
+        List<Style> styles = new ArrayList<>();
 
         for (Iterator it = psso.keys(); it.hasNext(); ) {
             String key = (String) it.next();
-            styles.add( new PostSectionStyle( key, psso.getString(key)));
+            styles.add( new Style( key, psso.getString(key)));
         }
-        this.setPostSectionStyles(styles);
+        this.setStyles(styles);
     }
 
     public int getId() {
@@ -118,12 +118,12 @@ public class PostSection {
         this.type = type;
     }
 
-    public List<PostSectionStyle> getPostSectionStyles() {
-        return postSectionStyles;
+    public List<Style> getStyles() {
+        return styles;
     }
 
-    public void setPostSectionStyles(List<PostSectionStyle> postSectionStyles) {
-        this.postSectionStyles = postSectionStyles;
+    public void setStyles(List<Style> styles) {
+        this.styles = styles;
     }
 
     public String getStatus() {

@@ -11,6 +11,7 @@ public interface CategoryRepository extends JpaRepository<Category, Integer> {
 
 
     Category findById(int catId);
+    List<Category> findAllByName(String name);
     List<Category> findAll();
 
 }

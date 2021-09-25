@@ -58,7 +58,7 @@ import { VoiceNewsComponent } from './column/voice-news/voice-news.component';
 import { AudioPlayerComponent } from './audio-player/audio-player.component';
 import { ChartComponent } from './chart/chart.component';
 import {ChartsModule} from 'ng2-charts';
-import {PostSectionComponent} from './post-section/post-section.component';
+import {CreatePostSectionComponent} from './admin/create-post-section/create-post-section.component';
 import {CreateArticleComponent} from './admin/create-article/create-article.component';
 import { AdminComponent } from './admin/admin.component';
 import {AlertComponent} from './common-components/alert/alert.component';
@@ -67,6 +67,10 @@ import {SectionSeparatorComponent} from './common-components/section-separator/s
 import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
 import { AdminPostsComponent } from './admin/admin-posts/admin-posts.component';
 import { CreateTagsComponent } from './admin/create-tags/create-tags.component';
+import {CreateCategoriesComponent} from './admin/create-categories/create-categories.component';
+import {PostSectionComponent} from './post-details/post-section/post-section.component';
+import { PostPageComponent } from './post-page/post-page.component';
+import {AdminPostItemComponent} from "./admin/admin-post-item/admin-post-item.component";
 
 @NgModule({
   declarations: [
@@ -105,13 +109,17 @@ import { CreateTagsComponent } from './admin/create-tags/create-tags.component';
     VoiceNewsComponent,
     AudioPlayerComponent,
     ChartComponent,
-    PostSectionComponent,
+    CreatePostSectionComponent,
     CreateArticleComponent,
     AdminComponent,
     AlertComponent,
     SectionSeparatorComponent,
     AdminPostsComponent,
-    CreateTagsComponent
+    CreateTagsComponent,
+    CreateCategoriesComponent,
+    PostSectionComponent,
+    PostPageComponent,
+    AdminPostItemComponent
   ],
   imports: [
     BrowserModule,

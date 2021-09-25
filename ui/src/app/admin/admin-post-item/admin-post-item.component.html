@@ -1,0 +1,64 @@
+<div class="">
+  <div [class]="'post-item  ' + post.status " (click)="onClicked($event, post)">
+
+    <div [class]="'d-table w-100'">
+
+      <img *ngIf="post.imageUrl" class=" post-thumbnail" [src]="post.imageUrl" alt=""/>
+
+      <div class=" post-text">
+        <div class="text-nowrap text-overflow text-right post-title-wrapper">
+          <a [routerLink]="'/post/' + post.id"
+             [class]="'font-heading post-title title-2 ml-2 mb-2 ' + (post.title ? 'font-weight-bold' : 'text-muted')"> {{post.title ? post.title : 'بدون عنوان'}} </a>
+          <span class="font-small mb-2 ">
+            <a [class]="'font-heading  author ml-2' "
+               [routerLink]="'/posts/author/' + post.author"> {{post.author}} </a>
+            <a *ngFor="let category of post.categories" class="font-heading post-category"
+               [routerLink]="'/posts/category/' + category">{{category.name}} </a>
+          </span>
+
+          <div class="post-footer flexbox-parent-row">
+            <div class=" text-right btn-group btn-group-toggle ltr" data-toggle="type">
+              <label class="btn btn-outline-primary " [class.active]="post.style === '2'">
+                <input type="radio" (change)="updatePostAttribute('style', post.style)" [(ngModel)]="post.style"
+                       class="form-control" checked value="2"> معمولی
+              </label>
+              <label class="btn btn-outline-primary" [class.active]="post.style === '1'">
+                <input type="radio" (change)="updatePostAttribute('style', post.style)" [(ngModel)]="post.style"
+                       class="form-control" value="1"> مهم
+              </label>
+            </div>
+
+            <div class="status mr-2">
+              <select [(ngModel)]="post.status" class="ltr text-left"
+                      (change)="updatePostAttribute('status', post.status)">
+                <option value="DRAFT">Draft</option>
+                <option value="PUBLISH">Publish</option>
+                <option value="REMOVED">Removed</option>
+              </select>
+            </div>
+            <div class="type mr-2">
+              <select [(ngModel)]="post.type" class="ltr text-left" (change)="updatePostAttribute('type', post.type)">
+                <option value="ARTICLE">Article</option>
+                <option value="VOICE">Voice</option>
+                <option value="VOICE_ALBUM">Voice Album</option>
+              </select>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+    <div>
+            <span class="text-muted flexbox-item-grow text-left font-small font-heading">
+              <a (click)="$event.stopPropagation()" [routerLink]="'/post/' + post.id" target="_blank"> <i
+                class="fa fa-external-link ml-2 open-post-tab"></i></a>
+              <a [routerLink]="'/post-edit/' + post.id"> <i class="fa fa-edit ml-2 open-post-tab"></i></a>
+              <a [routerLink]="" (click)="removePost()"> <i class="fa fa-trash ml-2 open-post-tab"></i></a>
+            </span>
+      <span>{{dateService.greToPersian(post.created, true)}} </span>
+    </div>
+
+  </div>
+</div>

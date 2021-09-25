@@ -57,4 +57,21 @@
   <div class="" *ngIf="postSection.type === 'FILE'">
   <app-upload-file></app-upload-file>
   </div>
+
+  <div class="" *ngIf="postSection.type === 'AUDIO'">
+    <div class="m-auto text-center p-3">
+
+      <audio [id]="'audio-' + i" *ngFor="let audio of audios; let i = index;" controls class="w-100">
+        <source  type="audio/mp3">
+        Your browser does not support the audio tag.
+      </audio>
+
+      <div class="buttons mt-2">
+        <button [routerLink]="" class="app-button " (click)="fileInput.click()">فایل صوتی</button>
+        <button [routerLink]="" class="app-button mr-2" (click)="fileInput.click()">آپلود</button>
+      </div>
+    </div>
+    <input (change)="audioFileChanged($event)" #fileInput type="file" hidden="hidden">
+
+  </div>
 </div>

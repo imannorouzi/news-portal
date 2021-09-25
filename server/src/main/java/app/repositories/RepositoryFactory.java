@@ -1,6 +1,5 @@
 package app.repositories;
 
-import app.objects.PostSectionStyle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +29,9 @@ public class RepositoryFactory {
 
     @Autowired
     CategoryRepository categoryRepository;
+
+    @Autowired
+    TagRepository tagRepository;
 
     @Autowired
     PostSectionStyleRepository postSectionStyleRepository;
@@ -72,5 +74,9 @@ public class RepositoryFactory {
 
     public PostSectionMetaRepository getPostSectionMetaRepository() {
         return postSectionMetaRepository;
+    }
+
+    public TagRepository getTagRepository() {
+        return tagRepository;
     }
 }

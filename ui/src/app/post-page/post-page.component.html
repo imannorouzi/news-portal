@@ -1,0 +1,9 @@
+<div class="post-page-wrapper">
+  <div class="text-left mb-2">
+    <a class="app-button secondary" [routerLink]="" (click)="navigationService.back()"><i class="fa fa-arrow-left"></i></a>
+  </div>
+
+  <spinner [showing]="loading" ></spinner>
+
+  <app-post-details *ngIf="post" [post]="post"></app-post-details>
+</div>

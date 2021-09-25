@@ -6,14 +6,20 @@
 }
 
 .tag {
-  padding: 5px 10px;
+  padding: 2px 3px;
   background: lightyellow;
-  border-radius: 4px;
   margin-right: 5px;
   border: 1px solid #eeeeee;
-  margin-bottom: 5px;
+  border-radius: 4px;
 }
-
+.loaded-tag {
+  cursor: pointer;
+  padding: 2px 3px;
+  background: #ffff8f;
+  margin-right: 5px;
+  border: 1px solid #eeeeee;
+  border-radius: 4px;
+}
 .remove-tag {
   cursor: pointer;
 }

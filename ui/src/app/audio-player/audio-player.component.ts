@@ -47,10 +47,10 @@ export class AudioPlayerComponent implements OnInit {
       this.trackLengthString = this.timeToString(this.trackLength);
     });
 
-    // Make a this.audio node
+    // Make a this.audios node
     this.audio.loop = true;
     this.audio.autoplay = false;
-    // this.audio.crossOrigin = "anonymous";
+    // this.audios.crossOrigin = "anonymous";
 
     // call `handleCanplay` when it music can be played
     this.audio.addEventListener('canplay', () => {
@@ -61,7 +61,7 @@ export class AudioPlayerComponent implements OnInit {
       this.start();
     });
     this.audio.src = url;
-    // this.audio.src = URL.createObjectURL(file);
+    // this.audios.src = URL.createObjectURL(file);
     this.audio.load();
   }
 
@@ -70,7 +70,7 @@ export class AudioPlayerComponent implements OnInit {
   }
 
   render(): void {
-    // get the current audio data
+    // get the current audios data
     this.analyser.getByteFrequencyData(this.audioDataArray);
     requestAnimationFrame( () => this.render());
   }

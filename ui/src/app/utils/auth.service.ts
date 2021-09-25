@@ -121,7 +121,6 @@ export class AuthService {
     });
 
     return this.http.post<any>( apiUrl, JSON.stringify({username: username, password: password}), {headers: headers})
-
       .pipe(map(data => JSON.parse(data.entity)) )
       .pipe(map(data => {
           // login successful if there's a jwt token in the response

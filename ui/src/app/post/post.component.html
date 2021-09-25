@@ -1,16 +1,16 @@
 <div class="">
   <div [class]="'post-item  ' + post.status + ' style-' + post.style" (click)="onClicked($event, post)">
 
-    <h3 class="font-heading text-center w-100 title-1 font-weight-bolder mb-2">{{post.title}}</h3>
-    <div [class]="'d-table'">
+    <h3 class="font-heading text-center w-100 title-1 font-weight-bolder mb-4">{{post.title}}</h3>
+    <div [class]="'d-table w-100'">
 
       <img class=" post-thumbnail" [src]="post.imageUrl" alt=""/>
       <div class=" post-text" >
         <div class=" text-right post-title-wrapper ">
-          <h4 [class]="'font-heading post-title title-2 ml-2 mb-2 ' + (post.title ? 'font-weight-bold' : 'text-muted')">{{post.title ? post.title : 'بدون عنوان'}}</h4>
+          <h4 [class]="'font-heading post-title title-2 ml-2 mb-4 ' + (post.title ? 'font-weight-bold' : 'text-muted')"> {{post.title ? post.title : 'بدون عنوان'}} </h4>
           <div class="font-small mb-2 ">
-            <a [class]="'font-heading  author ml-2' " [href]="'/author/' + post.author">{{post.author}}</a>
-            <a *ngFor="let category of post.categories" class="font-heading post-category" [href]="'/category/' + category">{{category}} </a>
+            <a [class]="'font-heading  author ml-2' " (click)="$event.stopPropagation()" [routerLink]="'/posts/author/' + post.author"> {{post.author}} </a>
+            <a *ngFor="let category of post.categories" (click)="$event.stopPropagation()" class="font-heading post-category" [routerLink]="'/posts/category/' + category.name">{{category.name}} </a>
           </div>
         </div>
 
@@ -24,10 +24,10 @@
     <div class="post-footer flexbox-parent-row">
       <span class="text-muted font-small font-heading "><i class="fa fa-comment"></i> 2</span>
       <span class="flexbox-item-grow ml-3 mr-3 font-small text-muted tags">
-        <a class="tag font-heading ml-2" *ngFor="let tag of post.tags">#{{tag}}</a>
+        <a class="tag font-heading ml-2" (click)="$event.stopPropagation()" [routerLink]="'/posts/tags/' + tag.name" *ngFor="let tag of post.tags">#{{tag.name}}</a>
       </span>
       <span class="text-muted font-small font-heading">
-        <a (click)="$event.stopPropagation()" href="/post-2" target="_blank"> <i class="fa fa-external-link ml-2 open-post-tab"></i></a>
+        <a (click)="$event.stopPropagation()" [routerLink]="'/post/' + post.id" target="_blank"> <i class="fa fa-external-link ml-2 open-post-tab"></i></a>
         <span>{{dateService.greToPersian(post.created, true)}} </span>
       </span>
     </div>

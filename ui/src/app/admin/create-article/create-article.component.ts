@@ -12,7 +12,9 @@ import {CommonService} from '../../utils/common.service';
 import {AlertService} from '../../utils/alert.service';
 import {map, switchMap} from 'rxjs/operators';
 import {of} from 'rxjs';
-import {Category} from "../../category";
+import {CreateTagsComponent} from '../create-tags/create-tags.component';
+import {CreateCategoriesComponent} from '../create-categories/create-categories.component';
+import {NavigationService} from '../../utils/navigation.service';
 
 @Component({
   selector: 'app-create-article',
@@ -23,14 +25,12 @@ export class CreateArticleComponent implements OnInit {
   @ViewChild('cropper', {static: false}) cropper: ImageCropperComponent;
   @ViewChild('imageCropperModal', {static: false}) imageCropperModal: ModalComponent;
   @ViewChild('fileInput', {static: true}) fileInput: ElementRef;
+  @ViewChild('tags', {static: true}) tags: CreateTagsComponent;
+  @ViewChild('categories', {static: true}) categories: CreateCategoriesComponent;
 
   @Output() postAdded: EventEmitter<any> = new EventEmitter<any>();
 
   imageChangedEvent: any = '';
-
-  model = {
-    editorData: '<p>Hello, world!</p>'
-  };
 
   /*data: any = {};
   cropperSettings: CropperSettings;*/
@@ -40,28 +40,16 @@ export class CreateArticleComponent implements OnInit {
 
   image = '';
   imageUrl = '';
-  categories: Category[] = [ new Category(), new Category()];
-
   constructor(
     private authService: AuthService,
     private dataService: DataService,
     private commonService: CommonService,
+  private navigationService: NavigationService,
   private alertService: AlertService) {
   }
 
   ngOnInit() {
     this.post.postSections.push(new PostSection());
-  }
-
-  editorReady(editor) {
-    editor.ui.getEditableElement().parentElement.insertBefore(
-      editor.ui.view.toolbar.element,
-      editor.ui.getEditableElement()
-    );
-  }
-
-  onFileChanged(event: Event) {
-
   }
 
   postArticle() {
@@ -134,18 +122,18 @@ export class CreateArticleComponent implements OnInit {
   copySection(index: number) {
     const copyPostSection = Object.assign({}, this.post.postSections[index]);
     copyPostSection.text = Object.assign({}, this.post.postSections[index].text);
-    copyPostSection.imageUrl = Object.assign({}, this.post.postSections[index].imageUrl);
+    copyPostSection.fileUrl = Object.assign({}, this.post.postSections[index].fileUrl);
     copyPostSection.style = Object.assign({}, this.post.postSections[index].style);
     this.post.postSections.splice(index, 0, copyPostSection);
   }
 
-  updatePost() {
-
-
+  updatePost(status) {
     // if (!this.validateForm()) { return; }
 
     this.post['userId'] = this.authService.userId;
-    this.post['type'] = 'POST';
+    this.post['categories'] = this.categories.getCategories();
+    this.post['tags'] = this.tags.getTags();
+    this.post['status'] = status;
 
     this.dataService.updatePost(this.post)
       .pipe(
@@ -164,6 +152,8 @@ export class CreateArticleComponent implements OnInit {
         this.uploadPostSections(postId).then( () => {
           console.log('Uploaded');
           this.postAdded.emit(postId);
+          this.alertService.success('ایجاد شد دوستم.');
+          this.navigationService.navigate('/admin');
         });
       },
       (error: any) => {

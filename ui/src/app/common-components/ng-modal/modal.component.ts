@@ -89,7 +89,7 @@ export class ModalComponent implements OnInit, AfterViewChecked {
     window.removeEventListener('resize', this.onWindowResize.bind(this));
   }
 
-  @HostListener('keydown.esc', ['$post'])
+  @HostListener('keydown.esc', ['$postSection'])
   onKeyDown(event): void {
     event.preventDefault();
     event.stopPropagation();

@@ -15,7 +15,7 @@ export class ErrorInterceptor implements HttpInterceptor {
       if (err.status === 401) {
         // auto logout if 401 response returned from api
         this.route.navigate(['/login']);
-        this.alertService.error('دسترسی غیرمجاز');
+        // this.alertService.error('دسترسی غیرمجاز');
         // location.reload(true);
       }
 
