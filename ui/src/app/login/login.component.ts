@@ -9,7 +9,6 @@ import {SpinnerService} from '../utils/spinner.service';
 import { of} from 'rxjs';
 import {AuthService} from '../utils/auth.service';
 import {LocalStorageService} from '../utils/local-storage.service';
-import {DummyData} from '../dummyData';
 
 @Component({
   selector: 'app-login',
@@ -61,10 +60,7 @@ export class LoginComponent implements OnInit {
     }
 
     this.loading = true;
-    (isGuest ?
-      of(DummyData.USER)
-      :
-      this.authService.loginWithServer(this.f.username.value, this.f.password.value))
+    this.authService.loginWithServer(this.f.username.value, this.f.password.value)
       .subscribe(
         user => {
           if (user) {

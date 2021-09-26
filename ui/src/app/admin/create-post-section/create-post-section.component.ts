@@ -19,8 +19,6 @@ export class CreatePostSectionComponent implements OnInit, AfterViewInit {
   @Output() removeClicked: EventEmitter<any> = new EventEmitter<any>();
   @Output() copyClicked: EventEmitter<any> = new EventEmitter<any>();
 
-  audios: any[] = [];
-
   public Editor = DecoupledEditor;
 
   config: CKEditor5.Config =
@@ -85,12 +83,17 @@ export class CreatePostSectionComponent implements OnInit, AfterViewInit {
   audioFileChanged($event) {
     const file = $event.target.files[0];
     if (file) {
-      this.audios.push({
-        name: file.name,
-        file: file
+      this.postSection.audios.push({
+        filename: file.name,
+        file: file,
+        status: 'DRAFT',
+        id: -1,
+        postSectionId: -1,
+        url: '',
+        title: ''
       });
       setTimeout ( () => {
-        const audioEle = (<HTMLAudioElement>document.getElementById('audio-' + ( this.audios.length - 1 ) ));
+        const audioEle = (<HTMLAudioElement>document.getElementById('audio-' + ( this.postSection.audios.length - 1 ) ));
         audioEle.src = URL.createObjectURL(file);
         audioEle.load();
       }, 100);
@@ -101,6 +104,43 @@ export class CreatePostSectionComponent implements OnInit, AfterViewInit {
     }
   }
 
+  async uploadAudioFiles() {
+    // set upload progress as 0 for all files
+
+    for (let i = 0; i < this.postSection.audios.length; ++i) {
+      try {
+        await (this.dataService.uploadFile(this.postSection.audios[i].file))
+          .subscribe( url => {
+            if ( url.msg === 'OK' ) {
+              this.postSection.audios[i].url = url.object;
+              this.postSection.audios[i].status = 'UPLOADED';
+            } else {
+              this.postSection.audios[i].status = 'FAILED';
+            }
+            console.log(url);
+          } );
+      } catch (error) {
+        // This is to update file status
+        console.error('Failed to upload post-section-audio-' + (i));
+        this.postSection.audios[i].status = 'FAILED';
+        throw error;
+      }
+    }
+  }
+
+  remove(index: number) {
+    this.postSection.audios.splice(index, 1);
+  }
+
+  move(from: number, upDown: number) {
+    if ( ( from === 0 && upDown === -1 ) ||
+      ( from === this.postSection.audios.length && upDown === 1 ) ) {
+      return;
+    }
+    const audio = this.postSection.audios.splice(from, 1)[0];
+    // insert stored item into position `to`
+    this.postSection.audios.splice(from + upDown, 0, audio);
+  }
 }
 
 class UploadAdapter {

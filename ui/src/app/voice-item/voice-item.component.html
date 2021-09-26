@@ -1,0 +1,13 @@
+<div class="" *ngIf="audio">
+
+  <div class=" flexbox-parent-row voice" >
+    <div class="flexbox-item-grow">
+      <span class="flexbox-item-grow">{{audio.title}}</span>
+    </div>
+
+    <div class="voice-thumbnail-container">
+      <i [class]="'fa app-tool ' + (audioService.url === audio.url ? 'fa-pause' : 'fa-play')" (click)="voiceClicked()"></i>
+    </div>
+  </div>
+
+</div>

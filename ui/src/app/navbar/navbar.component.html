@@ -41,7 +41,7 @@
 
 
   <div class="search-container mr-auto flexbox-item-grow " id="">
-      <input class="form-control w-100" type="search" placeholder="جستجو..." aria-label="Search">
+      <input class="form-control w-100" (keydown.enter)="search()" [(ngModel)]="filter" type="search" placeholder="جستجو..." aria-label="Search">
   </div>
 
   <div class=" ml-1" id="navbarText">

@@ -54,7 +54,6 @@ import { PostModalComponent } from './post-modal/post-modal.component';
 import { PostDetailsComponent } from './post-details/post-details.component';
 import { ColumnComponent } from './column/column.component';
 import { PostsByWriterComponent } from './column/posts-by-writer/posts-by-writer.component';
-import { VoiceNewsComponent } from './column/voice-news/voice-news.component';
 import { AudioPlayerComponent } from './audio-player/audio-player.component';
 import { ChartComponent } from './chart/chart.component';
 import {ChartsModule} from 'ng2-charts';
@@ -70,7 +69,9 @@ import { CreateTagsComponent } from './admin/create-tags/create-tags.component';
 import {CreateCategoriesComponent} from './admin/create-categories/create-categories.component';
 import {PostSectionComponent} from './post-details/post-section/post-section.component';
 import { PostPageComponent } from './post-page/post-page.component';
-import {AdminPostItemComponent} from "./admin/admin-post-item/admin-post-item.component";
+import {AdminPostItemComponent} from './admin/admin-post-item/admin-post-item.component';
+import {VoiceItemComponent} from './voice-item/voice-item.component';
+import {VoicePostComponent} from './voice-post/voice-post.component';
 
 @NgModule({
   declarations: [
@@ -106,7 +107,7 @@ import {AdminPostItemComponent} from "./admin/admin-post-item/admin-post-item.co
     PostDetailsComponent,
     ColumnComponent,
     PostsByWriterComponent,
-    VoiceNewsComponent,
+    VoiceItemComponent,
     AudioPlayerComponent,
     ChartComponent,
     CreatePostSectionComponent,
@@ -119,7 +120,9 @@ import {AdminPostItemComponent} from "./admin/admin-post-item/admin-post-item.co
     CreateCategoriesComponent,
     PostSectionComponent,
     PostPageComponent,
-    AdminPostItemComponent
+    AdminPostItemComponent,
+    VoiceItemComponent,
+    VoicePostComponent
   ],
   imports: [
     BrowserModule,

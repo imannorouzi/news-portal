@@ -1,6 +1,7 @@
 package app.api;
 
 import app.objects.*;
+import app.repositories.PostSpecification;
 import app.utils.FileStorageService;
 import app.utils.Utils;
 import com.amazonaws.util.json.JSONObject;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -53,6 +55,7 @@ public class PostAPIs {
                              @RequestParam(value = "hint", required = false) String hint)  {
         try {
             PostAttribute postAttribute = null;
+            List<Post> posts;
 
             if (!"null".equals(attribute) &&
                     attribute != null &&
@@ -60,7 +63,19 @@ public class PostAPIs {
                     value != null){
                 postAttribute = new PostAttribute(attribute, value);
             }
-            List<Post> posts = getPosts(page, size, postAttribute);
+
+            if (postAttribute != null && postAttribute.getAttribute().equals("search")) {
+                Post filter = new Post();
+                filter.setTitle(hint);
+                filter.setExcerpt(hint);
+                filter.setAuthor(hint);
+
+                Specification<Post> spec = new PostSpecification(filter);
+
+                posts = repositoryFactory.getPostRepository().findAll(spec);
+            } else {
+                posts = getPosts(page, size, postAttribute);
+            }
 
             return Response.ok(gson.toJson(new ResponseObject("OK", posts))).build();
 

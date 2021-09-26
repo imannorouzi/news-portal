@@ -25,6 +25,7 @@ const routes: Routes = [
   { path: 'contact-us', component: ContactUsComponent },
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard]  },
   { path: 'new-post', component: CreateArticleComponent, canActivate: [AuthGuard]  },
+  { path: 'edit-post/:postId', component: CreateArticleComponent, canActivate: [AuthGuard]  },
 
   { path: 'login', component: LoginComponent },
 

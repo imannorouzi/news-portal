@@ -382,3 +382,25 @@ table.table  td{
 .ck-editor__editable_inline {
   min-height: 200px;
 }
+
+.app-tool:hover {
+  background: darkred;
+  color: white;
+}
+.app-tool {
+  margin-left: 10px;
+  padding: 5px;
+  border-radius: 50%;
+  height: 40px;
+  text-align: center;
+  width: 40px;
+  line-height: 2;
+  border: 1px solid #f0d48a;
+  background: #ffd4d4;
+  box-shadow: 0 3px 8px rgba(0,0,0,.25);
+  cursor: pointer;
+}
+
+img {
+  max-width: 100%;
+}

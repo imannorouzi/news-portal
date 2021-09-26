@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 // import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import {DataService} from '../../utils/data.service';
 // import {CropperSettings, ImageCropperComponent} from "ngx-img-cropper";
@@ -10,11 +10,13 @@ import {ModalComponent} from '../../common-components/ng-modal/modal.component';
 import {ImageCroppedEvent, ImageCropperComponent} from 'ngx-image-cropper';
 import {CommonService} from '../../utils/common.service';
 import {AlertService} from '../../utils/alert.service';
-import {map, switchMap} from 'rxjs/operators';
+import {map, switchMap, take} from 'rxjs/operators';
 import {of} from 'rxjs';
 import {CreateTagsComponent} from '../create-tags/create-tags.component';
 import {CreateCategoriesComponent} from '../create-categories/create-categories.component';
 import {NavigationService} from '../../utils/navigation.service';
+import {HttpClient} from '@angular/common/http';
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-create-article',
@@ -44,12 +46,30 @@ export class CreateArticleComponent implements OnInit {
     private authService: AuthService,
     private dataService: DataService,
     private commonService: CommonService,
-  private navigationService: NavigationService,
-  private alertService: AlertService) {
+    private navigationService: NavigationService,
+    private alertService: AlertService,
+    private route: ActivatedRoute,
+    private http: HttpClient) {
   }
 
   ngOnInit() {
-    this.post.postSections.push(new PostSection());
+    const postId = this.route.snapshot.paramMap.get('postId');
+    if ( postId ) {
+      this.dataService.getPost( postId )
+        .pipe(take(1))
+        .subscribe( data => {
+          if ( data.msg === 'OK' ) {
+            data.object.postSections.forEach( ps => {
+              if ( !ps.style ) {
+                ps.style = [];
+              }
+            });
+            this.post = data.object;
+          }
+        });
+    } else {
+      this.post.postSections.push(new PostSection());
+    }
   }
 
   postArticle() {
@@ -148,19 +168,19 @@ export class CreateArticleComponent implements OnInit {
         )
       )
       .subscribe(
-      (postId: any) => {
-        this.uploadPostSections(postId).then( () => {
-          console.log('Uploaded');
-          this.postAdded.emit(postId);
-          this.alertService.success('ایجاد شد دوستم.');
-          this.navigationService.navigate('/admin');
+        (postId: any) => {
+          this.uploadPostSections(postId).then( () => {
+            console.log('Uploaded');
+            this.postAdded.emit(postId);
+            this.alertService.success('ایجاد شد دوستم.');
+            this.navigationService.navigate('/admin');
+          });
+        },
+        (error: any) => {
+          console.log(error);
+          // this.spinner.hide();
+          this.alertService.error(error.toString());
         });
-      },
-      (error: any) => {
-        console.log(error);
-        // this.spinner.hide();
-        this.alertService.error(error.toString());
-      });
   }
 
   loadImageFailed() {
@@ -181,5 +201,30 @@ export class CreateArticleComponent implements OnInit {
         throw error;
       }
     }
+  }
+
+  uploadAll() {
+
+    this.http.get('./assets/bbc_postmeta.json')
+      .subscribe( (data: any) => {
+        const posts = data.data;
+        for ( let i = 0; i < posts.length; i++ ) {
+          const post = new Post();
+          post.excerpt = posts[i].meta_value;
+          post.title = posts[i].post_title;
+          post.type = 'ARTICLE';
+          post.style = '2';
+          post.imageUrl = posts[i].guid;
+          post.status = 'PUBLISH';
+
+          const postSection = new PostSection();
+          postSection.text = posts[i].post_content;
+          postSection.type = 'TEXT';
+
+          post.postSections = [ postSection ];
+          this.post = post;
+          this.updatePost('PUBLISH');
+        }
+      }, error => console.error(error));
   }
 }

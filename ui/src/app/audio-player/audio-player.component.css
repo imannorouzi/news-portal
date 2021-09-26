@@ -38,7 +38,8 @@ button {
 .bar {
   display: inline-block;
   width: 3px;
-  background-color: #b63f4e;
+  /*background-color: #b63f4e;*/
+  background: #bbbbbb;
 }
 
 #seek-slider {

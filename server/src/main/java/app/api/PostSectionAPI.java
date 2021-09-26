@@ -38,12 +38,12 @@ public class PostSectionAPI {
                                       @RequestParam("postSection") String postJsonString,
                                       @RequestParam(value = "filename", required = false) String filename) {
 
-
         User user = repositoryFactory.getUserRepository().findByUsername(u.getUsername());
         PostSection postSection;
         try {
-            JSONObject jsonpost = new JSONObject(postJsonString);
-            postSection = new PostSection(jsonpost);
+//            JSONObject jsonpost = new JSONObject(postJsonString);
+//            postSection = new PostSection(jsonpost);
+            postSection = gson.fromJson(postJsonString, PostSection.class);
 
             if (filename != null && !filename.isEmpty() && file != null) {
                 filename = "post_" + user.getId() + "_" + filename.replaceAll("\\s+", "");

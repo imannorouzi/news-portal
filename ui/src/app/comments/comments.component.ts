@@ -3,7 +3,6 @@ import {DataService} from '../utils/data.service';
 import {FormBuilder,  FormGroup, Validators} from '@angular/forms';
 import {User} from '../user';
 import {AlertService} from '../utils/alert.service';
-import {DummyData} from '../dummyData';
 import {AuthService} from '../utils/auth.service';
 
 @Component({

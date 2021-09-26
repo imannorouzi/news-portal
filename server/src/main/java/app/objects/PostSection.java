@@ -60,6 +60,9 @@ public class PostSection {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Style> styles;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Audio> audios;
+
     public PostSection(JSONObject jo) throws JSONException {
         this.id = jo.has("id") && jo.getInt("id") != 0 ? jo.getInt("id") : -1;
         this.postId = jo.has("postId") && jo.getInt("postId") != 0 ? jo.getInt("postId") : -1;
@@ -132,5 +135,13 @@ public class PostSection {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public List<Audio> getAudios() {
+        return audios;
+    }
+
+    public void setAudios(List<Audio> audios) {
+        this.audios = audios;
     }
 }

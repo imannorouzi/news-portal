@@ -1,5 +1,5 @@
-<div class="container post-container p-3 container-shadow">
-  <div class="text-left">
+<div class="container post-container p-3 container-shadow h-100 overflow-auto">
+  <div class="text-left back-button">
     <a class="app-button secondary" routerLink="/admin"><i class="fa fa-arrow-left"></i></a>
   </div>
   <div [class]="'text-center justify-content-center mb-3 bg-white'
@@ -54,8 +54,8 @@
     <div class="type mr-2 flexbox-item-grow">
       <select [(ngModel)]="post.type" class="ltr text-left">
         <option value="ARTICLE">Article</option>
-        <option value="VOICE">Voice</option>
-        <option value="VOICE_ALBUM">Voice Album</option>
+        <option value="AUDIO">Voice</option>
+        <option value="AUDIO_ALBUM">Auidio Album</option>
       </select>
     </div>
   </div>
@@ -66,6 +66,7 @@
 
   <a [routerLink]="" class="app-button font-heading" (click)="updatePost('PUBLISH')">ذخیره</a>
   <a [routerLink]="" class="app-button secondary mr-2 font-heading" (click)="updatePost('DRAFT')">پیش‌نویس</a>
+  <a [routerLink]="" class="app-button secondary mr-2 font-heading" (click)="uploadAll()">آپلود بک‌آپ</a>
 
 </div>
 

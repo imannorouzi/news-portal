@@ -1,0 +1,30 @@
+<div class="voices-container">
+  <h3 class="font-heading">تحلیل خبری</h3>
+
+  <div (click)="voiceClicked(post, i)" class="voice" *ngFor="let post of posts; let i = index;">
+
+    <div class=" flexbox-parent-row" >
+      <div class="flexbox-item-grow">
+        <span class="flexbox-item-grow">{{post.title}}</span>
+        <div class="font-small mb-2 ">
+          <a [class]="'font-heading  author ml-2' " [href]="'/author/' + post.author">{{post.author}}</a>
+          <span class="text-muted font-small font-heading">
+        <span>{{dateService.greToPersian(post.created, true)}} </span>
+      </span>
+        </div>
+      </div>
+
+      <div class="voice-thumbnail-container">
+        <img [src]="post.imageUrl" class="voice-thumbnail"/>
+        <i [class]="'fa voice-open-icon ' + (audioService.url === playingUrl && i === playingIndex  ? 'fa-pause' : 'fa-play')"></i>
+      </div>
+    </div>
+
+  </div>
+
+  <div *ngIf="!loading && !noMoreForward" class="text-center">
+    <a [routerLink]="" class=" font-heading" (click)="readPosts()">
+      بیشتر ...
+    </a>
+  </div>
+</div>

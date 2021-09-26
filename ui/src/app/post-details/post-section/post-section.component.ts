@@ -22,9 +22,6 @@ export class PostSectionComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.postSection && changes.event.previousValue !== changes.event.currentValue) {
-
-    }
   }
 
 }

@@ -39,8 +39,8 @@
             <div class="type mr-2">
               <select [(ngModel)]="post.type" class="ltr text-left" (change)="updatePostAttribute('type', post.type)">
                 <option value="ARTICLE">Article</option>
-                <option value="VOICE">Voice</option>
-                <option value="VOICE_ALBUM">Voice Album</option>
+                <option value="AUDIO">Voice</option>
+                <option value="AUDIO_ALBUM">Audio Album</option>
               </select>
             </div>
 
@@ -51,12 +51,12 @@
       </div>
     </div>
     <div>
-            <span class="text-muted flexbox-item-grow text-left font-small font-heading">
-              <a (click)="$event.stopPropagation()" [routerLink]="'/post/' + post.id" target="_blank"> <i
-                class="fa fa-external-link ml-2 open-post-tab"></i></a>
-              <a [routerLink]="'/post-edit/' + post.id"> <i class="fa fa-edit ml-2 open-post-tab"></i></a>
-              <a [routerLink]="" (click)="removePost()"> <i class="fa fa-trash ml-2 open-post-tab"></i></a>
-            </span>
+    <span class="text-muted flexbox-item-grow text-left font-small font-heading">
+      <a (click)="$event.stopPropagation()" [routerLink]="'/post/' + post.id" target="_blank"> <i
+        class="fa fa-external-link ml-2 open-post-tab"></i></a>
+      <a [routerLink]="'/edit-post/' + post.id"> <i class="fa fa-edit ml-2 open-post-tab"></i></a>
+      <a [routerLink]="" (click)="removePost()"> <i class="fa fa-trash ml-2 open-post-tab"></i></a>
+    </span>
       <span>{{dateService.greToPersian(post.created, true)}} </span>
     </div>
 

@@ -6,9 +6,12 @@ import {Subject} from 'rxjs';
 })
 export class AudioService {
 
-  url = '';
-
+  url;
   // sends the url
-  playAudio: Subject<string> = new Subject<string>();
+  playAudioSubject: Subject<string> = new Subject<string>();
+
+  playAudio(url) {
+    this.playAudioSubject.next(url);
+  }
   constructor() { }
 }

@@ -84,3 +84,13 @@ label {
   border-radius: 5px;
   margin-bottom: 20px;
 }
+.back-button:hover {
+  opacity: 1;
+}
+.back-button {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  z-index: 10;
+  opacity: .4;
+}

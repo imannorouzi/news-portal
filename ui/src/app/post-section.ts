@@ -1,3 +1,5 @@
+import {AudioFile} from "./audio-file";
+
 export class PostSection {
   id = -1;
   postId = -1;
@@ -8,6 +10,7 @@ export class PostSection {
   status = '';
   file = '';
   filename = '';
+  audios: AudioFile[] = [];
 
   constructor(type: string = 'TEXT') {
     this.type = type;

@@ -1,10 +1,10 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {DataService} from '../utils/data.service';
 import {AlertService} from '../utils/alert.service';
 import {take} from 'rxjs/operators';
 import {Post} from '../post';
 import {ActivatedRoute} from '@angular/router';
-import {NavigationService} from "../utils/navigation.service";
+import {NavigationService} from '../utils/navigation.service';
 
 @Component({
   selector: 'app-post-page',
@@ -14,7 +14,8 @@ import {NavigationService} from "../utils/navigation.service";
 export class PostPageComponent implements OnInit {
 
   post: Post;
-  postId: string;
+  @Output() back: EventEmitter<any> = new EventEmitter<any>();
+  @Input() postId: string;
   loading = true;
 
   constructor(private dataService: DataService,
@@ -29,7 +30,7 @@ export class PostPageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.postId = this.route.snapshot.paramMap.get('postId');
+    this.postId = this.postId ? this.postId : this.route.snapshot.paramMap.get('postId');
     this.readPost();
   }
 
@@ -54,4 +55,11 @@ export class PostPageComponent implements OnInit {
         });
   }
 
+  backClicked() {
+    if (this.back ) {
+      this.back.emit();
+    } else {
+      this.navigationService.back();
+    }
+  }
 }

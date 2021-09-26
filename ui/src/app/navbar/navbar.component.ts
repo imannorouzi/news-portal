@@ -11,6 +11,8 @@ import {NavigationService} from '../utils/navigation.service';
 export class NavbarComponent implements OnInit {
   @Input() theme: string;
   @Output() toggle: EventEmitter<any> = new EventEmitter();
+
+  filter = '';
   constructor(public authService: AuthService,
               public commonService: CommonService,
               public navigationService: NavigationService) {
@@ -23,5 +25,9 @@ export class NavbarComponent implements OnInit {
     // 0 means light, 1 means dark
 
     this.commonService.themeChanged.next(switchValue === 0 ? 'light' : 'dark');
+  }
+
+  search() {
+    this.navigationService.navigate('/posts/search/' + this.filter );
   }
 }

@@ -54,6 +54,7 @@
       <source src="/assets/images/smoking.mp4" type="video/mp4">
     </video>
   </div>
+
   <div class="" *ngIf="postSection.type === 'FILE'">
   <app-upload-file></app-upload-file>
   </div>
@@ -61,14 +62,34 @@
   <div class="" *ngIf="postSection.type === 'AUDIO'">
     <div class="m-auto text-center p-3">
 
-      <audio [id]="'audio-' + i" *ngFor="let audio of audios; let i = index;" controls class="w-100">
-        <source  type="audio/mp3">
-        Your browser does not support the audio tag.
-      </audio>
+      <div class="post-section-audio mb-1" *ngFor="let audio of postSection.audios; let i = index;">
+
+        <div class="audio-top-row flexbox-parent-row" >
+          <input type="text" placeholder="عنوان فایل" [(ngModel)]="audio.title" class="ml-2 flexbox-item-grow" />
+          <span class="font-small text-muted">{{audio.filename}}</span>
+        </div>
+        <div class="flexbox-parent-row" >
+          <div class="audio-file-tools">
+            <i class="audio-file-tool fa fa-remove" (click)="remove(i)"></i>
+            <i class="audio-file-tool fa fa-chevron-up" (click)="move(i, -1)"></i>
+            <i class="audio-file-tool fa fa-chevron-down" (click)="move(i, 1)"></i>
+            <span class="audio-file-status english_font">{{audio.status}}</span>
+          </div>
+          <div class="flexbox-item-grow">
+            <audio [id]="'audio-' + i"  controls class="w-100">
+              <source src="" type="audio/mp3">
+              <source src="" type="audio/ogg">
+              Your browser does not support the audio tag.
+            </audio>
+          </div>
+        </div>
+
+        <hr>
+      </div>
 
       <div class="buttons mt-2">
         <button [routerLink]="" class="app-button " (click)="fileInput.click()">فایل صوتی</button>
-        <button [routerLink]="" class="app-button mr-2" (click)="fileInput.click()">آپلود</button>
+        <button [routerLink]="" class="app-button mr-2" (click)="uploadAudioFiles()">آپلود</button>
       </div>
     </div>
     <input (change)="audioFileChanged($event)" #fileInput type="file" hidden="hidden">

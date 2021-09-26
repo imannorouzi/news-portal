@@ -17,5 +17,6 @@ export class AppComponent implements OnInit {
     this.commonService.themeChanged.subscribe(
       (theme: string) => this.theme = theme
     );
+
   }
 }

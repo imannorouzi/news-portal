@@ -6,9 +6,8 @@ import {DateService} from '../utils/date.service';
 import {AlertService} from '../utils/alert.service';
 import {CommonService} from '../utils/common.service';
 import {PostModalComponent} from '../post-modal/post-modal.component';
-import {Subject} from 'rxjs';
 import {take} from 'rxjs/operators';
-import {ActivatedRoute, ActivationEnd, NavigationEnd, Router} from '@angular/router';
+import {ActivatedRoute, ActivationEnd, Router} from '@angular/router';
 
 @Component({
   selector: 'app-posts',
@@ -66,9 +65,8 @@ export class PostsComponent implements OnInit {
   ngAfterViewInit(): void {
   }
 
-  onPostClick(event: any) {
-    this.selectedPost = event;
-    this.postModal.show();
+  onPostClick(post: any) {
+    this.selectedPost = post;
   }
 
   ngOnDestroy(): void {

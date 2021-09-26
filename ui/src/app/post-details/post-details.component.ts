@@ -23,9 +23,6 @@ export class PostDetailsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.post && changes.event.previousValue !== changes.event.currentValue) {
-      console.log('change');
-    }
   }
 
   ngAfterViewInit(): void {

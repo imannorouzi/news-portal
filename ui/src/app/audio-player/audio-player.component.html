@@ -3,7 +3,7 @@
     <button (click)="toggle()" id="play-icon"><i [class]="'fa ' + (isPlaying() ? 'fa-pause' : 'fa-play')"></i></button>
     <span id="current-time" class="font-heading time">{{timeString}}</span>
     <div class="position-relative slider flexbox-item-grow">
-      <input type="range" id="seek-slider" [max]="trackLength" [value]="getCurrentTime()" class="w-100">
+      <input type="range" id="seek-slider" (change)="timeChanged($event)" [max]="trackLength" [value]="getCurrentTime()" class="w-100">
       <div class="bars">
         <div class="bar" *ngFor="let bar of bars; let i=index" [ngStyle]="getBarStyle(i)"></div>
       </div>

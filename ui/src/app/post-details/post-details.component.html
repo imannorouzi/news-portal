@@ -6,13 +6,14 @@
       <a [class]="'font-heading  author ml-2' " [routerLink]="'/posts/author/' + post.author"> {{post.author}} </a>
       <a *ngFor="let category of post.categories" class="font-heading post-category" [routerLink]="'/posts/category/' + category"> {{category.name}} </a>
     </div>
-    <div [class]="'d-table'">
+    <div [class]="'d-table w-100'">
 
       <img class=" post-thumbnail" [src]="post.imageUrl" alt=""/>
       <div class=" post-text">
 
         <div class="post-content">
-          <div class="post-section" [innerHTML]="postSection.text" *ngFor="let postSection of post.postSections">
+          <div class="post-section" *ngFor="let postSection of post.postSections">
+            <app-post-section [postSection]="postSection"></app-post-section>
           </div>
         </div>
 

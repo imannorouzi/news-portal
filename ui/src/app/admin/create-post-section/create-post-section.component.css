@@ -80,3 +80,12 @@ select{
 .select-container{
   margin: 5px;
 }
+
+.audio-file-tools {
+  line-height: 4;
+  margin-left: 10px;
+}
+
+.audio-top-row {
+  line-height:  4;
+}

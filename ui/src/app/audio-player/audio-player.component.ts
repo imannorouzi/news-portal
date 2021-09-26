@@ -19,13 +19,36 @@ export class AudioPlayerComponent implements OnInit {
   trackLengthString = '';
 
   show = false;
+  url = '';
 
   ngOnInit(): void {
     // this.audioElement.nativeElement.play();
 
-    this.audioService.playAudio
+    this.audioService.playAudioSubject
       .subscribe( url => {
-        this.loadAudio(url);
+        if ( this.isPlaying() ) {
+          if (  url !== this.url ) {
+            // new file has been played
+            this.pause();
+            this.loadAudio(url);
+            this.audioService.url = url;
+            this.url = url;
+          } else {
+            this.audioService.url = '';
+            this.pause();
+          }
+        } else {
+          if ( url === this.url ) {
+            this.start();
+            this.audioService.url = url;
+            this.url = url;
+          } else {
+            this.pause();
+            this.loadAudio(url);
+            this.audioService.url = url;
+            this.url = url;
+          }
+        }
         this.show = true;
       });
   }
@@ -48,7 +71,7 @@ export class AudioPlayerComponent implements OnInit {
     });
 
     // Make a this.audios node
-    this.audio.loop = true;
+    this.audio.loop = false;
     this.audio.autoplay = false;
     // this.audios.crossOrigin = "anonymous";
 
@@ -66,7 +89,10 @@ export class AudioPlayerComponent implements OnInit {
   }
 
   start(): void {
-    this.audio.play();
+    if ( !this.isPlaying() ) {
+      this.audio.play();
+      this.audioService.url = this.url;
+    }
   }
 
   render(): void {
@@ -99,7 +125,10 @@ export class AudioPlayerComponent implements OnInit {
   }
 
   pause(): void {
-    this.audio.pause();
+    if ( this.audio ) {
+      this.audio.pause();
+      this.audioService.url = '';
+    }
   }
 
   isPlaying(): boolean {
@@ -138,5 +167,10 @@ export class AudioPlayerComponent implements OnInit {
   hide() {
     this.pause();
     this.show = false;
+  }
+
+  timeChanged($event) {
+    console.log($event.target.value);
+    this.setCurrentTime($event.target.value);
   }
 }
