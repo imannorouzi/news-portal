@@ -48,7 +48,7 @@ public class PostSection {
     String fileUrl;
 
     @Lob
-    @Column(name = "text")
+    @Column(name = "text", length = 5000)
     private String text;
 
     @Column(name = "type")

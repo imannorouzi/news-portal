@@ -4,6 +4,7 @@ import app.objects.*;
 import app.repositories.PostSpecification;
 import app.utils.FileStorageService;
 import app.utils.Utils;
+import com.amazonaws.util.json.JSONArray;
 import com.amazonaws.util.json.JSONObject;
 import com.google.gson.Gson;
 import app.repositories.RepositoryFactory;
@@ -52,10 +53,15 @@ public class PostAPIs {
                              @RequestParam(value = "size") int size,
                              @RequestParam(value = "attribute", required = false) String attribute,
                              @RequestParam(value = "value",required = false) String value,
+                             @RequestParam(value = "status",required = false) String status,
                              @RequestParam(value = "hint", required = false) String hint)  {
         try {
             PostAttribute postAttribute = null;
             List<Post> posts;
+
+            if ( status == null || status.isEmpty() ) {
+                status = "PUBLISH";
+            }
 
             if (!"null".equals(attribute) &&
                     attribute != null &&
@@ -74,7 +80,7 @@ public class PostAPIs {
 
                 posts = repositoryFactory.getPostRepository().findAll(spec);
             } else {
-                posts = getPosts(page, size, postAttribute);
+                posts = getPosts(page, size, postAttribute, status);
             }
 
             return Response.ok(gson.toJson(new ResponseObject("OK", posts))).build();
@@ -150,7 +156,7 @@ public class PostAPIs {
                 }
                 repositoryFactory.getPostRepository().save(pst.get());
                 return Response.ok().entity(gson.toJson(new ResponseObject("OK", pst.get()))).build();
-            }else{
+            } else {
                 return Response.status(500).entity(gson.toJson(new ResponseObject("FAIL", ""))).build();
             }
 
@@ -169,8 +175,7 @@ public class PostAPIs {
         Post post;
         try {
             User user = repositoryFactory.getUserRepository().findByUsername(u.getUsername());
-            JSONObject jsonpost = new JSONObject(postJsonString);
-            post = new Post(jsonpost);
+            post = gson.fromJson(postJsonString, Post.class);
 
             // check if any user has been registered with the same email
 
@@ -200,22 +205,6 @@ public class PostAPIs {
 
         return Response.ok(gson.toJson(new ResponseObject("OK", post))).build();
     }
-    @PermitAll
-    @PostMapping("/delete-post")
-    public Response deletePost( @AuthenticationPrincipal UserDetails u,
-                                @RequestBody Integer id){
-
-        User user = repositoryFactory.getUserRepository().findByUsername(u.getUsername());
-        Post post = null;
-        try {
-            post = repositoryFactory.getPostRepository().findPostById(id);
-            repositoryFactory.getPostRepository().delete(post);
-            return Response.ok().entity(gson.toJson(new ResponseObject("OK", ""))).build();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Response.status(500).entity(gson.toJson(new ResponseObject("FAIL", e.getMessage()))).build();
-        }
-    }
 
     @GetMapping("/get-categories")
     public Response getCategories(@AuthenticationPrincipal UserDetails u,
@@ -243,7 +232,7 @@ public class PostAPIs {
         }
     }
 
-    List<Post> getPosts(int page, int size, PostAttribute pa) {
+    List<Post> getPosts(int page, int size, PostAttribute pa, String status) {
         Pageable sortedByIds = PageRequest
                 .of(page, size, Sort.by("id")
                         .ascending());
@@ -251,27 +240,35 @@ public class PostAPIs {
         List<Post> posts = new ArrayList<>();
 
         if (pa == null) {
-            posts = repositoryFactory.getPostRepository().findAll(sortedByIds).getContent();
+            posts = repositoryFactory.getPostRepository().findAllByStatus(status, sortedByIds);
         } else {
 //                PostAttribute pa = gson.fromJson(postAttribute, PostAttgson.fromJsonribute.class);
             switch ( pa.getAttribute() ){
                 case "type":
-                    posts = repositoryFactory.getPostRepository().findAllByType(pa.getValue(), sortedByIds);
+                    if ( pa.getValue().equals("ALL")) {
+                        posts = repositoryFactory.getPostRepository().findAllByStatus(status, sortedByIds);
+                    } else {
+                        posts = repositoryFactory.getPostRepository().findAllByTypeAndStatus(pa.getValue(), status, sortedByIds);
+                    }
                     break;
                 case "author":
-                    posts = repositoryFactory.getPostRepository().findAllByAuthor(pa.getValue(), sortedByIds);
+                    posts = repositoryFactory.getPostRepository().findAllByAuthorAndStatus(pa.getValue(), status, sortedByIds);
                     break;
                 case "status":
-                    posts = repositoryFactory.getPostRepository().findAllByStatus(pa.getValue(), sortedByIds);
+                    if ( pa.getValue().equals("ALL")) {
+                        posts = repositoryFactory.getPostRepository().findAll(sortedByIds).getContent();
+                    } else {
+                        posts = repositoryFactory.getPostRepository().findAllByStatus(pa.getValue(), sortedByIds);
+                    }
                     break;
                 case "category":
 
                     List<Category> categories = repositoryFactory.getCategoryRepository().findAllByName(pa.getValue());
-                    posts = repositoryFactory.getPostRepository().findAllByCategoriesIn(categories, sortedByIds);
+                    posts = repositoryFactory.getPostRepository().findAllByCategoriesInAndStatus(categories, status, sortedByIds);
                     break;
                 case "tag":
                     List<Tag> tags = repositoryFactory.getTagRepository().findAllByName(pa.getValue());
-                    posts = repositoryFactory.getPostRepository().findAllByTagsIn(tags, sortedByIds);
+                    posts = repositoryFactory.getPostRepository().findAllByTagsInAndStatus(tags, status, sortedByIds);
                     break;
             }
 

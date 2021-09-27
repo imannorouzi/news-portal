@@ -50,7 +50,7 @@ public class Post {
     String style;
 
     @Lob
-    @Column(name = "excerpt")
+    @Column(name = "excerpt", length = 2000)
     String excerpt;
 
     @Column(name = "author")
@@ -59,10 +59,10 @@ public class Post {
     @Column(name = "link")
     String link;
 
-    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     List<Category> categories;
 
-    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     List<Tag> tags;
 
     @Transient
