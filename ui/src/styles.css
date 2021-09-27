@@ -404,3 +404,31 @@ table.table  td{
 img {
   max-width: 100%;
 }
+
+@keyframes heartbeat
+{
+  0%
+  {
+    transform: scale( 1 );
+  }
+  5%
+  {
+    transform: scale( .9 );
+  }
+  10%
+  {
+    transform: scale( 1 );
+  }
+  15%
+  {
+    transform: scale( .9 );
+  }
+  20%
+  {
+    transform: scale( 1 );
+  }
+  100%
+  {
+    transform: scale( 1 );
+  }
+}

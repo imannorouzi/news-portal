@@ -5,7 +5,7 @@ import {CommonService} from '../../utils/common.service';
 import {DataService} from '../../utils/data.service';
 import {Post} from '../../post';
 import {AlertService} from '../../utils/alert.service';
-import {take} from "rxjs/operators";
+import {take} from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-post',

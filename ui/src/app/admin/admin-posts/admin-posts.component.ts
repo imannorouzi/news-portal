@@ -45,7 +45,7 @@ export class AdminPostsComponent implements  OnInit {
   }
 
 
-  readPosts(stats = 'ALL', type = 'ALL') {
+  readPosts(status = 'ALL', type = 'ALL') {
     this.dataService.getPosts(this.page++, this.PAGE_SIZE, 'type', type, status)
       .pipe(take(1))
       .subscribe( data => {

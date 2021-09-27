@@ -22,13 +22,13 @@
     </div>
 
     <div class="post-footer flexbox-parent-row">
-      <span class="text-muted font-small font-heading "><i class="fa fa-comment"></i> 2</span>
+      <span class="text-muted font-small font-heading "><i class="fa fa-comment"></i></span>
       <span class="flexbox-item-grow ml-3 mr-3 font-small text-muted tags">
         <a class="tag font-heading ml-2" (click)="$event.stopPropagation()" [routerLink]="'/posts/tags/' + tag.name" *ngFor="let tag of post.tags">#{{tag.name}}</a>
       </span>
       <span class="text-muted font-small font-heading">
         <a (click)="$event.stopPropagation()" [routerLink]="'/post/' + post.id" target="_blank"> <i class="fa fa-external-link ml-2 open-post-tab"></i></a>
-        <span>{{dateService.greToPersian(post.created, true)}} </span>
+        <span class="font-heading">{{dateService.greToPersian(post.created, true)}} </span>
       </span>
     </div>
 

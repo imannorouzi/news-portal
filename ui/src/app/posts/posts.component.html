@@ -10,7 +10,7 @@
     </app-post>
   </div>
 
-  <div *ngIf="!loading && !loadingMore && !noMoreForward" class="text-center">
+  <div *ngIf="!loading && !loadingMore && !noMoreForward" class="load-more text-center">
     <a [routerLink]="" class=" font-heading" (click)="loadMore()">مطالب بیشتر</a>
   </div>
   <spinner [showing]="loadingMore"></spinner>

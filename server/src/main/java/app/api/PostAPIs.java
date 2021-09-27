@@ -234,8 +234,8 @@ public class PostAPIs {
 
     List<Post> getPosts(int page, int size, PostAttribute pa, String status) {
         Pageable sortedByIds = PageRequest
-                .of(page, size, Sort.by("id")
-                        .ascending());
+                .of(page, size, Sort.by("created")
+                        .descending().and(Sort.by("id")).descending());
 
         List<Post> posts = new ArrayList<>();
 
@@ -246,13 +246,22 @@ public class PostAPIs {
             switch ( pa.getAttribute() ){
                 case "type":
                     if ( pa.getValue().equals("ALL")) {
-                        posts = repositoryFactory.getPostRepository().findAllByStatus(status, sortedByIds);
+                        posts = status.equals("ALL") ?
+                                repositoryFactory.getPostRepository().findAll(sortedByIds).getContent()
+                                :
+                                repositoryFactory.getPostRepository().findAllByStatus(status, sortedByIds);
                     } else {
-                        posts = repositoryFactory.getPostRepository().findAllByTypeAndStatus(pa.getValue(), status, sortedByIds);
+                        posts = status.equals("ALL") ?
+                                repositoryFactory.getPostRepository().findAllByType( pa.getValue(), sortedByIds)
+                                :
+                                repositoryFactory.getPostRepository().findAllByTypeAndStatus(pa.getValue(), status, sortedByIds);
                     }
                     break;
                 case "author":
-                    posts = repositoryFactory.getPostRepository().findAllByAuthorAndStatus(pa.getValue(), status, sortedByIds);
+                    posts = status.equals("ALL") ?
+                            repositoryFactory.getPostRepository().findAllByAuthor(pa.getValue(), sortedByIds)
+                            :
+                            repositoryFactory.getPostRepository().findAllByAuthorAndStatus(pa.getValue(), status, sortedByIds);
                     break;
                 case "status":
                     if ( pa.getValue().equals("ALL")) {
@@ -264,11 +273,17 @@ public class PostAPIs {
                 case "category":
 
                     List<Category> categories = repositoryFactory.getCategoryRepository().findAllByName(pa.getValue());
-                    posts = repositoryFactory.getPostRepository().findAllByCategoriesInAndStatus(categories, status, sortedByIds);
+                    posts = status.equals("ALL") ?
+                            repositoryFactory.getPostRepository().findAllByCategoriesIn(categories, sortedByIds)
+                            :
+                            repositoryFactory.getPostRepository().findAllByCategoriesInAndStatus(categories, status, sortedByIds);
                     break;
                 case "tag":
                     List<Tag> tags = repositoryFactory.getTagRepository().findAllByName(pa.getValue());
-                    posts = repositoryFactory.getPostRepository().findAllByTagsInAndStatus(tags, status, sortedByIds);
+                    posts = status.equals("ALL") ?
+                            repositoryFactory.getPostRepository().findAllByTagsIn(tags, sortedByIds)
+                            :
+                            repositoryFactory.getPostRepository().findAllByTagsInAndStatus(tags, status, sortedByIds);
                     break;
             }
 

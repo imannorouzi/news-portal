@@ -13,7 +13,7 @@
             <a [class]="'font-heading  author ml-2' "
                [routerLink]="'/posts/author/' + post.author"> {{post.author}} </a>
             <a *ngFor="let category of post.categories" class="font-heading post-category"
-               [routerLink]="'/posts/category/' + category">{{category.name}} </a>
+               [routerLink]="'/posts/category/' + category.name">{{category.name}} </a>
           </span>
 
           <div class="excerpt font-small">{{post.excerpt}}</div>
@@ -50,11 +50,11 @@
 
           <div class="flexbox-item-grow text-left ml-2">
             <span class="text-muted text-right font-small font-heading">
-      <a (click)="$event.stopPropagation()" [routerLink]="'/post/' + post.id" target="_blank"> <i
-        class="fa fa-external-link ml-2 open-post-tab"></i></a>
-      <a [routerLink]="'/edit-post/' + post.id"> <i class="fa fa-edit ml-2 open-post-tab"></i></a>
-      <a [routerLink]="" (click)="removePost()"> <i class="fa fa-trash ml-2 open-post-tab"></i></a>
-    </span>
+              <a (click)="$event.stopPropagation()" [routerLink]="'/post/' + post.id" target="_blank"> <i
+                class="fa fa-external-link ml-2 open-post-tab"></i></a>
+              <a [routerLink]="'/edit-post/' + post.id"> <i class="fa fa-edit ml-2 open-post-tab"></i></a>
+              <a [routerLink]="" (click)="removePost()"> <i class="fa fa-trash ml-2 open-post-tab"></i></a>
+            </span>
 
             <span class="text-muted font-small font-heading">{{dateService.greToPersian(post.created, true)}} </span>
           </div>

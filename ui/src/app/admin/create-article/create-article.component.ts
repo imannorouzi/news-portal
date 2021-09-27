@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 // import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import {DataService} from '../../utils/data.service';
 // import {CropperSettings, ImageCropperComponent} from "ngx-img-cropper";
@@ -10,14 +10,13 @@ import {ModalComponent} from '../../common-components/ng-modal/modal.component';
 import {ImageCroppedEvent, ImageCropperComponent} from 'ngx-image-cropper';
 import {CommonService} from '../../utils/common.service';
 import {AlertService} from '../../utils/alert.service';
-import {catchError, map, switchMap, take} from 'rxjs/operators';
+import {map, switchMap, take} from 'rxjs/operators';
 import {of} from 'rxjs';
 import {CreateTagsComponent} from '../create-tags/create-tags.component';
 import {CreateCategoriesComponent} from '../create-categories/create-categories.component';
 import {NavigationService} from '../../utils/navigation.service';
 import {HttpClient} from '@angular/common/http';
-import {ActivatedRoute} from "@angular/router";
-import {error} from "@angular/compiler/src/util";
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-create-article',
@@ -212,15 +211,18 @@ export class CreateArticleComponent implements OnInit {
 
     this.http.get('./assets/bbc_postmeta.json')
       .subscribe( (data: any) => {
-        const posts = data.data;
+        const posts = data[2].data;
+        const ps = [];
         for ( let i = 0; i < posts.length; i++ ) {
           const post = new Post();
           post.excerpt = posts[i].meta_value;
           post.title = posts[i].post_title;
           post.type = 'ARTICLE';
           post.style = '2';
-          post.imageUrl = posts[i].guid;
+          const filename = /[^/]*$/.exec(posts[i].guid)[0];
+          post.imageUrl = 'http://localhost:4200/api/download/images/posts/' + filename;
           post.status = 'PUBLISH';
+          post.created = new Date(posts[i].post_date);
 
           const postSection = new PostSection();
           postSection.text = posts[i].post_content;
@@ -228,8 +230,14 @@ export class CreateArticleComponent implements OnInit {
 
           post.postSections = [ postSection ];
           this.post = post;
+          ps.push(post);
+          // console.log(filename);
+
           this.updatePost('PUBLISH');
+          // console.log(post);
         }
+        // console.log( JSON.stringify(ps));
+        // console.log(ps.length);
       }, err => console.error(err));
   }
 }

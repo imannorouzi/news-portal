@@ -3,4 +3,8 @@
   left: 30px;
   top: 10px;
   z-index: 10;
+  opacity: .4;
+}
+.back-button:hover {
+  opacity: 1;
 }
