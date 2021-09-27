@@ -56,7 +56,7 @@ export class PostPageComponent implements OnInit {
   }
 
   backClicked() {
-    if (this.back ) {
+    if ( this.back.observers.length > 0 ) {
       this.back.emit();
     } else {
       this.navigationService.back();

@@ -159,14 +159,15 @@ export class DataService {
       .pipe(catchError(this.handleError));
   }
 
-  getPosts(page: number, pageLimit: number, attribute: string, value: string): Observable<any> {
+  getPosts(page: number, pageLimit: number, attribute: string, value: string, status = 'PUBLISH'): Observable<any> {
     const url = '/api/get-posts/';
     return this.http.get(url, {
         params: {
           page: page.toString(),
           size: pageLimit.toString(),
           attribute: attribute,
-          value: value
+          value: value,
+          status: status,
         }
       })
       .pipe(map(this.extractData))

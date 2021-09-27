@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {AdminPostsComponent} from './admin-posts/admin-posts.component';
 
 @Component({
   selector: 'app-admin',
@@ -6,6 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
+  @ViewChild( 'adminPostsComponent', { static: true }) adminPostsComponent: AdminPostsComponent;
+
+  status = 'ALL';
+  type = 'ALL';
 
   constructor() { }
 
@@ -13,4 +18,10 @@ export class AdminComponent implements OnInit {
   }
 
 
+  getPosts() {
+    this.adminPostsComponent.page = 0;
+    this.adminPostsComponent.posts = [];
+    this.adminPostsComponent.loading = true;
+    this.adminPostsComponent.readPosts( this.status, this.type );
+  }
 }

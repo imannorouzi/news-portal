@@ -5,6 +5,7 @@ import {CommonService} from '../../utils/common.service';
 import {DataService} from '../../utils/data.service';
 import {Post} from '../../post';
 import {AlertService} from '../../utils/alert.service';
+import {take} from "rxjs/operators";
 
 @Component({
   selector: 'app-admin-post',
@@ -35,31 +36,41 @@ export class AdminPostItemComponent implements OnInit {
 
   updatePostAttribute(attribute: string, value: string) {
     const obj = { attribute: attribute, value: value };
+    this.post.operating = true;
     this.dataService.updatePostAttribute( this.post.id, obj )
+      .pipe(take(1))
       .subscribe( data => {
         if (data.msg === 'OK') {
+          this.post.operating = false;
           this.alertService.success('اوکیه');
         } else {
           this.alertService.error('نشد!');
+          this.post.operating = false;
         }
       }, error => {
         console.error(error);
         this.alertService.error(error);
+        this.post.operating = false;
       });
   }
 
   removePost() {
-    this.dataService.deletePost( this.post.id )
+    const obj = { attribute: 'status', value: 'REMOVED' };
+    this.post.operating = true;
+    this.dataService.updatePostAttribute( this.post.id, obj )
       .subscribe( data => {
         if (data.msg === 'OK') {
           this.alertService.success('اوکیه');
-          this.removed.emit(this.post.id)
+          this.post.operating = false;
+          this.removed.emit(this.post.id);
         } else {
           this.alertService.error('نشد!');
+          this.post.operating = false;
         }
       }, error => {
         console.error(error);
         this.alertService.error(error);
+        this.post.operating = false;
       });
   }
 }

@@ -1,15 +1,16 @@
+<app-post-modal #postModal  [post]="selectedPost"></app-post-modal>
 <div class="posts-container">
   <h3 class="font-heading">مقالات</h3>
 
   <spinner [showing]="loading" ></spinner>
 
-  <div class="post" *ngFor="let post of posts">
+  <div class="post" (click)="postSelected(post)" *ngFor="let post of posts">
     <div class=" flexbox-parent-row" >
       <span class="flexbox-item-grow">{{post.title}}</span> <i class="fa fa-external-link post-open-icon"></i>
     </div>
 
     <div class="font-small mb-2 ">
-      <a [class]="'font-heading  author ml-2' " [routerLink]="'/posts/author/' + post.author">{{post.author}}</a>
+      <a [class]="'font-heading  author ml-2' " (click)="$event.stopPropagation()" [routerLink]="'/posts/author/' + post.author">{{post.author}}</a>
     </div>
 
     <div *ngIf="!loading && !noMoreForward" class="text-center">

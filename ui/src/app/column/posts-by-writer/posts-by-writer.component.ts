@@ -1,7 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {Post} from '../../post';
 import {take} from 'rxjs/operators';
 import {DataService} from '../../utils/data.service';
+import {PostModalComponent} from "../../post-modal/post-modal.component";
 
 @Component({
   selector: 'app-posts-by-writer',
@@ -9,8 +10,11 @@ import {DataService} from '../../utils/data.service';
   styleUrls: ['./posts-by-writer.component.css']
 })
 export class PostsByWriterComponent implements OnInit {
+  @ViewChild('postModal', {static: true}) postModal: PostModalComponent;
 
   @Input() name = '';
+
+  selectedPost: Post;
 
   posts: Post[] = [];
   page = 0;
@@ -45,4 +49,8 @@ export class PostsByWriterComponent implements OnInit {
     this.readPosts();
   }
 
+  postSelected(post: Post) {
+    this.selectedPost = post;
+    this.postModal.show();
+  }
 }

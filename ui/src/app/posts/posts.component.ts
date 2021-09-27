@@ -1,13 +1,11 @@
 import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {SpinnerComponent} from '../spinner/spinner.component';
-import {Subscription} from 'rxjs/internal/Subscription';
 import {DataService} from '../utils/data.service';
 import {DateService} from '../utils/date.service';
 import {AlertService} from '../utils/alert.service';
 import {CommonService} from '../utils/common.service';
-import {PostModalComponent} from '../post-modal/post-modal.component';
 import {take} from 'rxjs/operators';
-import {ActivatedRoute, ActivationEnd, Router} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 
 @Component({
   selector: 'app-posts',
@@ -16,7 +14,6 @@ import {ActivatedRoute, ActivationEnd, Router} from '@angular/router';
 })
 export class PostsComponent implements OnInit {
   @ViewChild('spinner', {static: true}) spinner: SpinnerComponent;
-  @ViewChild('postModal', {static: true}) postModal: PostModalComponent;
 
   posts = [];
   loading = true;
@@ -50,8 +47,10 @@ export class PostsComponent implements OnInit {
 
   ngOnInit() {
     // this.readPosts();
-    this.router.events.subscribe(data => {
-      if (data instanceof ActivationEnd) {
+    this.router.events
+      .pipe(take(1))
+      .subscribe(data => {
+      if (data instanceof NavigationEnd) {
         this.page = 0;
         this.loading = true;
         this.posts = [];

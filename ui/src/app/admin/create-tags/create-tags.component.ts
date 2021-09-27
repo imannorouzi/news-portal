@@ -28,7 +28,7 @@ export class CreateTagsComponent implements OnInit {
     if ( this.tag === '' || !this.tag) {
       return;
     }
-    this.tags.push(new Tag(this.tag.trim().replace(' ', '_')));
+    this.tags.push(new Tag(this.tag.split(' ').join('_')));
     this.tag = '';
   }
 

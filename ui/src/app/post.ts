@@ -18,6 +18,7 @@ export class Post {
   postSections: PostSection[] = [];
   image = '';
   filename = '';
+  operating = false;
 
   constructor(
     id: number = 0,

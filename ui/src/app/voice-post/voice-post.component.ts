@@ -14,7 +14,7 @@ export class VoicePostComponent implements OnInit {
 
   posts: Post[] = [];
   page = 0;
-  PAGE_SIZE = 1;
+  PAGE_SIZE = 5;
   noMoreForward = false;
   loading = true;
 

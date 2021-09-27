@@ -10,13 +10,14 @@ import {ModalComponent} from '../../common-components/ng-modal/modal.component';
 import {ImageCroppedEvent, ImageCropperComponent} from 'ngx-image-cropper';
 import {CommonService} from '../../utils/common.service';
 import {AlertService} from '../../utils/alert.service';
-import {map, switchMap, take} from 'rxjs/operators';
+import {catchError, map, switchMap, take} from 'rxjs/operators';
 import {of} from 'rxjs';
 import {CreateTagsComponent} from '../create-tags/create-tags.component';
 import {CreateCategoriesComponent} from '../create-categories/create-categories.component';
 import {NavigationService} from '../../utils/navigation.service';
 import {HttpClient} from '@angular/common/http';
 import {ActivatedRoute} from "@angular/router";
+import {error} from "@angular/compiler/src/util";
 
 @Component({
   selector: 'app-create-article',
@@ -76,8 +77,8 @@ export class CreateArticleComponent implements OnInit {
     this.dataService.addPost(this.post).subscribe((data: any) => {
         console.log('everything OK', data);
       },
-      (error: any) => {
-        console.error('error happened', error);
+      (err: any) => {
+        console.error('error happened', err);
       });
   }
   preview(files) {
@@ -169,17 +170,21 @@ export class CreateArticleComponent implements OnInit {
       )
       .subscribe(
         (postId: any) => {
-          this.uploadPostSections(postId).then( () => {
-            console.log('Uploaded');
-            this.postAdded.emit(postId);
-            this.alertService.success('ایجاد شد دوستم.');
-            this.navigationService.navigate('/admin');
-          });
+          if (postId === -1 ) {
+            this.alertService.error( 'نشد پست رو آپلود کنی' );
+          } else {
+            this.uploadPostSections(postId).then( () => {
+              console.log('Uploaded');
+              this.postAdded.emit(postId);
+              this.alertService.success('ایجاد شد دوستم.');
+              this.navigationService.navigate('/admin');
+            });
+          }
         },
-        (error: any) => {
-          console.log(error);
+        ( er: any) => {
+          console.log(er);
           // this.spinner.hide();
-          this.alertService.error(error.toString());
+          this.alertService.error(er.toString());
         });
   }
 
@@ -225,6 +230,6 @@ export class CreateArticleComponent implements OnInit {
           this.post = post;
           this.updatePost('PUBLISH');
         }
-      }, error => console.error(error));
+      }, err => console.error(err));
   }
 }

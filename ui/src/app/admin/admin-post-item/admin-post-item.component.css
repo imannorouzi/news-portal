@@ -26,6 +26,10 @@
   float: right;
 }
 
+.post-item.operating {
+  opacity: .4;
+}
+
 .post-tool:hover{
   color: white;
 }
@@ -89,6 +93,11 @@
   border-radius: 3px;
   color: #222;
   margin-right: 4px;
+}
+
+.post-footer i {
+  font-size: 15px;
+  padding: 10px;
 }
 @keyframes post-item-hover {
   0% {
