@@ -20,17 +20,20 @@ public class PostSpecification implements Specification<Post> {
     public Predicate toPredicate(Root<Post> root, CriteriaQuery<?> cq,
                                  CriteriaBuilder cb) {
 
-        Predicate p = cb.disjunction();
+        /*Predicate p = cb.disjunction();
+        Predicate orClause = cb.or(cb.like(root.<String>get("title"), filter.getTitle())).
+                             cb.like(root.<String>get("excerpt"), filter.getExcerpt()),
+                             cb.like(root.<String>get("author"), filter.getAuthor()) );*/
 
-        if (filter.getTitle() != null) {
-            p.getExpressions()
-                    .add(cb.equal(root.get("title"), filter.getTitle()));
-        }
-        if (filter.getExcerpt() != null) {
-            p.getExpressions().add(cb.equal(root.get("excerpt"), filter.getExcerpt()));
+        Predicate p = cb.disjunction();
+        /*if (filter.getExcerpt() != null) {
+            p.getExpressions().add(cb.or( cb.like(root.get("excerpt"), filter.getExcerpt())));
         }
         if (filter.getAuthor() != null) {
-            p.getExpressions().add(cb.equal(root.get("author"), filter.getAuthor()));
+            p.getExpressions().add(cb.or( cb.like(root.get("author"), filter.getAuthor())));
+        }*/
+        if (filter.getTitle() != null) {
+            p.getExpressions().add(cb.like(root.get("title"), filter.getTitle()));
         }
 
         return p;

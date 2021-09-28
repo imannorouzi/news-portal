@@ -32,5 +32,6 @@ public interface PostRepository extends JpaRepository<Post, Integer>, JpaSpecifi
     List<Post> findAllByAuthor(String author, Pageable pageable);
     List<Post> findAllByCategoriesIn(List<Category> categories, Pageable pageable);
     List<Post> findAllByTagsIn(List<Tag> tags, Pageable pageable);
+
 }
 

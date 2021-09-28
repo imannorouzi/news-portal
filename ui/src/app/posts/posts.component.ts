@@ -39,6 +39,7 @@ export class PostsComponent implements OnInit {
               private cdRef: ChangeDetectorRef,
               private router: Router,
               private route: ActivatedRoute) {
+
   }
 
   ngAfterViewChecked()  {
@@ -50,12 +51,20 @@ export class PostsComponent implements OnInit {
     this.router.events
       .pipe(take(1))
       .subscribe(data => {
-      if (data instanceof NavigationEnd) {
-        this.page = 0;
-        this.loading = true;
-        this.posts = [];
-        this.readPosts();
-      }
+        if (data instanceof NavigationEnd) {
+          this.page = 0;
+          this.loading = true;
+          this.posts = [];
+          this.readPosts();
+        }
+      });
+
+    this.route.params
+      .subscribe(params => {this.page = 0;
+      this.page = 0;
+      this.loading = true;
+      this.posts = [];
+      this.readPosts();
     });
     this.readPosts();
 
