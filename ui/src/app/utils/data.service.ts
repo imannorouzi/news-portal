@@ -160,7 +160,7 @@ export class DataService {
   }
 
   getPosts(page: number, pageLimit: number, attribute: string, value: string, status = 'PUBLISH'): Observable<any> {
-    const url = '/api/get-posts/';
+    const url =  environment.baseUrl + '/get-posts/';
     return this.http.get(url, {
         params: {
           page: page.toString(),
@@ -175,7 +175,7 @@ export class DataService {
   }
 
   getPost(postId: string): Observable<any> {
-    const url = '/api/get-post/' + postId;
+    const url = environment.baseUrl + '/get-post/' + postId;
     return this.http.get(url)
       .pipe(map(this.extractData))
       .pipe(catchError(this.handleError));
@@ -269,14 +269,14 @@ export class DataService {
   }
 
   getTags() {
-    const url = '/api/get-tags';
+    const url = environment.baseUrl + '/get-tags';
     return this.http.get(url)
       .pipe(map(this.extractData))
       .pipe(catchError(this.handleError));
   }
 
   getCategories() {
-    const url = '/api/get-categories';
+    const url = environment.baseUrl + '/get-categories';
     return this.http.get(url)
       .pipe(map(this.extractData))
       .pipe(catchError(this.handleError));

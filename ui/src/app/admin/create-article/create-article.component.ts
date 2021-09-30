@@ -17,6 +17,7 @@ import {CreateCategoriesComponent} from '../create-categories/create-categories.
 import {NavigationService} from '../../utils/navigation.service';
 import {HttpClient} from '@angular/common/http';
 import {ActivatedRoute} from '@angular/router';
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-create-article',
@@ -220,7 +221,7 @@ export class CreateArticleComponent implements OnInit {
           post.type = 'ARTICLE';
           post.style = '2';
           const filename = /[^/]*$/.exec(posts[i].guid)[0];
-          post.imageUrl = 'http://localhost:4200/api/download/images/posts/' + filename;
+          post.imageUrl = environment.baseUrl + '/download/images/posts/' + filename;
           post.status = 'PUBLISH';
           post.created = new Date(posts[i].post_date);
 

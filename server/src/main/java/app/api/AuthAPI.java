@@ -81,6 +81,7 @@ public class AuthAPI {
                     .build();
 
         } catch (DisabledException | BadCredentialsException e) {
+            e.printStackTrace();
             return Response.ok(gson.toJson(new ResponseObject("INVALID_CREDENTIALS", null))).build();
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,5 +1,7 @@
 package app.utils;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -10,7 +12,7 @@ import java.util.UUID;
 public class Utils {
 
     public static final String RELATIONAL_WEBSITE_URL = "";
-//    public static final String WEBSITE_URL = "http://185.173.104.77";
+    //    public static final String WEBSITE_URL = "http://185.173.104.77";
     public static final String WEBSITE_URL = "http://185.173.104.77";
 
     static TimeZone tz = TimeZone.getTimeZone("UTC");
@@ -25,7 +27,12 @@ public class Utils {
     }
 
     public static String fixUri(String fileDownloadUri) {
-        return fileDownloadUri.replace("http://localhost:8083", "/");
+        try {
+            return new URL(fileDownloadUri).getPath();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return fileDownloadUri.replace("http://localhost:8083", "/");
+        }
     }
 
     /*public static String saveFile(InputStream uploadedInputStream,
@@ -61,7 +68,7 @@ public class Utils {
         });
     }*/
 
-    
+
     public static Date convertStringToDateUTC(String dateString){
         Calendar cal = Calendar.getInstance(tz);
         sdf.setCalendar(cal);
@@ -72,7 +79,7 @@ public class Utils {
             e.printStackTrace();
             return null;
         }
-        
+
     }
 
 }

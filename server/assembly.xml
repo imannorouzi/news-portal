@@ -24,7 +24,7 @@
 
     <fileSets>
         <fileSet>
-            <directory>../ui/dist\</directory>
+            <directory>../../ui/dist</directory>
             <includes>
                 <include>**/*</include>
             </includes>
