@@ -70,18 +70,7 @@ public class PostAPIs {
                 postAttribute = new PostAttribute(attribute, value);
             }
 
-            if (postAttribute != null && postAttribute.getAttribute().equals("search")) {
-                Post filter = new Post();
-                filter.setTitle(hint);
-                filter.setExcerpt(hint);
-                filter.setAuthor(hint);
-
-                Specification<Post> spec = new PostSpecification(filter);
-
-                posts = repositoryFactory.getPostRepository().findAll(spec);
-            } else {
-                posts = getPosts(page, size, postAttribute, status);
-            }
+            posts = getPosts(page, size, postAttribute, status);
 
             return Response.ok(gson.toJson(new ResponseObject("OK", posts))).build();
 
@@ -284,6 +273,17 @@ public class PostAPIs {
                             repositoryFactory.getPostRepository().findAllByTagsIn(tags, sortedByIds)
                             :
                             repositoryFactory.getPostRepository().findAllByTagsInAndStatus(tags, status, sortedByIds);
+                    break;
+                case "search":
+                        Post filter = new Post();
+                        filter.setTitle(pa.getValue());
+                        filter.setExcerpt(pa.getValue());
+                        filter.setAuthor(pa.getValue());
+                        filter.setStatus(status);
+
+                        Specification<Post> spec = new PostSpecification(filter);
+
+                        posts = repositoryFactory.getPostRepository().findAll(spec, sortedByIds).getContent();
                     break;
             }
 
