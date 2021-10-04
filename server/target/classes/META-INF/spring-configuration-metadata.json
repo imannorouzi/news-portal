@@ -1,0 +1,27 @@
+{
+  "groups": [
+    {
+      "name": "app",
+      "type": "app.ApplicationConfiguration",
+      "sourceType": "app.ApplicationConfiguration"
+    }
+  ],
+  "properties": [
+    {
+      "name": "app.description",
+      "type": "java.lang.String",
+      "sourceType": "app.ApplicationConfiguration"
+    },
+    {
+      "name": "app.name",
+      "type": "java.lang.String",
+      "sourceType": "app.ApplicationConfiguration"
+    },
+    {
+      "name": "app.upload-dir",
+      "type": "java.lang.String",
+      "sourceType": "app.ApplicationConfiguration"
+    }
+  ],
+  "hints": []
+}

@@ -1,5 +1,5 @@
 export class Category {
-  id;
+  id = -1;
   name = '';
   checked = false;
 

@@ -181,6 +181,17 @@ export class DataService {
       .pipe(catchError(this.handleError));
   }
 
+  copyArticle(copyUrl: string): Observable<any> {
+    const url = environment.baseUrl + '/copy-article/';
+    return this.http.get(url, {
+      params: {
+        url: copyUrl
+      }
+    })
+      .pipe(map(this.extractData))
+      .pipe(catchError(this.handleError));
+  }
+
   uploadFile(file: File) {
     const apiURL = serverUrl + '/upload-file';
 

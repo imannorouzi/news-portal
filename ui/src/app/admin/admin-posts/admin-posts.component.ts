@@ -37,7 +37,6 @@ export class AdminPostsComponent implements  OnInit {
   }
 
   ngOnInit() {
-    this.readPosts();
   }
 
   ngOnDestroy(): void {

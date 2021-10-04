@@ -2,6 +2,7 @@
   <div class="text-left back-button">
     <a class="app-button secondary" routerLink="/admin"><i class="fa fa-arrow-left"></i></a>
   </div>
+  <button class="app-button secondary" (click)="urlModal.show()"><i class="fa fa-link"></i></button>
   <div [class]="'text-center justify-content-center mb-3 bg-white'
       + (post.imageUrl ? '' : 'image-container')">
     <div class="m-auto text-center">
@@ -103,6 +104,24 @@
   <ng-container class="app-modal-footer">
     <div class="text-right">
       <button type="button" class="app-button" (click)="onImageCropperModalOk()">خوبه</button>
+    </div>
+  </ng-container>
+</app-modal>
+
+
+<app-modal #urlModal
+           [modalTitle]="'کپی از سایت دیگر'"
+           [size]="'auto'"
+           [zIndex]="11">
+  <ng-container class="app-modal-body ">
+    <div class="text-center">
+      <input [(ngModel)]="copyArticleUrl" *ngIf="!copyingArticle" type="url" class="ltr text-left" placeholder="آدرس مقاله"/>
+      <spinner [showing]="copyingArticle"></spinner>
+    </div>
+  </ng-container>
+  <ng-container class="app-modal-footer">
+    <div class="text-right">
+      <button type="button" class="app-button" (click)="readArticleFromLink()">خوبه</button>
     </div>
   </ng-container>
 </app-modal>

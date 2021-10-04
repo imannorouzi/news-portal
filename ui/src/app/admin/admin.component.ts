@@ -9,12 +9,13 @@ import {AdminPostsComponent} from './admin-posts/admin-posts.component';
 export class AdminComponent implements OnInit {
   @ViewChild( 'adminPostsComponent', { static: true }) adminPostsComponent: AdminPostsComponent;
 
-  status = 'ALL';
+  status = 'PUBLISH';
   type = 'ALL';
 
   constructor() { }
 
   ngOnInit(): void {
+    this.adminPostsComponent.readPosts(this.status, this.type);
   }
 
 

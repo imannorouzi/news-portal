@@ -7,7 +7,7 @@
       <div class="flexbox-item-grow">
         <span class="flexbox-item-grow">{{post.title}}</span>
         <div class="font-small mb-2 ">
-          <a (click)="$event.stopPropagation()" [class]="'font-heading  author ml-2' " [routerLink]="'/posts/author/' + post.author">{{post.author}}</a>
+          <a (click)="$event.stopPropagation()" [class]="'font-heading  author ml-2' " [routerLink]="'/posts/author/' + post.author"> {{post.author}} </a>
           <span class="text-muted font-small font-heading">
         <span>{{dateService.greToPersian(post.created, true)}} </span>
       </span>

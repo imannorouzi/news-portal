@@ -17,7 +17,7 @@ import {CreateCategoriesComponent} from '../create-categories/create-categories.
 import {NavigationService} from '../../utils/navigation.service';
 import {HttpClient} from '@angular/common/http';
 import {ActivatedRoute} from '@angular/router';
-import {environment} from "../../../environments/environment";
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-create-article',
@@ -27,6 +27,7 @@ import {environment} from "../../../environments/environment";
 export class CreateArticleComponent implements OnInit {
   @ViewChild('cropper', {static: false}) cropper: ImageCropperComponent;
   @ViewChild('imageCropperModal', {static: false}) imageCropperModal: ModalComponent;
+  @ViewChild('urlModal', {static: false}) urlModal: ModalComponent;
   @ViewChild('fileInput', {static: true}) fileInput: ElementRef;
   @ViewChild('tags', {static: true}) tags: CreateTagsComponent;
   @ViewChild('categories', {static: true}) categories: CreateCategoriesComponent;
@@ -40,6 +41,9 @@ export class CreateArticleComponent implements OnInit {
   // public Editor = DecoupledEditor;
   public message: string;
   post: Post = new Post();
+
+  copyingArticle = false;
+  copyArticleUrl = '';
 
   image = '';
   imageUrl = '';
@@ -240,5 +244,30 @@ export class CreateArticleComponent implements OnInit {
         // console.log( JSON.stringify(ps));
         // console.log(ps.length);
       }, err => console.error(err));
+  }
+
+  readArticleFromLink() {
+    this.copyingArticle = true;
+    this.dataService.copyArticle(this.copyArticleUrl).pipe()
+      .pipe(take(1))
+      .subscribe( data => {
+        console.log( data );
+        if ( data.msg === 'OK' ) {
+          data.object.postSections.forEach( ps => {
+            if ( !ps.style ) {
+              ps.style = [];
+            }
+          });
+          this.post = data.object;
+          this.urlModal.hide();
+        } else {
+          this.alertService.error('نشد');
+        }
+        this.copyingArticle = false;
+      }, error => {
+        console.error(error);
+        this.copyingArticle = false;
+        this.alertService.error('نشد');
+      });
   }
 }

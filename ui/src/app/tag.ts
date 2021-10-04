@@ -1,5 +1,5 @@
 export class Tag {
-  id;
+  id = -1;
   name = '';
 
   constructor(

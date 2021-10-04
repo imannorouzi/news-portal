@@ -1,5 +1,6 @@
 package app.api;
 
+import app.crawl.Crawler;
 import app.objects.*;
 import app.repositories.PostSpecification;
 import app.utils.FileStorageService;
@@ -166,6 +167,20 @@ public class PostAPIs {
             User user = repositoryFactory.getUserRepository().findByUsername(u.getUsername());
             post = gson.fromJson(postJsonString, Post.class);
 
+            for(Category category: post.getCategories()) {
+                if ( category.getId() == -1 ) {
+                    Category cat = repositoryFactory.getCategoryRepository().save(category);
+                    category.setId(cat.getId());
+                }
+            }
+
+            for(Tag tag: post.getTags()) {
+                if ( tag.getId() == -1 ) {
+                    Tag t = repositoryFactory.getTagRepository().save(tag);
+                    tag.setId(t.getId());
+                }
+            }
+
             // check if any user has been registered with the same email
 
             if(filename != null && !filename.isEmpty() && file != null) {
@@ -295,5 +310,19 @@ public class PostAPIs {
             );
         }
         return posts;
+    }
+
+    @PermitAll
+    @GetMapping("/copy-article")
+    public Response copyArticle(@AuthenticationPrincipal UserDetails u,
+                             @RequestParam(value = "url") String url)  {
+        try {
+            Post post = Crawler.crawl(url);
+            return Response.ok(gson.toJson(new ResponseObject("OK", post))).build();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(500).entity(gson.toJson(new ResponseObject("FAIL", e.getMessage()))).build();
+        }
     }
 }
