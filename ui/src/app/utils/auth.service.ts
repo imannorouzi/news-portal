@@ -9,8 +9,6 @@ import {User} from '../user';
 import {CommonService} from './common.service';
 
 
-const serverUrl = environment.serverUrl;
-
 @Injectable()
 export class AuthService {
   redirectUrl = '/';
@@ -114,7 +112,7 @@ export class AuthService {
   }
 
   loginWithServer(username: string, password: string) {
-    const apiUrl = serverUrl + '/authenticate';
+    const apiUrl = environment.baseUrl + '/authenticate';
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -137,7 +135,7 @@ export class AuthService {
   }
 
   register(user: User) {
-    const apiUrl = serverUrl + '/register';
+    const apiUrl = environment.baseUrl + '/register';
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -164,7 +162,7 @@ export class AuthService {
   }
 
   loginWithGoogle(user) {
-    return this.http.post<any>( serverUrl + '/authenticate-with-google', user )
+    return this.http.post<any>( environment.baseUrl + '/authenticate-with-google', user )
       .pipe(map(data => {
         // login successful if there's a jwt token in the response
         if (data && data.msg === 'OK' && data.object.token) {

@@ -27,13 +27,13 @@ public class commentAPIs {
         this.repositoryFactory = repositoryFactory;
     }
 
-    @GetMapping("/comment/{id}")
+    @GetMapping("/api/comment/{id}")
     public Comment getComment(@PathVariable String id){
         int blogId = Integer.parseInt(id);
         return repositoryFactory.getCommentRepository().findById(blogId).orElse(null);
     }
 
-    @GetMapping("/get-comments/{eventId}/{page}")
+    @GetMapping("/api/get-comments/{eventId}/{page}")
     public Response getComments(@AuthenticationPrincipal UserDetails u,
                                 @PathVariable("eventId") Integer meetingId,
                                 @PathVariable("page") Integer page){
@@ -70,7 +70,7 @@ public class commentAPIs {
 
 
 
-    @GetMapping("/get-comments-guest")
+    @GetMapping("/api/get-comments-guest")
     public Response getComments(@QueryParam("uuid") String uuid,
                                 @QueryParam("page") int page) {
 
@@ -92,7 +92,7 @@ public class commentAPIs {
         }
     }
 
-    @PostMapping("/create-comment")
+    @PostMapping("/api/create-comment")
     public Response createComment( @AuthenticationPrincipal UserDetails u, @RequestBody String jsonCommentString) {
 
         Gson gson = new Gson();
@@ -118,7 +118,7 @@ public class commentAPIs {
         }
     }
 
-    @PostMapping("/create-comment-guest")
+    @PostMapping("/api/create-comment-guest")
     public Response createComment(String jsonCommentString){
 
         Gson gson = new Gson();
@@ -143,7 +143,7 @@ public class commentAPIs {
     }
 
     @PermitAll
-    @PostMapping("/delete-comment")
+    @PostMapping("/api/delete-comment")
     public Response deleteComment(  @AuthenticationPrincipal UserDetails u,
                                     @RequestBody String id){
 

@@ -53,13 +53,13 @@ public class GeneralAPIs {
         this.fileStorageService = fileStorageService;
     }
 
-    @GetMapping("/send-mail/{template}/{to}")
+    @GetMapping("/api/send-mail/{template}/{to}")
     public Response sendmail(@PathVariable("template") String template, @PathVariable("to") String to){
         MailUtils.sendTemplate( template, to);
         return Response.ok("OK").build();
     }
 
-    @PostMapping("/contact-us")
+    @PostMapping("/api/contact-us")
     public Response contactUs(String jsonCommentString) {
 
         Gson gson = new Gson();
@@ -92,7 +92,7 @@ public class GeneralAPIs {
 
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @PermitAll
-    @PostMapping("/upload-file")
+    @PostMapping("/api/upload-file")
     public Response uploadFile(@AuthenticationPrincipal UserDetails u,
                                @RequestParam(value = "file", required = false) MultipartFile file,
                                @FormDataParam("file") FormDataBodyPart body,
@@ -129,7 +129,7 @@ public class GeneralAPIs {
 
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @PermitAll
-    @PostMapping("/upload-album-image")
+    @PostMapping("/api/upload-album-image")
     public Response uploadAlbumImage(@FormDataParam("file") InputStream uploadedInputStream,
                                      @FormDataParam("file") FormDataContentDisposition fileDetail,
                                      @FormDataParam("file") FormDataBodyPart body){
@@ -142,7 +142,7 @@ public class GeneralAPIs {
                 .build();
     }
 
-    @GetMapping("/convert-date/{date}")
+    @GetMapping("/api/convert-date/{date}")
     public Response getAppDetails(@PathVariable("date") String dateString) throws ParseException {
 //        String dateString = "2020-07-20T14:00:00.000Z";
         TimeZone tz = TimeZone.getTimeZone("UTC");
@@ -157,14 +157,14 @@ public class GeneralAPIs {
     }
 
 
-    @RequestMapping(value = "/{[path:[^\\.]*}")
+//    @RequestMapping(value = "/{[path:[^\\.]*}")
+    @RequestMapping(value = "/**/{path:[^.]*}")
     public ResponseEntity<Resource> ui(HttpServletRequest request) throws Exception {
-        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-        return ResponseEntity.ok(new InputStreamResource(Objects.requireNonNull(classloader.getResourceAsStream("public/index.html"))));
-
+            ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+            return ResponseEntity.ok(new InputStreamResource(Objects.requireNonNull(classloader.getResourceAsStream("public/index.html"))));
     }
 
-    @GetMapping("/download/{dir}/{type}/{fileName:.+}")
+    @GetMapping("/api/download/{dir}/{type}/{fileName:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName,
                                                  @PathVariable String type,
                                                  @PathVariable String dir,

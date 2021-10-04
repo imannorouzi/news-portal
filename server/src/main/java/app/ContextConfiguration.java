@@ -74,12 +74,12 @@ public class ContextConfiguration extends WebSecurityConfigurerAdapter {
         httpSecurity.csrf().disable()
                 // dont authenticate this particular request
                 .authorizeRequests()
-                .antMatchers("/authenticate").permitAll()
+                .antMatchers("/api/authenticate").permitAll()
 //                .antMatchers("/register").permitAll()
-                .antMatchers("/get-posts").permitAll()
-                .antMatchers("/content/**").permitAll()
+                .antMatchers("/api/get-posts").permitAll()
+                .antMatchers("/api/content/**").permitAll()
 //                .antMatchers("/uploadFile/**").permitAll()
-                .antMatchers("/download/**").permitAll()
+                .antMatchers("/api/download/**").permitAll()
                 .antMatchers("/**").permitAll()
                 // all other requests need to be authenticated
                 .anyRequest().authenticated().and()

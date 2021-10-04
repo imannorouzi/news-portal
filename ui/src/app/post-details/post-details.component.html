@@ -8,7 +8,7 @@
     </div>
     <div [class]="'d-table w-100'">
 
-      <img class=" post-thumbnail" [src]="post.imageUrl" alt=""/>
+      <img *ngIf="post.imageUrl" class=" post-thumbnail" [src]="post.imageUrl" alt=""/>
       <div class=" post-text">
 
         <div class="post-content">

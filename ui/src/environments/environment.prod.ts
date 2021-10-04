@@ -10,6 +10,5 @@ export const environment = {
       storageBucket: 'sholop-1526521509022.appspot.com',
       messagingSenderId: '635253433511'
     },
-  baseUrl: '',
-  serverUrl: '',
+  baseUrl: '/api',
 };

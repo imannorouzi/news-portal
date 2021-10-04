@@ -48,7 +48,7 @@ public class AuthAPI {
     }
 
 
-    @GetMapping("/user/{id}")
+    @GetMapping("/api/user/{id}")
     public User getUser(@PathVariable String id){
         int blogId = Integer.parseInt(id);
         return repositoryFactory.getUserRepository().findById(blogId).orElse(null);
@@ -66,7 +66,7 @@ public class AuthAPI {
 
 
     @CrossOrigin
-    @PostMapping("/authenticate")
+    @PostMapping("/api/authenticate")
     public Response authenticate(@RequestBody String jsonSchedule){
 
         Gson gson = new Gson();
@@ -91,7 +91,7 @@ public class AuthAPI {
         }
     }
 
-    @PostMapping("/register")
+    @PostMapping("/api/register")
     public Response register(@RequestBody String jsonSchedule){
 
         try {
@@ -132,7 +132,7 @@ public class AuthAPI {
         }
     }
 
-    @PostMapping("/authenticate-with-google")
+    @PostMapping("/api/authenticate-with-google")
     public Response authenticateWithGoogle(String jsonSchedule){
 
         Gson gson = new Gson();
@@ -199,10 +199,7 @@ public class AuthAPI {
         }
     }
 
-
-
-
-    @PostMapping("/update-user")
+    @PostMapping("/api/update-user")
     public Response updateContact(@AuthenticationPrincipal UserDetails u,
                                   @RequestParam(value = "file", required = false) MultipartFile file,
                                   @RequestParam("user") String userJsonString,

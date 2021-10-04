@@ -32,7 +32,7 @@ public class PostSectionAPI {
         this.fileStorageService = fileStorageService;
     }
 
-    @PostMapping("/update-post-section")
+    @PostMapping("/api/update-post-section")
     public Response updatePostSection(@AuthenticationPrincipal UserDetails u,
                                       @RequestParam(value = "file", required = false) MultipartFile file,
                                       @RequestParam("postSection") String postJsonString,

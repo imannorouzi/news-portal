@@ -8,8 +8,6 @@ import {catchError, map} from 'rxjs/operators';
 import {Post} from '../post';
 import {PostSection} from '../post-section';
 
-const serverUrl = environment.serverUrl;
-
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +35,7 @@ export class DataService {
     return throwError(message);
   }
   getTokens(date: Date):  Observable<any> {
-    const apiURL = serverUrl + '/get-tokens';
+    const apiURL = environment.baseUrl + '/get-tokens';
     return this.http.get(apiURL, {
       params: {date: date.toUTCString()}
     }).pipe(map(this.extractData))
@@ -45,7 +43,7 @@ export class DataService {
   }
 
   getUsers( hint: string = ''):  Observable<any> {
-    const apiURL = serverUrl + '/get-users';
+    const apiURL = environment.baseUrl + '/get-users';
     return this.http.get(apiURL, {
       params: {hint: hint}
     }).pipe(map(this.extractData))
@@ -53,7 +51,7 @@ export class DataService {
   }
 
   updateUser(user: User) {
-    const apiURL = serverUrl + '/update-user';
+    const apiURL = environment.baseUrl + '/update-user';
 
     const formData: FormData = new FormData();
     if (user.image ) {
@@ -73,21 +71,21 @@ export class DataService {
   }
 
   getComments(eventId, page):  Observable<any> {
-    const apiURL = serverUrl + '/get-comments/' + eventId + '/' + page;
+    const apiURL = environment.baseUrl + '/get-comments/' + eventId + '/' + page;
     return this.http.get(apiURL, {}).pipe(map(this.extractData))
       .pipe(catchError(this.handleError));
 
   }
   getCommentsGuest(eventId, page, uuid):  Observable<any> {
     // It is a guest user
-    const apiURL = serverUrl + '/get-comments-guest';
+    const apiURL = environment.baseUrl + '/get-comments-guest';
     return this.http.get(apiURL, {
       params: {event_id: eventId, page: page, uuid: uuid}
     });
   }
 
   deleteComment(comment: any) {
-    const apiURL = serverUrl + '/delete-comment';
+    const apiURL = environment.baseUrl + '/delete-comment';
     const headers = new HttpHeaders({
       'Content-Type': 'text/json',
       'Accept': 'application/json'
@@ -102,11 +100,11 @@ export class DataService {
     const headers = new HttpHeaders({
     });
     if (comment.uuid) {
-      apiURL = serverUrl + '/create-comment-guest';
+      apiURL = environment.baseUrl + '/create-comment-guest';
       return this.http.post(`${apiURL}`, JSON.stringify(comment), {headers: headers}).pipe(map(this.extractData))
         .pipe(catchError(this.handleError));
     } else {
-      apiURL = serverUrl + '/create-comment';
+      apiURL = environment.baseUrl + '/create-comment';
       return this.http.post(`${apiURL}`, JSON.stringify(comment), {headers: headers}).pipe(map(this.extractData))
         .pipe(catchError(this.handleError));
     }
@@ -115,7 +113,7 @@ export class DataService {
   }
 
   contactUs(message: { name: any; email: any; title: any; message: any }) {
-    const apiURL = serverUrl + '/contact-us';
+    const apiURL = environment.baseUrl + '/contact-us';
 
     const headers = new HttpHeaders({
       'Content-Type': 'text/json',
@@ -149,7 +147,7 @@ export class DataService {
   }
 
   addPost(post: Post): Observable<Post> {
-    const apiURL = serverUrl + '/new-post';
+    const apiURL = environment.baseUrl + '/new-post';
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Accept': 'application/json'
@@ -193,7 +191,7 @@ export class DataService {
   }
 
   uploadFile(file: File) {
-    const apiURL = serverUrl + '/upload-file';
+    const apiURL = environment.baseUrl + '/upload-file';
 
     const formData: FormData = new FormData();
     if (file) {
@@ -212,7 +210,7 @@ export class DataService {
   }
 
   updatePost(con: any) {
-    const apiURL = serverUrl + '/update-post';
+    const apiURL = environment.baseUrl + '/update-post';
 
     const contact = Object.assign({}, con);
     const formData: FormData = new FormData();
@@ -237,7 +235,7 @@ export class DataService {
   }
 
   updatePostAttribute(postId: number, postAttribute: any) {
-    const apiURL = serverUrl + '/update-post-attribute/' + postId;
+    const apiURL = environment.baseUrl + '/update-post-attribute/' + postId;
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -249,7 +247,7 @@ export class DataService {
   }
 
   updatePostSection(ps: PostSection): Promise<any> {
-    const apiURL = serverUrl + '/update-post-section';
+    const apiURL = environment.baseUrl + '/update-post-section';
 
     const postSection = Object.assign({}, ps);
     const formData: FormData = new FormData();
@@ -293,14 +291,4 @@ export class DataService {
       .pipe(catchError(this.handleError));
   }
 
-  deletePost(postId: any) {
-    const apiURL = serverUrl + '/delete-post';
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    });
-    return this.http.post(`${apiURL}`, postId, {headers: headers})
-      .pipe(map(this.extractData))
-      .pipe(catchError(this.handleError));
-  }
 }

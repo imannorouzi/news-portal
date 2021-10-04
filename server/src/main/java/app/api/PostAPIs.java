@@ -23,7 +23,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.annotation.security.PermitAll;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,14 +40,14 @@ public class PostAPIs {
         this.fileStorageService = fileStorageService;
     }
 
-    @GetMapping("/post/{id}")
+    @GetMapping("/api/post/{id}")
     public Post getpost(@PathVariable String id){
         int blogId = Integer.parseInt(id);
         return repositoryFactory.getPostRepository().findById(blogId).orElse(null);
     }
 
 
-    @GetMapping("/get-posts")
+    @GetMapping("/api/get-posts")
     public Response getPosts(@AuthenticationPrincipal UserDetails u,
                              @RequestParam(value = "page") int page,
                              @RequestParam(value = "size") int size,
@@ -81,7 +80,7 @@ public class PostAPIs {
         }
     }
 
-    @GetMapping("/get-post/{postId}")
+    @GetMapping("/api/get-post/{postId}")
     public Response getPost(@AuthenticationPrincipal UserDetails u,
                             @PathVariable(value = "postId") int postId )  {
         try {
@@ -97,7 +96,7 @@ public class PostAPIs {
         }
     }
 
-    @PostMapping("/update-post-status")
+    @PostMapping("/api/update-post-status")
     public ResponseObject updatePostStatus(@RequestBody User user, String objectString){
 
         Gson gson = new Gson();
@@ -119,7 +118,7 @@ public class PostAPIs {
         }
     }
 
-    @PostMapping("/update-post-attribute/{postId}")
+    @PostMapping("/api/update-post-attribute/{postId}")
     public Response updatePostAttribute(@AuthenticationPrincipal UserDetails user,
                                         @PathVariable(value = "postId") int postId,
                                         @RequestBody String objectString){
@@ -157,7 +156,7 @@ public class PostAPIs {
     }
 
     @PermitAll
-    @PostMapping("/update-post")
+    @PostMapping("/api/update-post")
     public Response updatePost(@AuthenticationPrincipal UserDetails u,
                                @RequestParam(value = "file", required = false) MultipartFile file,
                                @RequestParam("post") String postJsonString,
@@ -199,6 +198,7 @@ public class PostAPIs {
             post.setUserId(user.getId());
 
             post = repositoryFactory.getPostRepository().save(post);
+            Utils.sendMessageToTelegram(post);
             // post sections will be saved in subsequent requests from the UI
 
         } catch (Exception e) {
@@ -210,7 +210,7 @@ public class PostAPIs {
         return Response.ok(gson.toJson(new ResponseObject("OK", post))).build();
     }
 
-    @GetMapping("/get-categories")
+    @GetMapping("/api/get-categories")
     public Response getCategories(@AuthenticationPrincipal UserDetails u,
                                   @RequestParam(value = "hint", required = false) String hint)  {
         try {
@@ -223,7 +223,7 @@ public class PostAPIs {
         }
     }
 
-    @GetMapping("/get-tags")
+    @GetMapping("/api/get-tags")
     public Response getTags(@AuthenticationPrincipal UserDetails u,
                             @RequestParam(value = "hint", required = false) String hint)  {
         try {
@@ -238,8 +238,8 @@ public class PostAPIs {
 
     List<Post> getPosts(int page, int size, PostAttribute pa, String status) {
         Pageable sortedByIds = PageRequest
-                .of(page, size, Sort.by("created")
-                        .descending().and(Sort.by("id")).descending());
+                .of(page, size, Sort.by("id")
+                        .descending()/*.and(Sort.by("created")).descending()*/);
 
         List<Post> posts = new ArrayList<>();
 
@@ -313,7 +313,7 @@ public class PostAPIs {
     }
 
     @PermitAll
-    @GetMapping("/copy-article")
+    @GetMapping("/api/copy-article")
     public Response copyArticle(@AuthenticationPrincipal UserDetails u,
                              @RequestParam(value = "url") String url)  {
         try {

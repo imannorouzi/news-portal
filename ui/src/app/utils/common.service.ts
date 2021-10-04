@@ -1,9 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Subject} from "rxjs";
-import {environment} from "../../environments/environment";
+import {Subject} from 'rxjs';
+import {environment} from '../../environments/environment';
 
-
-const serverUrl = environment.serverUrl;
 
 @Injectable({
   providedIn: 'root'
@@ -15,23 +13,23 @@ export class CommonService {
 
   constructor() { }
 
-  detectIEEdge() : number{
-    let ua = window.navigator.userAgent;
+  detectIEEdge(): number {
+    const ua = window.navigator.userAgent;
 
-    let msie = ua.indexOf('MSIE ');
+    const msie = ua.indexOf('MSIE ');
     if (msie > 0) {
       // IE 10 or older => return version number
       return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
     }
 
-    let trident = ua.indexOf('Trident/');
+    const trident = ua.indexOf('Trident/');
     if (trident > 0) {
       // IE 11 => return version number
-      let rv = ua.indexOf('rv:');
+      const rv = ua.indexOf('rv:');
       return parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10);
     }
 
-    let edge = ua.indexOf('Edge/');
+    const edge = ua.indexOf('Edge/');
     if (edge > 0) {
       // Edge => return version number
       return parseInt(ua.substring(edge + 5, ua.indexOf('.', edge)), 10);
@@ -41,42 +39,42 @@ export class CommonService {
     return 0;
   }
 
-  sortByKey(array, key = undefined, order="asc") {
+  sortByKey(array, key = undefined, order= 'asc') {
 
     let sorted = Object.assign([], array);
-    if(key){
+    if (key) {
       sorted = sorted.map( i => i[key] );
     }
-    let collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
+    const collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
     sorted = sorted.sort(collator.compare);
 
     let retVal = [];
-    if(key){
-      let buffer = Object.assign([], array);
+    if (key) {
+      const buffer = Object.assign([], array);
       sorted.forEach( s => {
-        let item = buffer.find(b => b[key] === s);
-        if(item){
+        const item = buffer.find(b => b[key] === s);
+        if (item) {
           retVal.push(item);
           buffer.splice(buffer.indexOf(item), 1);
         }
-      })
-    }else{
+      });
+    } else {
       retVal = sorted;
     }
 
     return retVal;
   }
 
-  getTimeDuration(startTime, endTime): string{
+  getTimeDuration(startTime, endTime): string {
 
-    if(startTime && endTime) {
-      let startSeconds = parseInt(startTime.substring(0, 2)) * 60 + parseInt(startTime.substring(2));
-      let endSeconds = parseInt(endTime.substring(0, 2)) * 60 + parseInt(endTime.substring(2));
+    if (startTime && endTime) {
+      const startSeconds = parseInt(startTime.substring(0, 2)) * 60 + parseInt(startTime.substring(2));
+      const endSeconds = parseInt(endTime.substring(0, 2)) * 60 + parseInt(endTime.substring(2));
 
-      let minus = endSeconds - startSeconds;
+      const minus = endSeconds - startSeconds;
 
-      let hour = Math.floor(minus / 60);
-      let minutes = minus % 60;
+      const hour = Math.floor(minus / 60);
+      const minutes = minus % 60;
 
       if (hour === 0) {
         return minutes + ' دقیقه';
@@ -88,8 +86,8 @@ export class CommonService {
     return '';
   }
 
-  getStatusString(status: string){
-    switch(status){
+  getStatusString(status: string) {
+    switch (status) {
       case 'draft':
         return 'پیش نویس';
       case 'publish':
@@ -100,7 +98,7 @@ export class CommonService {
   }
 
   getContactStatus(status: string) {
-    switch(status){
+    switch (status) {
       case 'NOT_REPLIED':
         return {text:  'جواب نداده', color: 'gray', class: 'fa-question'};
       case 'ATTENDING':
@@ -115,14 +113,14 @@ export class CommonService {
     }
   }
 
-  getRandomColor(){
-    let colors = ['red', 'green', 'blue', 'orange', 'yellow'];
+  getRandomColor() {
+    const colors = ['red', 'green', 'blue', 'orange', 'yellow'];
 
     return colors[Math.floor(Math.random() * colors.length)];
   }
 
-  getEventStatus(status: string){
-    switch(status){
+  getEventStatus(status: string) {
+    switch (status) {
       case 'DONE':
         return {text:  'انجام شده', color: '#0b170b', class: 'fa-question'};
       case 'GOING_ON':
@@ -146,15 +144,13 @@ export class CommonService {
   }
 
   isEmpty(obj) {
-    for(let prop in obj) {
-      if(obj.hasOwnProperty(prop))
+    for (const prop in obj) {
+      if (obj.hasOwnProperty(prop)) {
         return false;
+      }
     }
 
     return true;
   }
 
-  getBase() {
-    return serverUrl;
-  }
 }
