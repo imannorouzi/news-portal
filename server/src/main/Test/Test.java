@@ -2,6 +2,9 @@ import app.repositories.RepositoryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.io.*;
+import java.net.URL;
+import java.net.URLConnection;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,7 +27,7 @@ public class Test {
         }*/
 
 
-        (new Test()).hash();
+        (new Test()).sendMessageToTelegram();
     }
 
     public void hash(){
@@ -53,6 +56,33 @@ public class Test {
         );
         System.out.println(events.size());
     }*/
+
+    public void sendMessageToTelegram() {
+        try {
+        String urlString = "https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s";
+
+        String apiToken = "855924836:AAGmLLAg_uG1cT7sTb82oH31ZQdpKTClbMA";
+        String chatId = "@iraneAzadChannel";
+        String text = "Hello world!";
+
+        urlString = String.format(urlString, apiToken, chatId, text);
+
+        URL url = new URL(urlString);
+        URLConnection conn = null;
+            conn = url.openConnection();
+
+
+        StringBuilder sb = new StringBuilder();
+        InputStream is = new BufferedInputStream(conn.getInputStream());
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+        String inputLine = "";
+        while ((inputLine = br.readLine()) != null) {
+            sb.append(inputLine);
+        }
+        String response = sb.toString();} catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 }
