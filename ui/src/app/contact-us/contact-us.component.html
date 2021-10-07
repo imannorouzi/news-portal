@@ -1,12 +1,8 @@
-<div class="row bg-white p-5">
-
-  <div class="col-md-8 mb-5">
-    <!-- Header -->
-    <p class="dark-grey-text text-muted text-right">سوالات و مشکلات خود را برای ما بنویسید.</p>
+<div class="h-100 overflow-auto bg-white p-5">
     <form [formGroup]="contactUsForm" (ngSubmit)="onSubmit()">
       <div class=" ">
         <label class=" col-form-label text-right">نام</label>
-        <input id="name" type="text" formControlName="name" name="name" class="" placeholder="نام کامل" [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
+        <input id="name" type="text" formControlName="name" name="name" class="" placeholder="نام (اختیاری)" [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
       </div>
 
       <!--Email-->
@@ -18,7 +14,7 @@
       <!--Title-->
       <div class=" ">
         <label class=" col-form-label text-right">موضوع</label>
-        <input formControlName="title" type="text" name="title" class="" placeholder="موضوع ارتباط" [ngClass]="{ 'is-invalid': submitted && f.title.errors }">
+        <input formControlName="title" type="text" name="title" class="" placeholder="موضوع" [ngClass]="{ 'is-invalid': submitted && f.title.errors }">
 
       </div>
 
@@ -29,38 +25,7 @@
 
       </div>
 
-      <button type="submit" class="btn primary ml-2">ارسال</button>
+      <spinner [showing]="loading"></spinner>
+      <button *ngIf="!loading" type="submit" class="app-button primary ml-2">ارسال</button>
     </form>
-  </div>
-
-  <div class="col-md-4 ">
-
-    <div class="flexbox-parent text-center">
-    <!-- Buttons-->
-    <div class="  contact-info mb-4">
-      <div class="text-overflow">
-        <i class="fa fa-map-marker font-x-large ml-3"></i>
-        <span>تهران،‌ خیابان پاسداران</span>
-      </div>
-      <div class="text-overflow">
-        <i class="fa fa-phone font-x-large ml-3"></i>
-        <span class="ltr">+98 (21) 8457 8457</span>
-      </div>
-      <div class="">
-        <i class="fa fa-envelope ml-3 font-x-large"></i>
-        <span>info@sholop.com</span>
-      </div>
-    </div>
-
-    <hr>
-
-    <!--Google map-->
-    <div id="map-container-section" class="z-depth-1-half map-container-section  flexbox-item-grow" style="height: 200px">
-      <agm-map class="map" [latitude]="35.6892" [longitude]="51.3890" [scrollwheel]="true" [zoom]="12">
-        <agm-marker [latitude]="35.6892" [longitude]="51.3890"></agm-marker>
-      </agm-map>
-    </div>
-    </div>
-  </div>
-
 </div>

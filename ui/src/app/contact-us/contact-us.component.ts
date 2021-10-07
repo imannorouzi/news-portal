@@ -25,7 +25,7 @@ export class ContactUsComponent implements OnInit {
 
     this.contactUsForm = this.formBuilder.group({
       title: ['', [ Validators.minLength(5), Validators.required ]],
-      email: ['', [ Validators.email, Validators.required ]],
+      email: ['', [ Validators.email ]],
       name: [''],
       message: ['', [ Validators.minLength(20), Validators.required ]]
     });
@@ -39,6 +39,7 @@ export class ContactUsComponent implements OnInit {
 
     // stop here if form is invalid
     if (this.contactUsForm.invalid) {
+      this.alertService.warn('لطفا فرد را بازبینی کنید. ');
       return;
     }
 
@@ -50,11 +51,13 @@ export class ContactUsComponent implements OnInit {
       message: this.f.message.value
     };
 
+    this.loading = true;
     this.dataService.contactUs(message)
       .pipe(first())
       .subscribe(
         data => {
           this.alertService.success('پیام شما ارسال شد.');
+          this.loading = false;
         },
         error => {
           this.alertService.error(error);

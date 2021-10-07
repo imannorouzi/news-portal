@@ -1,4 +1,5 @@
 import app.repositories.RepositoryFactory;
+import app.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -27,7 +28,7 @@ public class Test {
         }*/
 
 
-        (new Test()).sendMessageToTelegram();
+        Utils.sendMessageToTwitter(null);
     }
 
     public void hash(){

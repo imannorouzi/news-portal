@@ -2,13 +2,12 @@
 <confirm #prompt [type]="'PROMPT'" [title]="''">{{promptText}}</confirm>
 
 <!--<app-floating-button></app-floating-button>-->
-<div class="flexbox-parent container">
-<div [class]="(authService.isLoggedIn() ? '' : '' ) + ' flexbox-item-grow flexbox-parent-row home h-100 '" id="home">
+<div class="flexbox-parent p-0 container">
+  <div class="p-4 h-100">
+  <div [class]="(authService.isLoggedIn() ? '' : '' ) + ' flexbox-item-grow flexbox-parent-row home h-100 '" id="home">
 
-<!--  <app-sidebar></app-sidebar>-->
-
-  <div class="flexbox-item-grow p-4">
-      <div class="row h-100 ">
+    <div class="flexbox-item-grow ">
+      <div class="row h-100 overflow-auto ">
         <div class="col-md-8 p-0 h-100 ">
           <div [class]="'page-wrapper chiller-theme h-100'">
             <main class="page-content pl-3 pr-3 h-100 ">
@@ -20,9 +19,9 @@
           <app-column ></app-column>
         </div>
       </div>
+    </div>
   </div>
-
-</div>
+  </div>
 
   <app-audio-player></app-audio-player>
 </div>

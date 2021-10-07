@@ -1,4 +1,4 @@
-<div class="container post-container p-3 container-shadow h-100 overflow-auto">
+<div class="container post-container container-shadow h-100 overflow-auto">
   <div class="text-left back-button">
     <a class="app-button secondary" routerLink="/admin"><i class="fa fa-arrow-left"></i></a>
   </div>
@@ -65,9 +65,21 @@
 
   <app-create-categories #categories></app-create-categories>
 
-  <a [routerLink]="" class="app-button font-heading" (click)="updatePost('PUBLISH')">ذخیره</a>
-  <a [routerLink]="" class="app-button secondary mr-2 font-heading" (click)="updatePost('DRAFT')">پیش‌نویس</a>
-  <a [routerLink]="" class="app-button secondary mr-2 font-heading" (click)="uploadAll()">آپلود بک‌آپ</a>
+  <div class="mt-2 mb-4">
+
+    <label class="font-heading ml-2" >
+      <input type="checkbox" [(ngModel)]="sendToTelegram" class=""> تلگرام
+    </label>
+    <label class="font-heading" >
+      <input type="checkbox" [(ngModel)]="sendToTwitter" class=""> توئیتر
+    </label>
+  </div>
+
+  <div class="mb-4">
+    <a [routerLink]="" class="app-button font-heading" (click)="updatePost('PUBLISH')">ذخیره</a>
+    <a [routerLink]="" class="app-button secondary mr-2 font-heading" (click)="updatePost('DRAFT')">پیش‌نویس</a>
+    <a [routerLink]="" class="app-button secondary mr-2 font-heading" (click)="uploadAll()">آپلود بک‌آپ</a>
+  </div>
 
 </div>
 

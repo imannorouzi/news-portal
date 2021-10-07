@@ -405,6 +405,13 @@ img {
   max-width: 100%;
 }
 
+figure {
+  text-align: center;
+}
+figcaption {
+  color: #333;
+  font-family: Sefid, serif;
+}
 @keyframes heartbeat
 {
   0%

@@ -2,7 +2,7 @@
 
   <div class="container">
 
-  <div class="navbar-toggler" *ngIf="!authService.isLoggedIn()"  data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <div class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <i class="fa fa-ellipsis-v"></i>
   </div>
 
@@ -13,6 +13,13 @@
         <a class="nav-link" [routerLink]="'/posts'">
           <i class="fa fa-home ml-2"></i>
           <span class="font-heading">صفحه اصلی</span>
+        </a>
+      </li>
+
+      <li class="nav-item mr-3 " *ngIf="authService.isLoggedIn()" [class]="(navigationService.currentLocation === ('/admin') ? 'selected' : '')" [routerLink]="'/admin'">
+        <a class="nav-link" [routerLink]="'/admin'">
+          <i class="fa fa-dashboard ml-2"></i>
+          <span class="font-heading">پیشخوان</span>
         </a>
       </li>
 

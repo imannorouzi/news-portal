@@ -53,6 +53,10 @@ public class Post {
     @Column(name = "excerpt", length = 2000)
     String excerpt;
 
+    @Lob
+    @Column(name = "twitter_text", length = 2000)
+    String twitterText;
+
     @Column(name = "author")
     String author;
 
@@ -223,4 +227,11 @@ public class Post {
         this.postSections = postSections;
     }
 
+    public String getTwitterText() {
+        return twitterText;
+    }
+
+    public void setTwitterText(String twitterText) {
+        this.twitterText = twitterText;
+    }
 }

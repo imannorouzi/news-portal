@@ -15,12 +15,14 @@ const homeUrls = [
 export class NavigationService {
 
   currentPath = '';
+  navigated = -1;
 
   constructor(private router: Router,
               private location: Location) {
     this.router.events.forEach((event) => {
       if (event instanceof NavigationEnd) {
         this.currentPath = this.router.url;
+        this.navigated++;
       }
     });
   }
@@ -46,6 +48,10 @@ export class NavigationService {
   }
 
   back() {
-    this.location.back();
+    if ( this.navigated > 0 ) {
+      this.location.back();
+    } else {
+      this.goToHome();
+    }
   }
 }

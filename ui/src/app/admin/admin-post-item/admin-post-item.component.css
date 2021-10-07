@@ -95,9 +95,13 @@
   margin-right: 4px;
 }
 
+.post-footer {
+  height: 30px;
+}
 .post-footer i {
   font-size: 15px;
   padding: 10px;
+  height: 30px;
 }
 @keyframes post-item-hover {
   0% {

@@ -183,5 +183,6 @@
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-web:5.3.3.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: io.jsonwebtoken:jjwt:0.9.1" level="project" />
     <orderEntry type="library" name="Maven: org.jsoup:jsoup:1.11.3" level="project" />
+    <orderEntry type="library" name="Maven: org.twitter4j:twitter4j-core:4.0.7" level="project" />
   </component>
 </module>

@@ -60,28 +60,36 @@ public class GeneralAPIs {
     }
 
     @PostMapping("/api/contact-us")
-    public Response contactUs(String jsonCommentString) {
+    public Response contactUs(@RequestBody String jsonContactUs) {
 
         Gson gson = new Gson();
         try {
-            JSONObject jsonComment = new JSONObject(jsonCommentString);
 
-            ContactUsMessage cum = new ContactUsMessage(jsonComment);
+            ContactUsMessage cu = gson.fromJson(jsonContactUs, ContactUsMessage.class);
 
-            MailMessage msg = new MailMessage();
+            Post post = new Post();
+            post.setTitle(cu.getTitle());
+            post.setExcerpt(cu.getMessage() + "\n\n" + cu.getEmail());
+            post.setAuthor(cu.getName());
+            post.setType("CONTACT_US");
+            post.setStatus("DRAFT");
+            post.setStyle("2");
+            post.setCreated(new Timestamp(System.currentTimeMillis()));
+            repositoryFactory.getPostRepository().save(post);
+            /*MailMessage msg = new MailMessage();
             msg.setSubject(cum.getTitle());
             msg.setTo("iman.norouzy@gmail.com");
-            msg.setFrom(cum.getEmail());
+            msg.setFrom(cum.getEmail());*/
 
-            String htmlString = FileUtils.readFileToString(new File("./server/src/main/templates/meeting/newMeeting.html"));
+            /*String htmlString = FileUtils.readFileToString(new File("./server/src/main/templates/meeting/newMeeting.html"));
             htmlString = htmlString.replace("$title", cum.getTitle());
             htmlString = htmlString.replace("$message", cum.getMessage());
 
 
             msg.setBody(htmlString);
-            MailUtils.sendMail(msg);
+            MailUtils.sendMail(msg);*/
 
-            return Response.ok(gson.toJson(new ResponseObject("OK", "Recieved"))).build();
+            return Response.ok(gson.toJson(new ResponseObject("OK", post))).build();
 
         } catch (Exception e) {
             e.printStackTrace();

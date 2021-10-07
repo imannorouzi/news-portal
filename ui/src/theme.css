@@ -1,29 +1,29 @@
 /*************** New Theme ******/
 
-select:hover,
-input:focus,
-textarea:focus{
+.app-container select:hover,
+.app-container input:focus,
+.app-container textarea:focus{
   background-color: #fff;
   border-color: rgba(234,76,137,0.4);
   -webkit-box-shadow: 0 0 0 4px rgba(234,76,137,0.1);
   box-shadow: 0 0 0 4px rgba(234,76,137,0.1);
 }
 
-select.ng-touched.ng-invalid,
-input.ng-touched.ng-invalid,
-textarea.ng-touched.ng-invalid{
+.app-container select.ng-touched.ng-invalid,
+.app-container input.ng-touched.ng-invalid,
+.app-container textarea.ng-touched.ng-invalid{
   background-color: rgba(255, 183, 207, 0.4);
 }
 
-select:hover,
-input:hover[type='text'],
-input:hover[type='number'],
-input:hover[type='search'],
-input:hover[type='password'],
-input:hover[type='email'],
-input:hover[type='url'],
-input:hover[type='tel'],
-textarea:hover {
+.app-container select:hover,
+.app-container input:hover[type='text'],
+.app-container input:hover[type='number'],
+.app-container input:hover[type='search'],
+.app-container input:hover[type='password'],
+.app-container input:hover[type='email'],
+.app-container input:hover[type='url'],
+.app-container input:hover[type='tel'],
+.app-container textarea:hover {
   background-color: #fff;
   border-color: rgba(0,0,0,0.1);
   -webkit-box-shadow: 0 0 0 4px rgba(234,76,137,0.1);
@@ -88,8 +88,8 @@ label{
   outline: none;
   font-size: 14px;
   font-weight: 500;
-  line-height: 20px;
-  height: 40px;
+  line-height: 10px;
+  height: 30px;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   text-align: center;

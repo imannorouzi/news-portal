@@ -160,7 +160,11 @@ public class PostAPIs {
     public Response updatePost(@AuthenticationPrincipal UserDetails u,
                                @RequestParam(value = "file", required = false) MultipartFile file,
                                @RequestParam("post") String postJsonString,
-                               @RequestParam(value = "filename", required = false) String filename) {
+                               @RequestParam(value = "filename", required = false) String filename,
+                               @RequestParam(value = "sendToTelegram", required = false) Boolean sendToTelegram,
+                               @RequestParam(value = "sendToTwitter", required = false) Boolean sendToTwitter
+
+                               ) {
         Post post;
         try {
             User user = repositoryFactory.getUserRepository().findByUsername(u.getUsername());
@@ -197,9 +201,18 @@ public class PostAPIs {
 
             post.setUserId(user.getId());
 
-            post = repositoryFactory.getPostRepository().save(post);
-            Utils.sendMessageToTelegram(post);
             // post sections will be saved in subsequent requests from the UI
+            post = repositoryFactory.getPostRepository().save(post);
+
+            if ( sendToTelegram ) {
+                Utils.sendMessageToTelegram(post);
+            }
+
+            if( sendToTwitter ) {
+                Utils.sendMessageToTwitter(post);
+            }
+
+
 
         } catch (Exception e) {
             e.printStackTrace();

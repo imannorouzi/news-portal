@@ -42,6 +42,9 @@ export class CreateArticleComponent implements OnInit {
   public message: string;
   post: Post = new Post();
 
+  sendToTelegram = false;
+  sendToTwitter = false;
+
   copyingArticle = false;
   copyArticleUrl = '';
 
@@ -160,7 +163,7 @@ export class CreateArticleComponent implements OnInit {
     this.post['tags'] = this.tags.getTags();
     this.post['status'] = status;
 
-    this.dataService.updatePost(this.post)
+    this.dataService.updatePost(this.post, this.sendToTelegram, this.sendToTwitter)
       .pipe(
         map(data => data),
         switchMap(

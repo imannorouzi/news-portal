@@ -209,7 +209,7 @@ export class DataService {
       .pipe(catchError(this.handleError));
   }
 
-  updatePost(con: any) {
+    updatePost(con: any, sendToTelegram: boolean, sendToTwitter: boolean) {
     const apiURL = environment.baseUrl + '/update-post';
 
     const contact = Object.assign({}, con);
@@ -229,7 +229,13 @@ export class DataService {
     const hdrs = new HttpHeaders();
     hdrs.append('Content-Type', 'multipart/form-data');
     hdrs.append('Accept', 'application/json');
-    return this.http.post(`${apiURL}`, formData, {headers: hdrs})
+    return this.http.post(`${apiURL}`, formData, {
+      headers: hdrs,
+      params: {
+        sendToTelegram: sendToTelegram + '',
+        sendToTwitter: sendToTwitter + ''
+      }
+    })
       .pipe(map(this.extractData))
       .pipe(catchError(this.handleError));
   }

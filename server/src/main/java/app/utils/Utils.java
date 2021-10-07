@@ -6,6 +6,10 @@ import app.objects.Tag;
 import com.amazonaws.util.json.JSONException;
 import com.amazonaws.util.json.JSONObject;
 import com.google.gson.Gson;
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
+import twitter4j.conf.ConfigurationBuilder;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -161,4 +165,19 @@ public class Utils {
         }
     }
 
+    public static void sendMessageToTwitter(Post post) {
+        try {
+            ConfigurationBuilder cb = new ConfigurationBuilder();
+            cb.setDebugEnabled(true)
+                    .setOAuthConsumerKey("9yDsSRSF0kunqwbFoz3SBq0y5")
+                    .setOAuthConsumerSecret("esz3p4vZV1Oq9PbS9Xu3Tbj3Iup0NbCzjjW8XVIsZUFuRKoKNI")
+                    .setOAuthAccessToken("1127712816671014912-08bUu8eRTTVVtXITf69mewIiLtl9gq")
+                    .setOAuthAccessTokenSecret("JxHuEFZLdGwkOJ1bZVvvI25kPKiK93gnpmz7SAv4jw3QB");
+            TwitterFactory tf = new TwitterFactory(cb.build());
+            Twitter twitter = tf.getInstance();
+            twitter.updateStatus(post.getTwitterText());
+        } catch (TwitterException e) {
+            e.printStackTrace();
+        }
+    }
 }

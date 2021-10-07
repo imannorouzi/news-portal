@@ -2,7 +2,7 @@
   <div class="form-group " >
     <label class="l col-form-label text-right font-heading">دسته‌ها</label>
     <div class="text-left">
-      <label class="mr-3"  *ngFor="let cat of categories">
+      <label class="mr-3 font-heading"  *ngFor="let cat of categories">
         <input type="checkbox" [(ngModel)]="cat.checked" class="">  {{cat.name}}
       </label>
     </div>
