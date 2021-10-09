@@ -19,6 +19,7 @@ export class Post {
   image = '';
   filename = '';
   operating = false;
+  twitterText = '';
 
   constructor(
     id: number = 0,
@@ -34,7 +35,8 @@ export class Post {
     categories: Category[] = [],
     postSections: PostSection[] = [],
     image: string = '',
-    filename: string = '') {
+    filename: string = '',
+    twitterText: string = '') {
 
     this.id = id;
     this.title = title;
@@ -50,5 +52,6 @@ export class Post {
     this.postSections = postSections;
     this.image = image;
     this.filename = filename;
+    this.twitterText = twitterText;
   }
 }

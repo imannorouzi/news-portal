@@ -43,4 +43,12 @@ export class CreateTagsComponent implements OnInit {
   getTags() {
     return this.tags;
   }
+
+  getTagsString() {
+    let ret = '';
+    this.tags.forEach( t => {
+      ret += '#' + t.name + ' ';
+    });
+    return ret;
+  }
 }

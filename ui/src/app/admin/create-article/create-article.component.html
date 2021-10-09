@@ -34,9 +34,9 @@
   </div>
 
   <div class="">
-    <textarea id="excerpt" rows="8" placeholder="خلاصه و متن تلگرام" [(ngModel)]="post.excerpt" class="mb-2 bg-white"></textarea>
+    <textarea id="excerpt" rows="5" placeholder="خلاصه و متن تلگرام" [(ngModel)]="post.excerpt" class="mb-2 bg-white"></textarea>
   </div>
-
+  <hr>
   <div class="style-wrapper">
     <div class="row " >
       <label class="col-md-3 col-form-label text-right font-heading">قیافه</label>
@@ -50,6 +50,7 @@
       </div>
     </div>
   </div>
+  <hr>
   <div class="type-wrapper flexbox-parent-row">
     <label class="font-heading">نوع پست</label>
     <div class="type mr-2 flexbox-item-grow">
@@ -60,13 +61,19 @@
       </select>
     </div>
   </div>
-
+  <hr>
   <app-create-tags #tags></app-create-tags>
-
+  <hr>
   <app-create-categories #categories></app-create-categories>
+  <hr>
+
+  <div class="">
+
+    <label class="font-heading">متن توئیتر  <span class="font-heading"> ( {{278 - (post.twitterText.length + tagLength)}} )</span></label>
+    <textarea rows="3" placeholder="متن توئیتر" [(ngModel)]="twitterText" class="mb-2 bg-white"></textarea>
+  </div>
 
   <div class="mt-2 mb-4">
-
     <label class="font-heading ml-2" >
       <input type="checkbox" [(ngModel)]="sendToTelegram" class=""> تلگرام
     </label>
@@ -74,6 +81,12 @@
       <input type="checkbox" [(ngModel)]="sendToTwitter" class=""> توئیتر
     </label>
   </div>
+
+  <hr>
+
+  <app-instagram-post [imageUrl]="imageUrl"></app-instagram-post>
+
+  <hr>
 
   <div class="mb-4">
     <a [routerLink]="" class="app-button font-heading" (click)="updatePost('PUBLISH')">ذخیره</a>

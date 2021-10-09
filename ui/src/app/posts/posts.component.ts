@@ -48,7 +48,7 @@ export class PostsComponent implements OnInit {
 
   ngOnInit() {
     // this.readPosts();
-    this.router.events
+    /*this.router.events
       .pipe(take(1))
       .subscribe(data => {
         if (data instanceof NavigationEnd) {
@@ -57,7 +57,7 @@ export class PostsComponent implements OnInit {
           this.posts = [];
           this.readPosts();
         }
-      });
+      });*/
 
     this.route.params
       .subscribe(params => {this.page = 0;
@@ -66,7 +66,7 @@ export class PostsComponent implements OnInit {
       this.posts = [];
       this.readPosts();
     });
-    this.readPosts();
+    // this.readPosts();
 
   }
 

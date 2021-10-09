@@ -208,7 +208,7 @@ public class PostAPIs {
                 Utils.sendMessageToTelegram(post);
             }
 
-            if( sendToTwitter ) {
+            if ( sendToTwitter ) {
                 Utils.sendMessageToTwitter(post);
             }
 

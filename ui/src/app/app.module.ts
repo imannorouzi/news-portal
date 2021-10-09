@@ -42,7 +42,7 @@ import {AuthService} from './utils/auth.service';
 import {LocalStorageService} from './utils/local-storage.service';
 import {GlobalDataService} from './utils/global-data.service';
 import { SlidingTextComponent } from './sliding-text/sliding-text.component';
-import {GeneralPipe, KeysPipe} from './utils/general-pipe';
+import {GeneralPipe, KeysPipe, SanitizeHtmlPipe} from './utils/general-pipe';
 import {OverlaySpinnerComponent} from './common-components/overlay-spinner/overlay.spinner.component';
 import {ContentModalComponent} from './common-components/content-modal/content-modal.component';
 import {ModalModule} from 'ngx-bootstrap/modal';
@@ -72,6 +72,7 @@ import { PostPageComponent } from './post-page/post-page.component';
 import {AdminPostItemComponent} from './admin/admin-post-item/admin-post-item.component';
 import {VoiceItemComponent} from './voice-item/voice-item.component';
 import {VoicePostComponent} from './voice-post/voice-post.component';
+import {InstagramPostComponent} from "./admin/instagram-post/instagram-post.component";
 
 @NgModule({
   declarations: [
@@ -122,7 +123,9 @@ import {VoicePostComponent} from './voice-post/voice-post.component';
     PostPageComponent,
     AdminPostItemComponent,
     VoiceItemComponent,
-    VoicePostComponent
+    VoicePostComponent,
+    InstagramPostComponent,
+    SanitizeHtmlPipe
   ],
   imports: [
     BrowserModule,

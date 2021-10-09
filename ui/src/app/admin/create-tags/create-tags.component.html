@@ -1,15 +1,16 @@
 <div class="tags-wrapper">
-  <label class="font-heading">برچسب‌ها</label>
 
   <div class="display-tags mb-4 mt-4">
     <span class="loaded-tag" (click)="addTag(tag)" *ngFor="let tag of loadedTags; let i = index"> #{{tag.name}} </span>
+  </div>
+
+  <div class="flexbox-parent-row">
+    <label class="font-heading ml-2">برچسب‌ها</label>
+    <input class="flexbox-item-grow" type="text" class="" (keydown.enter)="insertTag()" [(ngModel)]="tag"/>
   </div>
 
   <div class="display-tags mb-4 mt-4">
    <span class="tag" *ngFor="let tag of tags; let i = index"> <i (click)="removeTag(i)" class="fa fa-remove remove-tag"></i> #{{tag.name}} </span>
   </div>
 
-  <div>
-    <input type="text" class="" (keydown.enter)="insertTag()" [(ngModel)]="tag"/>
-  </div>
 </div>

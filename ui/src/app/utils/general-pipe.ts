@@ -1,4 +1,5 @@
 import {Pipe, PipeTransform} from "@angular/core";
+import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
 
 @Pipe({
   name: 'generalFilter',
@@ -30,5 +31,20 @@ export class GeneralPipe implements PipeTransform{
 export class KeysPipe implements PipeTransform {
   transform(value: any, args: any[] = null): any {
     return Object.keys(value)//.map(key => value[key]);
+  }
+}
+
+
+
+@Pipe({
+  name: 'sanitizeHtml'
+})
+export class SanitizeHtmlPipe implements PipeTransform {
+
+  constructor(private sanitizer: DomSanitizer) {
+  }
+
+  transform(v: string): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml(v);
   }
 }

@@ -72,16 +72,16 @@ label {
 }
 
 .style-wrapper {
-  border: 1px dashed #909090;
-  padding: 10px;
-  border-radius: 5px;
+  /*border: 1px dashed #909090;*/
+  /*padding: 10px;*/
+  /*border-radius: 5px;*/
   margin-bottom: 20px;
 }
 
 .type-wrapper {
-  border: 1px dashed #909090;
-  padding: 10px;
-  border-radius: 5px;
+  /*border: 1px dashed #909090;*/
+  /*padding: 10px;*/
+  /*border-radius: 5px;*/
   margin-bottom: 20px;
 }
 .back-button:hover {

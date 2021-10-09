@@ -47,6 +47,7 @@ export class CreateArticleComponent implements OnInit {
 
   copyingArticle = false;
   copyArticleUrl = '';
+  twitterText = '';
 
   image = '';
   imageUrl = '';
@@ -162,6 +163,7 @@ export class CreateArticleComponent implements OnInit {
     this.post['categories'] = this.categories.getCategories();
     this.post['tags'] = this.tags.getTags();
     this.post['status'] = status;
+    this.post['twitterText'] += this.twitterText + ' ' + this.tags.getTagsString();
 
     this.dataService.updatePost(this.post, this.sendToTelegram, this.sendToTwitter)
       .pipe(
@@ -272,5 +274,16 @@ export class CreateArticleComponent implements OnInit {
         this.copyingArticle = false;
         this.alertService.error('نشد');
       });
+  }
+
+  get tagLength(): number {
+    if ( this.tags.getTags()  ) {
+      let l = 0;
+      this.tags.getTags().forEach( t => {
+        l += t.name.length + 2; // space and hash should be added
+      });
+      return l;
+    }
+    return 0;
   }
 }

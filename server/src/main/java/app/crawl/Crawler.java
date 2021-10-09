@@ -52,6 +52,7 @@ public class Crawler {
         post.setStatus("PUBLISH");
         post.setStyle("2");
         post.setType("ARTICLE");
+        post.setTwitterText("");
         post.setCreated(new Timestamp(System.currentTimeMillis()));
 
         PostSection ps = new PostSection();
@@ -73,6 +74,7 @@ public class Crawler {
         post.setStatus("PUBLISH");
         post.setStyle("2");
         post.setType("ARTICLE");
+        post.setTwitterText("");
         post.setImageUrl(document.select(".field-name-field-image .img-responsive").first().attr("src"));
         post.setCreated(new Timestamp(System.currentTimeMillis()));
 
@@ -92,6 +94,7 @@ public class Crawler {
         post.setStatus("PUBLISH");
         post.setStyle("2");
         post.setType("ARTICLE");
+        post.setTwitterText("");
         post.setCreated(new Timestamp(System.currentTimeMillis()));
 
         PostSection ps = new PostSection();

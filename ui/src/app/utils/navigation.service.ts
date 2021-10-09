@@ -1,6 +1,10 @@
 import {Injectable, OnInit} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
 import {Location} from '@angular/common';
+import {filter} from 'rxjs/operators';
+import {environment} from "../../environments/environment";
+
+declare let gtag: Function;
 
 const homeUrls = [
   '/',
@@ -19,12 +23,18 @@ export class NavigationService {
 
   constructor(private router: Router,
               private location: Location) {
-    this.router.events.forEach((event) => {
-      if (event instanceof NavigationEnd) {
+
+    this.router.events.pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
         this.currentPath = this.router.url;
         this.navigated++;
-      }
-    });
+
+        gtag('config', environment.gtag,
+          {
+            page_path: event.urlAfterRedirects
+          }
+        );
+      });
   }
 
   navigate(url, params = undefined ) {

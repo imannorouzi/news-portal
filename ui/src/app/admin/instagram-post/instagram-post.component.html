@@ -1,0 +1,26 @@
+<div  class="rtl formal-font font-dark m-3">
+  <div class=' justify-content-center  '>
+      <div *ngIf="imageUrl" class=" " >
+        <div class="m-auto image-wrapper">
+        <div id="capture">
+          <img  class="image-main"   [src]="imageUrl">
+          <div class="caption">
+            <div id="text-preview"
+                 class="ck-output-text "
+                 [innerHTML]="text | sanitizeHtml"></div>
+          </div>
+<!--          <img class="logo" src='./assets/images/log-no-bg.png' >-->
+          <img class="cover"  src='./assets/images/cover.png' >
+        </div>
+        </div>
+
+        <div class="editor bg-white">
+          <ckeditor [editor]="Editor" (ready)="onReady($event)"[(ngModel)]="text"></ckeditor>
+        </div>
+
+      </div>
+  </div>
+  <div *ngIf="imageUrl" class="text-center mt-2">
+  <a [routerLink]="" class="app-button secondary mt-2" (click)="download()">Download</a>
+  </div>
+</div>

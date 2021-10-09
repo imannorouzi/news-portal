@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   VERSION: require('../../package.json').version,
+  gtag: 'G-YVN64WVXN8',
   firebase:
     {
       apiKey: 'AIzaSyDPxrXEXL44MTWY5ZOhm55Z9EucFkS0Rg0',
