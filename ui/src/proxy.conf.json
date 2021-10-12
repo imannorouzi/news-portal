@@ -1,11 +1,11 @@
 {
   "/api": {
-    "target": "http://35.167.68.226/api",
+    "target": "http://localhost:8083/api",
     "secure": false,
     "pathRewrite": {"^/api" : ""}
   },
   "/broadcast": {
-    "target": "ws://35.167.68.226/broadcast",
+    "target": "ws://localhost:8083/broadcast",
     "secure": false
   }
 }

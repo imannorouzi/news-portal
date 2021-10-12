@@ -73,6 +73,7 @@ import {AdminPostItemComponent} from './admin/admin-post-item/admin-post-item.co
 import {VoiceItemComponent} from './voice-item/voice-item.component';
 import {VoicePostComponent} from './voice-post/voice-post.component';
 import {InstagramPostComponent} from "./admin/instagram-post/instagram-post.component";
+import {AudioPostsComponent} from "./audio-posts/audio-posts.component";
 
 @NgModule({
   declarations: [
@@ -125,7 +126,8 @@ import {InstagramPostComponent} from "./admin/instagram-post/instagram-post.comp
     VoiceItemComponent,
     VoicePostComponent,
     InstagramPostComponent,
-    SanitizeHtmlPipe
+    SanitizeHtmlPipe,
+    AudioPostsComponent
   ],
   imports: [
     BrowserModule,

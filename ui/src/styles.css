@@ -312,6 +312,17 @@ table.table  td{
   margin: auto;
 }
 
+@media screen and (max-width: 767px) {
+  img {
+    width: 100%;
+    height: auto;
+  }
+
+  .audio-details {
+    display: none;
+  }
+}
+
 @keyframes fade-in{
   0%{
     opacity: 0;

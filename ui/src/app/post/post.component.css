@@ -5,8 +5,9 @@
   padding: 15px 15px;
   color: #161a1e;
   background: #fff;
-  border-bottom-color: rgb(157, 163, 166);
-  box-shadow: 0 3px 8px rgba(0,0,0,.25);
+  /*border-bottom-color: rgb(157, 163, 166);*/
+  border-bottom: 1px solid #eee;
+  /*box-shadow: 0 3px 8px rgba(0,0,0,.25);*/
 }
 .post-item .post-content {
   line-height: 1.5;
@@ -28,7 +29,7 @@
 .post-item.style-1{
   box-shadow: none;
   border: 1px dashed lightgray;
-  border-radius: 10px;
+  /*border-radius: 10px;*/
 }
 .post-item.style-1 .post-thumbnail{
   width: 50%;

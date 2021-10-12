@@ -277,13 +277,13 @@ export class CreateArticleComponent implements OnInit {
   }
 
   get tagLength(): number {
+    let l = 0;
     if ( this.tags.getTags()  ) {
-      let l = 0;
       this.tags.getTags().forEach( t => {
         l += t.name.length + 2; // space and hash should be added
       });
-      return l;
     }
-    return 0;
+
+    return 278 - ((this.post && this.post.twitterText ? this.post.twitterText.length : 0) + l);
   }
 }

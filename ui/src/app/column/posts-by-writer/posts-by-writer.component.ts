@@ -2,7 +2,7 @@ import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {Post} from '../../post';
 import {take} from 'rxjs/operators';
 import {DataService} from '../../utils/data.service';
-import {PostModalComponent} from "../../post-modal/post-modal.component";
+import {PostModalComponent} from '../../post-modal/post-modal.component';
 
 @Component({
   selector: 'app-posts-by-writer',

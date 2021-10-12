@@ -43,7 +43,7 @@ public class Utils {
 
     public static String fixUri(String fileDownloadUri) {
         try {
-            return new URL(fileDownloadUri).getPath();
+            return "/api" + new URL(fileDownloadUri).getPath();
         } catch (MalformedURLException e) {
             e.printStackTrace();
             return fileDownloadUri.replace("http://localhost:8083", "/api/");
@@ -111,11 +111,11 @@ public class Utils {
 
             text += "<b>" + post.getTitle() + "</b>\n" +
                     (post.getAuthor() != null ? post.getAuthor() + "\n\n" : "") +
-                    categories + "\n" +
+                    categories + "\n\n" +
                     post.getExcerpt() + "\n" + "\n" +
-                    tags + "\n" +
-                    "<a href=\"http://iraneazad.org/" + post.getId() + "\">Read more...</a> \n" +
-                    (post.getLink() != null ? "<a href=\"" + post.getLink() + "\">Source</a> " : "");
+                    tags + "\n\n" +
+                    "<a href=\"http://iraneazad.org/post/" + post.getId() + "\">" + "بیشتر بخوانید..." + "</a> \n" +
+                    (post.getLink() != null ? "به نقل از " + "<a href=\"" + post.getLink() + "\">" + (new URL(post.getLink()).getHost()) +"</a> " : "");
 
             urlString = String.format(urlString, apiToken);
 /*
@@ -167,6 +167,8 @@ public class Utils {
 
     public static void sendMessageToTwitter(Post post) {
         try {
+            if (post == null || post.getTwitterText() == null ) return;
+
             ConfigurationBuilder cb = new ConfigurationBuilder();
             cb.setDebugEnabled(true)
                     .setOAuthConsumerKey("9yDsSRSF0kunqwbFoz3SBq0y5")

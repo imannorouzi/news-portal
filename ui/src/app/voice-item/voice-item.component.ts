@@ -22,6 +22,6 @@ export class VoiceItemComponent implements OnInit {
   }
 
   voiceClicked() {
-    this.audioService.playAudio(this.audio.url);
+    this.audioService.playAudio(this.audio);
   }
 }

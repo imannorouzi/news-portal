@@ -3,27 +3,27 @@
 
 <!--<app-floating-button></app-floating-button>-->
 <div class="flexbox-parent p-0 container">
-  <div class="p-4 h-100">
-  <div [class]="(authService.isLoggedIn() ? '' : '' ) + ' flexbox-item-grow flexbox-parent-row home h-100 '" id="home">
+  <div class="p-4 flexbox-item-grow">
+    <div [class]="' flexbox-item-grow  home h-100 '" id="home">
 
-    <div class="flexbox-item-grow ">
-      <div class="row h-100 overflow-auto ">
-        <div class="col-md-8 p-0 h-100 ">
-          <div [class]="'page-wrapper chiller-theme h-100'">
-            <main class="page-content pl-3 pr-3 h-100 ">
-              <ng-content></ng-content>
-            </main>
+        <div class="row h-100 overflow-auto ">
+          <div class="col-md-8 p-0 h-100 ">
+            <div [class]="'page-wrapper chiller-theme h-100'">
+              <main class="page-content pl-3 pr-3 h-100 ">
+                <ng-content></ng-content>
+              </main>
+            </div>
+          </div>
+          <div class="col-md-4 h-100">
+            <app-column ></app-column>
           </div>
         </div>
-        <div class="col-md-4 h-100">
-          <app-column ></app-column>
-        </div>
-      </div>
     </div>
   </div>
-  </div>
+
 
   <app-audio-player></app-audio-player>
+
 </div>
 
 

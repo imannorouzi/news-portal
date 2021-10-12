@@ -8,7 +8,11 @@
         <div class="bar" *ngFor="let bar of bars; let i=index" [ngStyle]="getBarStyle(i)"></div>
       </div>
     </div>
-    <span id="duration" class="time font-heading">{{trackLengthString}}</span>
+
+    <div class="audio-details" *ngIf="audioFile">
+      <div class="font-heading font-weight-bold">{{audioFile.title}}</div>
+      <div id="duration" class="font-heading">{{trackLengthString}}</div>
+    </div>
     <button (click)="hide()" id="close-icon"><i class="fa fa-remove"></i></button>
   </div>
 

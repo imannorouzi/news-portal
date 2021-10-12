@@ -49,7 +49,7 @@ export class VoicePostComponent implements OnInit {
   voiceClicked(post: Post, index: number) {
     const audio = post.postSections.find( ps => ps.type = 'AUDIO');
     if ( audio && audio.audios && audio.audios.length > 0 ) {
-      this.audioService.playAudioSubject.next(audio.audios[0].url);
+      this.audioService.playAudioSubject.next(audio.audios[0]);
       this.playingUrl = audio.audios[0].url;
       this.playingIndex = index;
     }

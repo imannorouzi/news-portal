@@ -1,7 +1,7 @@
 <div class="">
   <div [class]="'post-item  ' + post.status + ' style-' + post.style" (click)="onClicked($event, post)">
 
-    <h3 class="font-heading text-center w-100 title-1 font-weight-bolder mb-4">{{post.title}}</h3>
+    <h3 class="font-heading text-center w-100 title-1 font-weight-bolder ">{{post.title}}</h3>
     <div [class]="'d-table w-100'">
 
       <img *ngIf="post.imageUrl" class=" post-thumbnail" [src]="post.imageUrl" alt=""/>

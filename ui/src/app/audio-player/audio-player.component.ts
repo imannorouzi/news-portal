@@ -1,5 +1,6 @@
 import {Component, ElementRef, OnInit, Output, ViewChild, EventEmitter, HostListener} from '@angular/core';
 import {AudioService} from './audio.service';
+import {AudioFile} from "../audio-file";
 
 @Component({
   selector: 'app-audio-player',
@@ -18,6 +19,8 @@ export class AudioPlayerComponent implements OnInit {
   trackLength = 0;
   trackLengthString = '';
 
+  audioFile: AudioFile;
+
   show = false;
   url = '';
 
@@ -25,7 +28,9 @@ export class AudioPlayerComponent implements OnInit {
     // this.audioElement.nativeElement.play();
 
     this.audioService.playAudioSubject
-      .subscribe( url => {
+      .subscribe( (audioFile: AudioFile) => {
+        const url = audioFile.url;
+        this.audioFile = audioFile;
         if ( this.isPlaying() ) {
           if (  url !== this.url ) {
             // new file has been played

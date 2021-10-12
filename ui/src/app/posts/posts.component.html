@@ -5,9 +5,12 @@
 
   <spinner [showing]="loading" #spinner></spinner>
 
-  <div class="post" *ngFor="let item of posts" (click)="onPostClick(item)">
-    <app-post [post]="item">
-    </app-post>
+  <div *ngFor="let item of posts; let i = index;">
+    <div class="post" >
+      <app-post [post]="item" (click)="onPostClick(item)">
+      </app-post>
+    </div>
+    <app-audio-posts *ngIf="i===0"></app-audio-posts>
   </div>
 
   <div *ngIf="!loading && !loadingMore && !noMoreForward" class="load-more text-center">

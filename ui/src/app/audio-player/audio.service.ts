@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Subject} from 'rxjs';
+import {AudioFile} from '../audio-file';
 
 @Injectable({
   providedIn: 'root'
@@ -8,10 +9,10 @@ export class AudioService {
 
   url;
   // sends the url
-  playAudioSubject: Subject<string> = new Subject<string>();
+  playAudioSubject: Subject<AudioFile> = new Subject<AudioFile>();
 
-  playAudio(url) {
-    this.playAudioSubject.next(url);
+  playAudio(audio: AudioFile) {
+    this.playAudioSubject.next(audio);
   }
   constructor() { }
 }
