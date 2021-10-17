@@ -21,7 +21,6 @@ export class AuthService {
               private http: HttpClient,
               private alertService: AlertService,
               public commonService: CommonService) {
-    this.loadFromSessionStorage();
   }
 
   login(user: User): void {
@@ -29,7 +28,6 @@ export class AuthService {
       // user.imageUrl = this.commonService.getBase() + user.imageUrl;
     }
     this.user = user;
-    this.saveToSessionStorage(user);
   }
 
   logout(): void {
@@ -38,7 +36,6 @@ export class AuthService {
     }
     this.user = null;
     this.loggedOut.next();
-    this.saveToSessionStorage(this.user);
   }
 
   get jsonWebToken(): string {
@@ -63,134 +60,13 @@ export class AuthService {
     }
   }
 
-  private saveToSessionStorage(user) {
-    if (this.storageAvailable('sessionStorage')) {
-      const sessionStorage = window['sessionStorage'];
-
-      if (!this.jsonWebToken) {
-        sessionStorage.removeItem('user');
-      } else {
-        sessionStorage.setItem('user', JSON.stringify(user));
-      }
-    }
-  }
-
-  private loadFromSessionStorage() {
-    if (this.storageAvailable('sessionStorage')) {
-      const sessionStorage = window['sessionStorage'];
-
-      if ('user' in sessionStorage) {
-        this.user = JSON.parse(sessionStorage['user']);
-      }
-    }
-  }
-
   public isLoggedIn(): boolean {
     return true; // this.user !== null;
   }
 
-  private storageAvailable(type) {
-    const storage = window[type], x = '__storage_test__';
-    try {
-      (<any>storage).setItem(x, x);
-      (<any>storage).removeItem(x);
-      return true;
-    } catch (e) {
-      return e instanceof DOMException && (
-          // everything except Firefox
-        e.code === 22 ||
-        // Firefox
-        e.code === 1014 ||
-        // test name field too, because code might not be present
-        // everything except Firefox
-        e.name === 'QuotaExceededError' ||
-        // Firefox
-        e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
-        // acknowledge QuotaExceededError only if there's something already stored
-        storage.length !== 0;
-    }
-  }
-
-  loginWithServer(username: string, password: string) {
-    const apiUrl = environment.baseUrl + '/authenticate';
-
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
-
-    return this.http.post<any>( apiUrl, JSON.stringify({username: username, password: password}), {headers: headers})
-      .pipe(map(data => JSON.parse(data.entity)) )
-      .pipe(map(data => {
-          // login successful if there's a jwt token in the response
-          if (data && data.msg === 'OK' && data.object.token) {
-            return data.object;
-          } else if (data && data.msg === 'INVALID_CREDENTIALS') {
-            this.alertService.error('ایمیل یا کلمه عبور اشتباه است.');
-          }
-          return null;
-        },
-        error => {
-          console.log(error);
-        }));
-  }
-
-  register(user: User) {
-    const apiUrl = environment.baseUrl + '/register';
-
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
-
-    return this.http.post<any>( apiUrl, JSON.stringify(user), {headers: headers})
-
-      .pipe(map(data => JSON.parse(data.entity)) )
-      .pipe(map(data => {
-          // login successful if there's a jwt token in the response
-          if (data && data['msg'] === 'OK' && data['object'].token) {
-            this.alertService.success('ثبت نام شما با موفقیت انجام شد.', true);
-            return data.object;
-          } else if (data && data['msg'] === 'DUPLICATE') {
-            this.alertService.error('این ایمیل قبلا ثبت نام کرده است.', true);
-          } else {
-            this.alertService.error('مشکلی به وجود آمد. لطفا دوباره تلاش کنید.', true);
-          }
-          return null;
-        },
-        error => {
-          console.log(error);
-        }));
-  }
-
-  loginWithGoogle(user) {
-    return this.http.post<any>( environment.baseUrl + '/authenticate-with-google', user )
-      .pipe(map(data => {
-        // login successful if there's a jwt token in the response
-        if (data && data.msg === 'OK' && data.object.token) {
-          // store user details and jwt token in local storage to keep user logged in between page refreshes
-          this.login(data.object);
-        }
-
-        // data.object is the user
-        return data.object;
-      }));
-  }
 
   getCurrentUser() {
     return this.user;
   }
 
-  getRoleString() {
-    if (this.getCurrentUser()) {
-      switch (this.getCurrentUser().role) {
-        case 'owner':
-          return 'مدیر';
-        case 'reception':
-          return 'پذیرش';
-        case 'user':
-          return 'کاربر';
-        default:
-          return '';
-      }
-    }
-  }
 }

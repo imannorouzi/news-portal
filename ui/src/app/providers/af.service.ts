@@ -39,18 +39,6 @@ export class AfService {
         };
 
         this.spinnerService.changeState(true);
-        this.authService.loginWithGoogle(user)
-          .pipe(first())
-          .subscribe(
-            data => {
-              this.router.navigate([ this.route.snapshot.queryParams['returnUrl'] || '/posts']);
-              this.spinnerService.changeState(false);
-              this.logout();
-            },
-            error => {
-              this.spinnerService.changeState(false);
-              this.alertService.error('مشکلی پیش آمده. دوباره تلاش کنید.');
-            });
 
       }, error => {
         console.log(error);

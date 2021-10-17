@@ -4,7 +4,7 @@ import {Location} from '@angular/common';
 import {filter} from 'rxjs/operators';
 import {environment} from "../../environments/environment";
 
-declare let gtag: Function;
+// declare let gtag: Function;
 
 const homeUrls = [
   '/',
@@ -29,11 +29,11 @@ export class NavigationService {
         this.currentPath = this.router.url;
         this.navigated++;
 
-        gtag('config', environment.gtag,
+        /*gtag('config', environment.gtag,
           {
             page_path: event.urlAfterRedirects
           }
-        );
+        );*/
       });
   }
 

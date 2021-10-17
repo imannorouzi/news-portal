@@ -10,8 +10,6 @@ import {AboutUsComponent} from './about-us/about-us.component';
 import {ConditionsComponent} from './conditions/conditions.component';
 import {FaqComponent} from './faq/faq.component';
 import {PostsComponent} from './posts/posts.component';
-import {AdminComponent} from './admin/admin.component';
-import {CreateArticleComponent} from './admin/create-article/create-article.component';
 import {PostPageComponent} from './post-page/post-page.component';
 
 const routes: Routes = [
@@ -23,9 +21,6 @@ const routes: Routes = [
   { path: 'faq', component: FaqComponent },
   { path: 'conditions', component: ConditionsComponent },
   { path: 'contact-us', component: ContactUsComponent },
-  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard]  },
-  { path: 'new-post', component: CreateArticleComponent, canActivate: [AuthGuard]  },
-  { path: 'edit-post/:postId', component: CreateArticleComponent, canActivate: [AuthGuard]  },
 
   { path: 'login', component: LoginComponent },
 

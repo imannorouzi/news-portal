@@ -58,25 +58,6 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid && !isGuest) {
       return;
     }
-
-    this.loading = true;
-    this.authService.loginWithServer(this.f.username.value, this.f.password.value)
-      .subscribe(
-        user => {
-          if (user) {
-            if (this.localStorageService.checkIn(user.id)) {
-              this.authService.login(user);
-              this.router.navigate([this.authService.redirectUrl]);
-
-              this.authService.loggedIn.next();
-            }
-          }
-          this.loading = false;
-        }, error => {
-          this.loading = false;
-          console.error(error);
-          this.alertService.error('مشکلی پیش آمد.');
-        });
   }
 
   loginWithGoogle() {

@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {Observable, throwError} from 'rxjs';
+import {Observable, of, throwError} from 'rxjs';
 import {User} from '../user';
 import {environment} from '../../environments/environment';
 import {AuthService} from './auth.service';
-import {catchError, map} from 'rxjs/operators';
+import {catchError, map, tap} from 'rxjs/operators';
 import {Post} from '../post';
 import {PostSection} from '../post-section';
 
@@ -30,10 +30,24 @@ export class DataService {
 
   }
 
-  private handleError(error: Response | any) {
+  /*private handleError(error: Response | any) {
     const message = error.error || error || '';
     return throwError(message);
+  }*/
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
+
+      // TODO: better job of transforming error for user consumption
+      console.log(`${operation} failed: ${error.message}`);
+
+      // Let the app keep running by returning an empty result.
+      return of(result as T);
+    };
   }
+
   getTokens(date: Date):  Observable<any> {
     const apiURL = environment.baseUrl + '/get-tokens';
     return this.http.get(apiURL, {
@@ -158,7 +172,7 @@ export class DataService {
   }
 
   getPosts(page: number, pageLimit: number, attribute: string, value: string, status = 'PUBLISH'): Observable<any> {
-    const url =  environment.baseUrl + '/get-posts/';
+    /*const url =  environment.baseUrl + '/get-posts/';
     return this.http.get(url, {
         params: {
           page: page.toString(),
@@ -169,7 +183,13 @@ export class DataService {
         }
       })
       .pipe(map(this.extractData))
-      .pipe(catchError(this.handleError));
+      .pipe(catchError(this.handleError));*/
+
+    return this.http.get<Post[]>('api/posts')
+      .pipe(
+        tap(_ => console.log('fetched posts')),
+        catchError(this.handleError<Post[]>('getHeroes', []))
+      );
   }
 
   getPost(postId: string): Observable<any> {

@@ -1,0 +1,7 @@
+<div class="text-left mb-2 back-button">
+  <a class="app-button secondary" [routerLink]="" (click)="backClicked()"><i class="fa fa-arrow-left"></i></a>
+</div>
+<div class="post-page-wrapper h-100 overflow-auto position-relative">
+  <spinner [showing]="loading" ></spinner>
+  <app-post-details *ngIf="post" [post]="post"></app-post-details>
+</div>

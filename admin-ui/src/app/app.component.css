@@ -1,0 +1,12 @@
+.app-container{
+  /*background: #fcfcfc;*/
+  /*background: #f5f7fa;*/
+  color: #212529;
+  font-size: 15px;
+}
+
+.dark.app-container{
+  background: rgb(34,34,34);
+  background: linear-gradient(180deg, rgba(34,34,34,1) 0%, rgba(34,34,34,1) 52%, rgba(0,0,0,1) 100%);
+  color: #eee;
+}

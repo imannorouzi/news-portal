@@ -1,0 +1,15 @@
+
+.column-content {
+  /*width: 400px;*/
+  border: 1px solid  #f5f7fa;
+  border-radius: 5px;
+  box-sizing: border-box;
+  padding: 15px;
+  background-color: white;
+}
+@media screen and (max-width: 767px) {
+  .column-wrapper {
+    /*padding: 15px 0 15px 15px;*/
+    margin-top: 20px;
+  }
+}

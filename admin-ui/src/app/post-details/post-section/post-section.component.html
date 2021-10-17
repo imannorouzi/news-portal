@@ -1,0 +1,10 @@
+<div class="post-content">
+  <div class="post-section" *ngIf="postSection.type==='TEXT'" [innerHTML]="postSection.text" >
+  </div>
+
+  <div class="post-section" *ngIf="postSection.type==='AUDIO'" >
+    <div *ngFor="let audio of postSection.audios" >
+      <app-voice-item [audio]="audio"></app-voice-item>
+    </div>
+  </div>
+</div>

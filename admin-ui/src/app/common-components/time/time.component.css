@@ -1,0 +1,92 @@
+.times-wrapper{
+  /*position: relative;*/
+}
+.times-container{
+  position: absolute;
+  width: 100%;
+  min-width: 140px;
+  right: 0;
+  top: 0;
+  z-index: 200;
+
+  border-radius: .4em;
+  -webkit-box-shadow: 0 3px 8px rgba(0,0,0,.25);
+  box-shadow: 0 3px 8px rgba(0,0,0,.25);
+  background: #f5f7fa;
+  -webkit-transition: opacity .3s linear;
+  transition: opacity .3s linear;
+  max-width: 130px;
+}
+
+button{
+  width: 100%;
+}
+
+.time-arrows{
+  color: #000;
+}
+
+.time-arrows>div:hover{
+  color: cadetblue;
+}
+.time-arrows>div{
+  cursor: pointer;
+}
+
+.main-row,
+.time-item.highlight{
+  color: indianred;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 0;
+  font-size: 20px;
+  font-weight: bold;
+}
+.time-item.highlight.hour-item{
+  border-bottom-left-radius: 4px;
+  border-top-left-radius: 4px;
+}
+.time-item.highlight.minute-item{
+  border-bottom-right-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.time-item:hover{
+  color: indianred;
+}
+.time-item{
+  color: black;
+  cursor: pointer;
+  padding: 2px 0;
+  margin: 0;
+  position: relative;
+}
+
+.hour-item, .minute-item{
+  background: #efefef;
+}
+
+.change-button{
+
+  cursor: pointer;
+  border-radius: 3px;
+  padding: 5px;
+}
+.change-button:hover{
+  background: #9d9d9d;
+  color: white;
+}
+.frame{
+  line-height: 2.5;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}

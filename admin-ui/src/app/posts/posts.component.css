@@ -1,0 +1,10 @@
+.post:last-child{
+  margin-bottom: 0;
+}
+.post {
+  /*margin-bottom: 15px;*/
+}
+
+.load-more {
+  animation: heartbeat 3s 1s infinite;
+}

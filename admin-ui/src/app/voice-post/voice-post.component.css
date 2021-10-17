@@ -1,0 +1,55 @@
+.voices-container{
+}
+
+.voice:hover {
+  background-color: #f1f1f1;
+}
+.voice:last-child {
+  border-bottom: none;
+}
+.voice {
+  padding: 5px;
+  cursor: pointer;
+  border-bottom: #ddeeff 1px dashed;
+}
+
+.voice-open-icon:hover {
+  color: darkred;
+}
+
+.voice:hover .voice-open-icon {
+  display: inline-grid;
+}
+.voice-open-icon{
+  display: none;
+  width: 60px;
+  height: 60px;
+  /* line-height: 20px; */
+  padding: 5px;
+  border-radius: 50%;
+  /* margin: auto; */
+  font-size: 18px;
+  color: #b0172b;
+  text-align: center;
+  position: relative;
+  z-index: 20;
+}
+
+.voice-thumbnail-container {
+  width: 60px;
+  height: 60px;
+  line-height: 4;
+  position: relative;
+  z-index: 10;
+  overflow: hidden;
+}
+.voice:hover .voice-thumbnail {
+  opacity: .5;
+}
+.voice-thumbnail {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  height: 100%;
+  z-index: 15;
+}

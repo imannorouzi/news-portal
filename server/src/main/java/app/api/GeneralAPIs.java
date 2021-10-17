@@ -59,6 +59,25 @@ public class GeneralAPIs {
         return Response.ok("OK").build();
     }
 
+
+    @GetMapping("/api/heroes")
+    public Response heroes(){
+        String str = (new Gson()).toJson("" +
+                " [\n" +
+                "      { id: 11, name: 'Dr Nice' },\n" +
+                "      { id: 12, name: 'Narco' },\n" +
+                "      { id: 13, name: 'Bombasto' },\n" +
+                "      { id: 14, name: 'Celeritas' },\n" +
+                "      { id: 15, name: 'Magneta' },\n" +
+                "      { id: 16, name: 'RubberMan' },\n" +
+                "      { id: 17, name: 'Dynama' },\n" +
+                "      { id: 18, name: 'Dr IQ' },\n" +
+                "      { id: 19, name: 'Magma' },\n" +
+                "      { id: 20, name: 'Tornado' }\n" +
+                "    ]");
+        return Response.ok(str).build();
+    }
+
     @PostMapping("/api/contact-us")
     public Response contactUs(@RequestBody String jsonContactUs) {
 

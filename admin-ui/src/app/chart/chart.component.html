@@ -1,0 +1,13 @@
+<div style="display: block;">
+  <h5>نمودار (نا)برابری درآمد در ایران<span class="font-small"> - برگرفته از <a href="https://wid.world/country/iran/" target="_blank">WID</a></span></h5>
+
+  <canvas baseChart width="400" height="400"
+          [datasets]="lineChartData"
+          [labels]="lineChartLabels"
+          [options]="lineChartOptions"
+          [colors]="lineChartColors"
+          [legend]="lineChartLegend"
+          [chartType]="lineChartType"
+          [plugins]="lineChartPlugins">
+  </canvas>
+</div>

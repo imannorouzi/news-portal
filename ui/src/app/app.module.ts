@@ -57,23 +57,15 @@ import { PostsByWriterComponent } from './column/posts-by-writer/posts-by-writer
 import { AudioPlayerComponent } from './audio-player/audio-player.component';
 import { ChartComponent } from './chart/chart.component';
 import {ChartsModule} from 'ng2-charts';
-import {CreatePostSectionComponent} from './admin/create-post-section/create-post-section.component';
-import {CreateArticleComponent} from './admin/create-article/create-article.component';
-import { AdminComponent } from './admin/admin.component';
 import {AlertComponent} from './common-components/alert/alert.component';
 import {ColorPickerModule} from 'ngx-color-picker';
 import {SectionSeparatorComponent} from './common-components/section-separator/section-separator.component';
 import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
-import { AdminPostsComponent } from './admin/admin-posts/admin-posts.component';
-import { CreateTagsComponent } from './admin/create-tags/create-tags.component';
-import {CreateCategoriesComponent} from './admin/create-categories/create-categories.component';
 import {PostSectionComponent} from './post-details/post-section/post-section.component';
 import { PostPageComponent } from './post-page/post-page.component';
-import {AdminPostItemComponent} from './admin/admin-post-item/admin-post-item.component';
 import {VoiceItemComponent} from './voice-item/voice-item.component';
 import {VoicePostComponent} from './voice-post/voice-post.component';
-import {InstagramPostComponent} from "./admin/instagram-post/instagram-post.component";
-import {AudioPostsComponent} from "./audio-posts/audio-posts.component";
+import {AudioPostsComponent} from './audio-posts/audio-posts.component';
 
 @NgModule({
   declarations: [
@@ -112,25 +104,17 @@ import {AudioPostsComponent} from "./audio-posts/audio-posts.component";
     VoiceItemComponent,
     AudioPlayerComponent,
     ChartComponent,
-    CreatePostSectionComponent,
-    CreateArticleComponent,
-    AdminComponent,
     AlertComponent,
     SectionSeparatorComponent,
-    AdminPostsComponent,
-    CreateTagsComponent,
-    CreateCategoriesComponent,
     PostSectionComponent,
     PostPageComponent,
-    AdminPostItemComponent,
     VoiceItemComponent,
     VoicePostComponent,
-    InstagramPostComponent,
     SanitizeHtmlPipe,
     AudioPostsComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     CommonModule,
     HttpClientModule,

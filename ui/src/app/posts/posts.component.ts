@@ -59,14 +59,14 @@ export class PostsComponent implements OnInit {
         }
       });*/
 
-    this.route.params
+    /*this.route.params
       .subscribe(params => {this.page = 0;
       this.page = 0;
       this.loading = true;
       this.posts = [];
       this.readPosts();
-    });
-    // this.readPosts();
+    });*/
+    this.readPosts();
 
   }
 

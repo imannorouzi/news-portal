@@ -1,0 +1,13 @@
+
+.post-thumbnail{
+  width: 50%;
+  margin: 0 0 10px 10px;
+  float: right;
+}
+.post-content {
+  line-height: 1.5;
+  font-size: 14px;
+  text-align: justify;
+  text-justify: inter-word;
+}
+

@@ -1,0 +1,31 @@
+<div class="h-100 overflow-auto bg-white p-5">
+    <form [formGroup]="contactUsForm" (ngSubmit)="onSubmit()">
+      <div class=" ">
+        <label class=" col-form-label text-right">نام</label>
+        <input id="name" type="text" formControlName="name" name="name" class="" placeholder="نام (اختیاری)" [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
+      </div>
+
+      <!--Email-->
+      <div class=" ">
+        <label class=" col-form-label text-right">ایمیل</label>
+        <input formControlName="email" type="text" name="email" class=" ltr" placeholder="ali@gmail.com" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+      </div>
+
+      <!--Title-->
+      <div class=" ">
+        <label class=" col-form-label text-right">موضوع</label>
+        <input formControlName="title" type="text" name="title" class="" placeholder="موضوع" [ngClass]="{ 'is-invalid': submitted && f.title.errors }">
+
+      </div>
+
+      <!--Messgae-->
+      <div class=" ">
+        <label class=" col-form-label text-right">پیام</label>
+        <textarea id="message" formControlName="message" type="text" rows="10" name="email" class="" placeholder="متن پیام" [ngClass]="{ 'is-invalid': submitted && f.message.errors }"></textarea>
+
+      </div>
+
+      <spinner [showing]="loading"></spinner>
+      <button *ngIf="!loading" type="submit" class="app-button primary ml-2">ارسال</button>
+    </form>
+</div>

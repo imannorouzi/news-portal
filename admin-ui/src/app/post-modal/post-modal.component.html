@@ -1,0 +1,13 @@
+<app-modal [modalTitle]=" '' "
+           [size]="'lg'"
+           [zIndex]="11" #childModal>
+
+  <ng-container class="app-modal-body" *ngIf="post">
+    <app-post-details [post]="post"></app-post-details>
+  </ng-container>>
+
+  <ng-container class="app-modal-footer">
+    <button class="btn secondary app-button " (click)="hide()"> بستن </button>
+  </ng-container>
+
+</app-modal>

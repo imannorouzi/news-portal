@@ -1,0 +1,24 @@
+<div class="h-100 overflow-auto  post-container " [ngStyle]="selectedPost ? {'display': 'none'} : {}" >
+  <div class="text-center m-5" *ngIf="!loading && (commonService.isEmpty(posts))">
+    <div>چیزی پیدا نکردم</div>
+  </div>
+
+  <spinner [showing]="loading" #spinner></spinner>
+
+  <div *ngFor="let item of posts; let i = index;">
+    <div class="post" >
+      <app-post [post]="item" (click)="onPostClick(item)">
+      </app-post>
+    </div>
+    <app-audio-posts *ngIf="i===0"></app-audio-posts>
+  </div>
+
+  <div *ngIf="!loading && !loadingMore && !noMoreForward" class="load-more text-center">
+    <a [routerLink]="" class=" font-heading" (click)="loadMore()">مطالب بیشتر</a>
+  </div>
+  <spinner [showing]="loadingMore"></spinner>
+</div>
+
+<div class="h-100 selected-post" *ngIf="selectedPost">
+  <app-post-page (back)="selectedPost=undefined" [postId]="selectedPost.id"></app-post-page>
+</div>

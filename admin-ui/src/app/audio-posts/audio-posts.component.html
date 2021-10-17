@@ -1,0 +1,21 @@
+<div class="voices-container">
+  <div (click)="voiceClicked(post, i)" class=" voice" *ngFor="let post of posts; let i = index;">
+
+    <div class="row">
+      <div class="col-sm-8">
+        <span class=""> {{post.title}} </span>
+        <a (click)="$event.stopPropagation()" [class]="'font-heading  author mr-2' " [routerLink]="'/posts/author/' + post.author"> {{post.author}} </a>
+      </div>
+      <div class="col-sm-4 text-left">
+        <span class="font-heading pull-right font-small text-muted">{{dateService.greToPersian(post.created, true)}} </span>
+        <i [class]="'fa voice-open-icon ' + (audioService.url === playingUrl && i === playingIndex  ? 'fa-pause' : 'fa-play')"></i>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && !noMoreForward" class="text-center">
+    <a [routerLink]="" class=" font-heading" (click)="readPosts()">
+      بیشتر ...
+    </a>
+  </div>
+</div>
