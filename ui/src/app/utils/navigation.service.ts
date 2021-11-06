@@ -2,7 +2,7 @@ import {Injectable, OnInit} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {filter} from 'rxjs/operators';
-import {environment} from "../../environments/environment";
+import {environment} from '../../environments/environment';
 
 // declare let gtag: Function;
 

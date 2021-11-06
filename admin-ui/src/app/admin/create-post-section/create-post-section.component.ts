@@ -63,6 +63,9 @@ export class CreatePostSectionComponent implements OnInit, AfterViewInit {
     editor.plugins.get ('FileRepository').createUploadAdapter = (loader) => {
       return new UploadAdapter(loader, this.dataService);
     };
+
+    editor.execute( 'alignment', { value: 'right' } );
+
   }
 
   ngAfterViewInit(): void {

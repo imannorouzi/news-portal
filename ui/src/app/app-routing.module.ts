@@ -11,12 +11,14 @@ import {ConditionsComponent} from './conditions/conditions.component';
 import {FaqComponent} from './faq/faq.component';
 import {PostsComponent} from './posts/posts.component';
 import {PostPageComponent} from './post-page/post-page.component';
+import {PostResolver} from './post.resolver';
+import {PostsResolver} from './posts.resolver';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'posts', pathMatch: 'full' },
-  { path: 'posts/:attribute/:value', component: PostsComponent},
-  { path: 'posts', component: PostsComponent},
-  { path: 'post/:postId', component: PostPageComponent},
+  { path: '', redirectTo: 'posts', pathMatch: 'full', resolve: { pageData: PostsResolver  } },
+  { path: 'posts/:attribute/:value', component: PostsComponent, resolve: { pageData: PostsResolver  }},
+  { path: 'posts', component: PostsComponent, resolve: { pageData: PostsResolver  }},
+  { path: 'post/:postId', component: PostPageComponent, resolve: { pageData: PostResolver  }},
   { path: 'about-us', component: AboutUsComponent },
   { path: 'faq', component: FaqComponent },
   { path: 'conditions', component: ConditionsComponent },

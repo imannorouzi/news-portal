@@ -31,7 +31,14 @@ export class PostPageComponent implements OnInit {
 
   ngOnInit() {
     this.postId = this.postId ? this.postId : this.route.snapshot.paramMap.get('postId');
-    this.readPost();
+    const data = this.route.snapshot.data.pageData;
+    if ( data && data.msg === 'OK' ) {
+      this.post = data.object;
+      this.loading = false;
+      this.route.snapshot.data.pageData = undefined;
+    } else {
+      this.readPost();
+    }
   }
 
   ngOnDestroy(): void {

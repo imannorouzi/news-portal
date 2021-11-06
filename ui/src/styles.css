@@ -37,19 +37,7 @@
 
 @font-face {
   font-family: naskh;
-  src: url(/assets/fonts/NotoNaskhArabic-Regular.ttf);
-  font-weight: normal;
-}
-@font-face {
-  font-family: naskh;
-  src: url( /assets/fonts/NotoNaskhArabic-Bold.ttf);
-  font-weight: bold;
-}
-
-@font-face {
-  font-family: digitFont;
-  src: url(/assets/fonts/BBCNassim.woff);
-  font-weight: normal;
+  src: url(/assets/fonts/NotoSansArabic-Regular.ttf);
 }
 
 *{
@@ -63,7 +51,7 @@
   font-family: naskh, serif;
 }
 .font-digit{
-  font-family: digitFont, Serif;
+  font-family: Sefid, Serif;
 }
 html{
   font-size: 13px;

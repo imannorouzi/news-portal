@@ -217,13 +217,14 @@ export class CreateArticleComponent implements OnInit {
     }
   }
 
-  uploadAll() {
+  async uploadAll() {
 
     this.http.get('./assets/bbc_postmeta.json')
       .subscribe( (data: any) => {
         const posts = data[2].data;
         const ps = [];
         for ( let i = 0; i < posts.length; i++ ) {
+
           const post = new Post();
           post.excerpt = posts[i].meta_value;
           post.title = posts[i].post_title;
@@ -239,16 +240,42 @@ export class CreateArticleComponent implements OnInit {
           postSection.type = 'TEXT';
 
           post.postSections = [ postSection ];
-          this.post = post;
+          post['userId'] = this.authService.userId;
+          post['categories'] = [];
+          post['tags'] = [];
+          post['twitterText'] = '';
           ps.push(post);
           // console.log(filename);
-
-          this.updatePost('PUBLISH');
-          // console.log(post);
         }
-        // console.log( JSON.stringify(ps));
-        // console.log(ps.length);
+
+        this.uploadPosts(ps);
       }, err => console.error(err));
+  }
+
+  async uploadPosts(posts) {
+    for (let i = 0; i < posts.length; ++i) {
+      try {
+        await (this.dataService.updatePost(posts[i], false, false))
+          .subscribe((data: any) => {
+              if (data.msg !== 'OK' ) {
+                this.alertService.error( 'نشد پست رو آپلود کنی' );
+              } else {
+                posts[i].postSections[0].postId = data.object.id;
+                this.dataService.updatePostSection( posts[i].postSections[0])
+                  .then( () => this.alertService.success('OK'),
+                    () => this.alertService.error('FAIL'));
+              }
+            },
+            ( er: any) => {
+              console.log(er);
+              this.alertService.error(er.toString());
+            });
+      } catch (error) {
+        // This is to update file status
+        console.error('Failed to upload post-' + (i));
+        throw error;
+      }
+    }
   }
 
   readArticleFromLink() {

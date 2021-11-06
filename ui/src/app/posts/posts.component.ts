@@ -47,7 +47,6 @@ export class PostsComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.readPosts();
     /*this.router.events
       .pipe(take(1))
       .subscribe(data => {
@@ -59,14 +58,22 @@ export class PostsComponent implements OnInit {
         }
       });*/
 
-    /*this.route.params
-      .subscribe(params => {this.page = 0;
-      this.page = 0;
-      this.loading = true;
-      this.posts = [];
-      this.readPosts();
-    });*/
-    this.readPosts();
+    this.route.params
+      .subscribe(params => {
+
+        const data = this.route.snapshot.data.pageData;
+        if ( this.page === 0 && data && data.msg === 'OK' ) {
+          this.posts = data.object;
+          this.page = 1;
+          this.loading = false;
+          this.route.snapshot.data.pageData = undefined;
+        } else {
+          this.page = 0;
+          this.loading = true;
+          this.posts = [];
+          this.readPosts();
+        }
+      });
 
   }
 

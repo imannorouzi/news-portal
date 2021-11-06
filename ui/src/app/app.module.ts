@@ -66,6 +66,9 @@ import { PostPageComponent } from './post-page/post-page.component';
 import {VoiceItemComponent} from './voice-item/voice-item.component';
 import {VoicePostComponent} from './voice-post/voice-post.component';
 import {AudioPostsComponent} from './audio-posts/audio-posts.component';
+import {LoadingBarModule} from "@ngx-loading-bar/core";
+import {LoadingBarRouterModule} from "@ngx-loading-bar/router";
+import {LoadingBarHttpClientModule} from "@ngx-loading-bar/http-client";
 
 @NgModule({
   declarations: [
@@ -135,7 +138,16 @@ import {AudioPostsComponent} from './audio-posts/audio-posts.component';
     ChartsModule,
     ColorPickerModule,
     HttpClientModule,
-    CKEditorModule
+    CKEditorModule,
+
+    // for HttpClient use:
+    LoadingBarHttpClientModule,
+
+    // for Router use:
+    LoadingBarRouterModule,
+
+    // for Core use:
+    LoadingBarModule
   ],
   exports: [
   ],

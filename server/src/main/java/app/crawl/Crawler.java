@@ -35,6 +35,11 @@ public class Crawler {
                     post = Crawler.extractRaheKargar(doc);
                     post.setLink(url);
                     break;
+                case "www.iraneazad.org":
+                case "iraneazad.org":
+                    post = Crawler.extractIraneAzad(doc);
+                    post.setLink(url);
+                    break;
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -100,6 +105,29 @@ public class Crawler {
         PostSection ps = new PostSection();
         ps.setStyles(new ArrayList<>());
         ps.setText(document.select(".Section1").toString());
+        ps.setType("TEXT");
+
+        post.setPostSections(Collections.singletonList(ps));
+
+        return post;
+    }
+
+    public static Post extractIraneAzad(Document document) throws JSONException {
+
+        Post post = new Post();
+        post.setTitle(document.select("h1.entry-title").toString().replaceAll("\\<[^>]*>",""));
+//        post.setExcerpt(document.select(".field_body_summary").toString().replaceAll("\\<[^>]*>",""));
+//        post.setAuthor(document.select(".field-name-field-nevisande").text());
+        post.setStatus("PUBLISH");
+        post.setStyle("2");
+        post.setType("ARTICLE");
+        post.setTwitterText("");
+        post.setImageUrl(document.select(".np-article-thumb .wp-post-image").first().attr("src"));
+        post.setCreated(new Timestamp(System.currentTimeMillis()));
+
+        PostSection ps = new PostSection();
+        ps.setStyles(new ArrayList<>());
+        ps.setText(document.select(".entry-content").toString());
         ps.setType("TEXT");
 
         post.setPostSections(Collections.singletonList(ps));
