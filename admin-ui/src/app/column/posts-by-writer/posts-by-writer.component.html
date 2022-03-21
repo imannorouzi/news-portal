@@ -12,11 +12,11 @@
     <div class="font-small mb-2 ">
       <a [class]="'font-heading  author ml-2' " (click)="$event.stopPropagation()" [routerLink]="'/posts/author/' + post.author">{{post.author}}</a>
     </div>
+  </div>
 
-    <div *ngIf="!loading && !noMoreForward" class="text-center">
-      <a [routerLink]="" class=" font-heading" (click)="readPosts()">
-        بیشتر ...
-      </a>
-    </div>
+  <div *ngIf="!loading && !noMoreForward" class="text-center">
+    <a [routerLink]="" class=" font-heading" (click)="readPosts()">
+      بیشتر ...
+    </a>
   </div>
 </div>
