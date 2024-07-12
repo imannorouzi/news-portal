@@ -28,7 +28,7 @@
     "@ckeditor/ckeditor5-build-decoupled-document": "^29.2.0",
     "@reactivex/rxjs": "^6.6.7",
     "angularfire2": "^5.4.2",
-    "bootstrap": "^4.4.1",
+    "bootstrap": "^5.0.0",
     "chart.js": "2.9.3",
     "core-js": "^3.6.4",
     "firebase": "7.11.0",
